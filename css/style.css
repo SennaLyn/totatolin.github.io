@@ -111,7 +111,7 @@ button::-moz-focus-inner {
   padding: 0;
 }
 @font-face {
-  font-family: FontAwesome;
+  font-family: 12px/1.5 Tahoma, Helvetica, Arial, '宋体', sans-serif;
   font-style: normal;
   font-weight: normal;
   src: url("fonts/fontawesome-webfont.eot?v=#4.0.3");
@@ -126,6 +126,20 @@ body {
   background: #fff;
   font: 14px "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-text-size-adjust: 100%;
+}
+h2 {
+  margin: 40px 0 10px 0 !important;
+}
+h2::before {
+  content: '♑ ';
+  color: #06d9ff;
+}
+h3,
+p {
+  margin: 10px 0 !important;
+}
+p {
+  color: #a3a3a3;
 }
 .outer {
   max-width: 970px;
@@ -178,6 +192,45 @@ body {
 }
 .mobile-nav-on #wrap {
   left: 280px;
+}
+.p-rl {
+  background: #fefaee !important;
+  margin: 0 0 40px 0 !important;
+  position: relative;
+  border-radius: 5px;
+  padding: 5px 20px !important;
+  border-width: 1px !important;
+}
+code.has-numbering {
+  font-size: 16px;
+  font-style: italic;
+  margin-left: 10px;
+  word-wrap: normal;
+  word-break: keep-all;
+  white-space: pre;
+}
+.pre-numbering {
+  font-style: italic;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 100%;
+  margin: 0 !important;
+  padding-right: 5px;
+  border-right: 1px solid #c3ccd0;
+  border-radius: 3px 0 0 3px;
+  background-color: #fefaee;
+  text-align: right;
+  font-size: 1em;
+  color: #aaa;
+  list-style: none !important;
+}
+.pre-numbering li {
+  line-height: 22px;
+}
+.pre-numbering li:first-child {
+  margin-top: 5px;
 }
 @media screen and (min-width: 768px) {
   #main {

@@ -18,12 +18,11 @@
     <link rel="icon" href="/icon.ico">
   
   
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
   <link rel="stylesheet" href="/css/style.css">
   
 
   <link href="css/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/paraiso-light.min.css">
 
 </head>
 
@@ -91,16 +90,73 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="三种方法的简介及比较"><a href="#三种方法的简介及比较" class="headerlink" title="三种方法的简介及比较"></a>三种方法的简介及比较</h1>
-        
-          <p class="article-more-link">
-            <a href="/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/#more">Read More</a>
-          </p>
-        
+        <a id="more"></a>
+<h2 id="forEach方法"><a href="#forEach方法" class="headerlink" title="forEach方法"></a>forEach方法</h2><h3 id="1、基本用法"><a href="#1、基本用法" class="headerlink" title="1、基本用法"></a>1、基本用法</h3><p>相比于传统的JS遍历方法简单了许多，但是不足处在于不能中断循环，不能使用break语句或使用return语句。</p>
+<pre><code>[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;].forEach((v) =&gt; {
+    console.log(v);
+})
+// 输出&#39;a&#39;, &#39;b&#39;, &#39;c&#39;
+</code></pre><hr>
+<h2 id="for…in方法"><a href="#for…in方法" class="headerlink" title="for…in方法"></a>for…in方法</h2><h3 id="1、基本用法-1"><a href="#1、基本用法-1" class="headerlink" title="1、基本用法"></a>1、基本用法</h3><p>简单来说，for…in是用来遍历键名的方法。</p>
+<pre><code>var k = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;];
+for (i in k) {
+    console.log(i);
+}
+// 输出为&#39;0&#39;,&#39;1&#39;,&#39;2&#39;，且为字符串
+</code></pre><h3 id="2、可以遍历字符串（同for…of方法）"><a href="#2、可以遍历字符串（同for…of方法）" class="headerlink" title="2、可以遍历字符串（同for…of方法）"></a>2、可以遍历字符串（同for…of方法）</h3><pre><code>var k = &#39;abc&#39;;
+for (i in k) {
+    console.log(k[i]);
+}
+// 输出为&#39;a&#39;,&#39;b&#39;,&#39;c&#39;
+</code></pre><h3 id="3、可以使用break终止（同for…of方法）"><a href="#3、可以使用break终止（同for…of方法）" class="headerlink" title="3、可以使用break终止（同for…of方法）"></a>3、可以使用break终止（同for…of方法）</h3><pre><code>var k = [10,20,30];
+for (i in k) {
+    console.log(k[i]);
+    if (k[i]&gt;15) {break;}
+}
+// 输出为10, 20
+</code></pre><h3 id="4、可以遍历对象"><a href="#4、可以遍历对象" class="headerlink" title="4、可以遍历对象"></a>4、可以遍历对象</h3><pre><code>var k = {
+  &#39;a&#39;: &#39;x&#39;,
+  &#39;b&#39;: &#39;y&#39;,
+  &#39;c&#39;: &#39;z&#39;
+};
+for (i in k) {
+    console.log(k[i]);
+}
+// 输出为&#39;x&#39;, &#39;y&#39;, &#39;z&#39;
+</code></pre><hr>
+<h2 id="for…of方法"><a href="#for…of方法" class="headerlink" title="for…of方法"></a>for…of方法</h2><h3 id="1、基本用法-2"><a href="#1、基本用法-2" class="headerlink" title="1、基本用法"></a>1、基本用法</h3><p>简单来说，for…of是用来遍历键值的方法。</p>
+<pre><code>var k = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;];
+for (v of k) {
+    console.log(v);
+}
+// 输出为&#39;a&#39;,&#39;b&#39;,&#39;c&#39;
+</code></pre><h3 id="2、可以遍历字符串（同for…in方法）"><a href="#2、可以遍历字符串（同for…in方法）" class="headerlink" title="2、可以遍历字符串（同for…in方法）"></a>2、可以遍历字符串（同for…in方法）</h3><pre><code>var k = &#39;abc&#39;;
+for (v of k) {
+    console.log(v);
+}
+// 输出为&#39;a&#39;,&#39;b&#39;,&#39;c&#39;
+</code></pre><h3 id="3、可以使用break终止（同for…in方法）"><a href="#3、可以使用break终止（同for…in方法）" class="headerlink" title="3、可以使用break终止（同for…in方法）"></a>3、可以使用break终止（同for…in方法）</h3><pre><code>var k = [10,20,30];
+for (v of k) {
+    console.log(v);
+    if (v&gt;15) {break;}
+}
+// 输出为10, 20
+</code></pre><h3 id="4、可以支持Map和Set对象遍历"><a href="#4、可以支持Map和Set对象遍历" class="headerlink" title="4、可以支持Map和Set对象遍历"></a>4、可以支持Map和Set对象遍历</h3><pre><code>var k = new Map([[&#39;a&#39;, 1], [&#39;b&#39;, 2], [&#39;c&#39;, 3]]);
+for ([i, v] of k) {
+    console.log(v);
+}
+// 输出为1, 2, 3
+</code></pre><pre><code>var k = new Set([1,1,2,2,3,3]);
+for (v of k) {
+    console.log(v);
+}
+// 输出为1,2,3
+</code></pre><hr>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" data-id="cj3r4iftu0000hkwz22tusdqh" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" data-id="cj3r6dftu0001sgwzqxsky9w5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -137,19 +193,23 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
+</code></pre>
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
+</code></pre>
 <p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
+</code></pre>
 <p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
+</code></pre>
 <p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/08/hello-world/" data-id="cj3r4ifut0001hkwzlqhf7gx8" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/08/hello-world/" data-id="cj3r6dftk0000sgwzrueqjeyh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -231,7 +291,7 @@
 </nav>
     
 
-<script src="js/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
@@ -239,6 +299,9 @@
 
 
 <script src="/js/script.js"></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
   </div>
 </body>

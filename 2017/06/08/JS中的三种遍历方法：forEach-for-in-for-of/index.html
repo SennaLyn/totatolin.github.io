@@ -5,16 +5,16 @@
   
   <title>JS中的三种遍历方法：forEach,for...in,for...of | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="三种方法的简介及比较">
+  <meta name="description" content="forEach方法1、基本用法相比于传统的JS遍历方法简单了许多，但是不足处在于不能中断循环，不能使用break语句或使用return语句。 [&amp;#39;a&amp;#39;, &amp;#39;b&amp;#39;, &amp;#39;c&amp;#39;].forEach((v) =&amp;gt; {     console.log(v); }) // 输出&amp;#39;a&amp;#39;, &amp;#39;b&amp;#39;, &amp;#39;c&amp;#39;  f">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS中的三种遍历方法：forEach,for...in,for...of">
 <meta property="og:url" content="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="三种方法的简介及比较">
-<meta property="og:updated_time" content="2017-06-08T15:28:17.273Z">
+<meta property="og:description" content="forEach方法1、基本用法相比于传统的JS遍历方法简单了许多，但是不足处在于不能中断循环，不能使用break语句或使用return语句。 [&amp;#39;a&amp;#39;, &amp;#39;b&amp;#39;, &amp;#39;c&amp;#39;].forEach((v) =&amp;gt; {     console.log(v); }) // 输出&amp;#39;a&amp;#39;, &amp;#39;b&amp;#39;, &amp;#39;c&amp;#39;  f">
+<meta property="og:updated_time" content="2017-06-10T14:12:53.832Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS中的三种遍历方法：forEach,for...in,for...of">
-<meta name="twitter:description" content="三种方法的简介及比较">
+<meta name="twitter:description" content="forEach方法1、基本用法相比于传统的JS遍历方法简单了许多，但是不足处在于不能中断循环，不能使用break语句或使用return语句。 [&amp;#39;a&amp;#39;, &amp;#39;b&amp;#39;, &amp;#39;c&amp;#39;].forEach((v) =&amp;gt; {     console.log(v); }) // 输出&amp;#39;a&amp;#39;, &amp;#39;b&amp;#39;, &amp;#39;c&amp;#39;  f">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -22,12 +22,11 @@
     <link rel="icon" href="/icon.ico">
   
   
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
   <link rel="stylesheet" href="/css/style.css">
   
 
   <link href="css/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/paraiso-light.min.css">
 
 </head>
 
@@ -88,24 +87,73 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="三种方法的简介及比较"><a href="#三种方法的简介及比较" class="headerlink" title="三种方法的简介及比较"></a>三种方法的简介及比较</h1><a id="more"></a>
-<h1 id="forEach方法"><a href="#forEach方法" class="headerlink" title="forEach方法"></a>forEach方法</h1><h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[&apos;a&apos;, &apos;b&apos;, &apos;c&apos;].forEach((v) =&gt; &#123;</div><div class="line">    console.log(v);</div><div class="line">&#125;)</div><div class="line">// 输出&apos;a&apos;, &apos;b&apos;, &apos;c&apos;</div></pre></td></tr></table></figure>
-<p>相比于传统的JS遍历方法简单了许多，但是不足处在于不能中断循环，不能使用break语句或使用return语句。</p>
-<h1 id="for…in方法"><a href="#for…in方法" class="headerlink" title="for…in方法"></a>for…in方法</h1><h2 id="基本用法-1"><a href="#基本用法-1" class="headerlink" title="基本用法"></a>基本用法</h2><p>简单来说，for…in是用来遍历键名的方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var k = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;];</div><div class="line">for (i in k) &#123;</div><div class="line">    console.log(i);</div><div class="line">&#125;</div><div class="line">// 输出为&apos;0&apos;,&apos;1&apos;,&apos;2&apos;，且为字符串</div></pre></td></tr></table></figure>
-<h2 id="可以遍历字符串（同for…of方法）"><a href="#可以遍历字符串（同for…of方法）" class="headerlink" title="可以遍历字符串（同for…of方法）"></a>可以遍历字符串（同for…of方法）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var k = &apos;abc&apos;;</div><div class="line">for (i in k) &#123;</div><div class="line">    console.log(k[i]);</div><div class="line">&#125;</div><div class="line">// 输出为&apos;a&apos;,&apos;b&apos;,&apos;c&apos;</div></pre></td></tr></table></figure>
-<h2 id="可以使用break终止（同for…of方法）"><a href="#可以使用break终止（同for…of方法）" class="headerlink" title="可以使用break终止（同for…of方法）"></a>可以使用break终止（同for…of方法）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">var k = [10,20,30];</div><div class="line">for (i in k) &#123;</div><div class="line">    console.log(k[i]);</div><div class="line">    if (k[i]&gt;15) &#123;break;&#125;</div><div class="line">&#125;</div><div class="line">// 输出为10, 20</div></pre></td></tr></table></figure>
-<h2 id="可以遍历对象"><a href="#可以遍历对象" class="headerlink" title="可以遍历对象"></a>可以遍历对象</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var k = &#123;</div><div class="line">  &apos;a&apos;: &apos;x&apos;,</div><div class="line">  &apos;b&apos;: &apos;y&apos;,</div><div class="line">  &apos;c&apos;: &apos;z&apos;</div><div class="line">&#125;;</div><div class="line">for (i in k) &#123;</div><div class="line">    console.log(k[i]);</div><div class="line">&#125;</div><div class="line">// 输出为&apos;x&apos;, &apos;y&apos;, &apos;z&apos;</div></pre></td></tr></table></figure>
-<h1 id="for…of方法"><a href="#for…of方法" class="headerlink" title="for…of方法"></a>for…of方法</h1><h2 id="基本用法-2"><a href="#基本用法-2" class="headerlink" title="基本用法"></a>基本用法</h2><p>简单来说，for…of是用来遍历键值的方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var k = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;];</div><div class="line">for (v of k) &#123;</div><div class="line">    console.log(v);</div><div class="line">&#125;</div><div class="line">// 输出为&apos;a&apos;,&apos;b&apos;,&apos;c&apos;</div></pre></td></tr></table></figure>
-<h2 id="可以遍历字符串（同for…in方法）"><a href="#可以遍历字符串（同for…in方法）" class="headerlink" title="可以遍历字符串（同for…in方法）"></a>可以遍历字符串（同for…in方法）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var k = &apos;abc&apos;;</div><div class="line">for (v of k) &#123;</div><div class="line">    console.log(v);</div><div class="line">&#125;</div><div class="line">// 输出为&apos;a&apos;,&apos;b&apos;,&apos;c&apos;</div></pre></td></tr></table></figure>
-<h2 id="可以使用break终止（同for…in方法）"><a href="#可以使用break终止（同for…in方法）" class="headerlink" title="可以使用break终止（同for…in方法）"></a>可以使用break终止（同for…in方法）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">var k = [10,20,30];</div><div class="line">for (v of k) &#123;</div><div class="line">    console.log(v);</div><div class="line">    if (v&gt;15) &#123;break;&#125;</div><div class="line">&#125;</div><div class="line">// 输出为10, 20</div></pre></td></tr></table></figure>
-<h2 id="可以支持Map和Set对象遍历"><a href="#可以支持Map和Set对象遍历" class="headerlink" title="可以支持Map和Set对象遍历"></a>可以支持Map和Set对象遍历</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var k = new Map([[&apos;a&apos;, 1], [&apos;b&apos;, 2], [&apos;c&apos;, 3]]);</div><div class="line">for ([i, v] of k) &#123;</div><div class="line">    console.log(v);</div><div class="line">&#125;</div><div class="line">// 输出为1, 2, 3</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">var k = new Set([1,1,2,2,3,3]);</div><div class="line">for (v of k) &#123;</div><div class="line">    console.log(v);</div><div class="line">&#125;</div><div class="line">// 输出为1,2,3</div></pre></td></tr></table></figure>
+        <a id="more"></a>
+<h2 id="forEach方法"><a href="#forEach方法" class="headerlink" title="forEach方法"></a>forEach方法</h2><h3 id="1、基本用法"><a href="#1、基本用法" class="headerlink" title="1、基本用法"></a>1、基本用法</h3><p>相比于传统的JS遍历方法简单了许多，但是不足处在于不能中断循环，不能使用break语句或使用return语句。</p>
+<pre><code>[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;].forEach((v) =&gt; {
+    console.log(v);
+})
+// 输出&#39;a&#39;, &#39;b&#39;, &#39;c&#39;
+</code></pre><hr>
+<h2 id="for…in方法"><a href="#for…in方法" class="headerlink" title="for…in方法"></a>for…in方法</h2><h3 id="1、基本用法-1"><a href="#1、基本用法-1" class="headerlink" title="1、基本用法"></a>1、基本用法</h3><p>简单来说，for…in是用来遍历键名的方法。</p>
+<pre><code>var k = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;];
+for (i in k) {
+    console.log(i);
+}
+// 输出为&#39;0&#39;,&#39;1&#39;,&#39;2&#39;，且为字符串
+</code></pre><h3 id="2、可以遍历字符串（同for…of方法）"><a href="#2、可以遍历字符串（同for…of方法）" class="headerlink" title="2、可以遍历字符串（同for…of方法）"></a>2、可以遍历字符串（同for…of方法）</h3><pre><code>var k = &#39;abc&#39;;
+for (i in k) {
+    console.log(k[i]);
+}
+// 输出为&#39;a&#39;,&#39;b&#39;,&#39;c&#39;
+</code></pre><h3 id="3、可以使用break终止（同for…of方法）"><a href="#3、可以使用break终止（同for…of方法）" class="headerlink" title="3、可以使用break终止（同for…of方法）"></a>3、可以使用break终止（同for…of方法）</h3><pre><code>var k = [10,20,30];
+for (i in k) {
+    console.log(k[i]);
+    if (k[i]&gt;15) {break;}
+}
+// 输出为10, 20
+</code></pre><h3 id="4、可以遍历对象"><a href="#4、可以遍历对象" class="headerlink" title="4、可以遍历对象"></a>4、可以遍历对象</h3><pre><code>var k = {
+  &#39;a&#39;: &#39;x&#39;,
+  &#39;b&#39;: &#39;y&#39;,
+  &#39;c&#39;: &#39;z&#39;
+};
+for (i in k) {
+    console.log(k[i]);
+}
+// 输出为&#39;x&#39;, &#39;y&#39;, &#39;z&#39;
+</code></pre><hr>
+<h2 id="for…of方法"><a href="#for…of方法" class="headerlink" title="for…of方法"></a>for…of方法</h2><h3 id="1、基本用法-2"><a href="#1、基本用法-2" class="headerlink" title="1、基本用法"></a>1、基本用法</h3><p>简单来说，for…of是用来遍历键值的方法。</p>
+<pre><code>var k = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;];
+for (v of k) {
+    console.log(v);
+}
+// 输出为&#39;a&#39;,&#39;b&#39;,&#39;c&#39;
+</code></pre><h3 id="2、可以遍历字符串（同for…in方法）"><a href="#2、可以遍历字符串（同for…in方法）" class="headerlink" title="2、可以遍历字符串（同for…in方法）"></a>2、可以遍历字符串（同for…in方法）</h3><pre><code>var k = &#39;abc&#39;;
+for (v of k) {
+    console.log(v);
+}
+// 输出为&#39;a&#39;,&#39;b&#39;,&#39;c&#39;
+</code></pre><h3 id="3、可以使用break终止（同for…in方法）"><a href="#3、可以使用break终止（同for…in方法）" class="headerlink" title="3、可以使用break终止（同for…in方法）"></a>3、可以使用break终止（同for…in方法）</h3><pre><code>var k = [10,20,30];
+for (v of k) {
+    console.log(v);
+    if (v&gt;15) {break;}
+}
+// 输出为10, 20
+</code></pre><h3 id="4、可以支持Map和Set对象遍历"><a href="#4、可以支持Map和Set对象遍历" class="headerlink" title="4、可以支持Map和Set对象遍历"></a>4、可以支持Map和Set对象遍历</h3><pre><code>var k = new Map([[&#39;a&#39;, 1], [&#39;b&#39;, 2], [&#39;c&#39;, 3]]);
+for ([i, v] of k) {
+    console.log(v);
+}
+// 输出为1, 2, 3
+</code></pre><pre><code>var k = new Set([1,1,2,2,3,3]);
+for (v of k) {
+    console.log(v);
+}
+// 输出为1,2,3
+</code></pre><hr>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" data-id="cj3r4iftu0000hkwz22tusdqh" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" data-id="cj3r6dftu0001sgwzqxsky9w5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -156,7 +204,7 @@
 </nav>
     
 
-<script src="js/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
 
 
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
@@ -164,6 +212,9 @@
 
 
 <script src="/js/script.js"></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
   </div>
 </body>
