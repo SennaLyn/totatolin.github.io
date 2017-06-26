@@ -632,7 +632,7 @@ code.has-numbering {
   transition: color 0.2s;
 }
 a.article-title:hover {
-  color: #85e1ec;
+  color: #06d9ff;
 }
 .index-page {
   border-bottom: 1px solid #eee;
@@ -706,8 +706,7 @@ a.article-title:hover {
   margin: 1.1em 0;
 }
 .article-entry a {
-  color: #85e1ec;
-  text-decoration: none;
+  color: #06d9ff;
 }
 .article-entry a:hover {
   text-decoration: underline;
@@ -808,7 +807,7 @@ a.article-title:hover {
   text-decoration: none;
 }
 .article-more-link a:hover {
-  background: #85e1ec;
+  background: #06d9ff;
   color: #fff;
   text-decoration: none;
   text-shadow: 0 1px #45d1e2;
@@ -1075,7 +1074,7 @@ a.article-title:hover {
   margin: 20px 0;
 }
 #comments a {
-  color: #85e1ec;
+  color: #06d9ff;
 }
 .archives-wrap {
   margin: 20px 0;
@@ -1131,7 +1130,7 @@ a.article-title:hover {
   line-height: 1.6em;
 }
 .archive-article-title:hover {
-  color: #85e1ec;
+  color: #06d9ff;
 }
 .archive-article-footer {
   margin-top: 1em;
@@ -1204,7 +1203,7 @@ a.article-title:hover {
   color: #999;
 }
 #footer a {
-  color: #85e1ec;
+  color: #06d9ff;
   text-decoration: none;
 }
 #footer a:hover {
@@ -1325,7 +1324,7 @@ a.article-title:hover {
   margin-left: 20px;
 }
 .article-entry .gist .gist-file .gist-meta a {
-  color: #85e1ec;
+  color: #06d9ff;
   font-weight: normal;
 }
 .article-entry .gist .gist-file .gist-meta a:hover {
@@ -1441,7 +1440,7 @@ pre .javascript .function {
   border-radius: 3px;
 }
 .widget a {
-  color: #85e1ec;
+  color: #06d9ff;
   text-decoration: none;
 }
 .widget a:hover {
@@ -1516,7 +1515,7 @@ pre .javascript .function {
   border-radius: 100%;
 }
 .widget .list-i i:hover {
-  background: #85e1ec;
+  background: #06d9ff;
 }
 .widget ul,
 .widget ol {
@@ -1538,15 +1537,15 @@ pre .javascript .function {
 }
 .widget ul li:hover,
 .widget ol li:hover {
-  border: 1px solid #85e1ec;
+  border: 1px solid #06d9ff;
 }
 .widget ul li:hover a,
 .widget ol li:hover a {
-  color: #85e1ec;
+  color: #06d9ff;
 }
 .widget ul li a:hover,
 .widget ol li a:hover {
-  color: #85e1ec;
+  color: #06d9ff;
   text-decoration: none;
 }
 .widget ul ul,
