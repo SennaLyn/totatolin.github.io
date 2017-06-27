@@ -141,6 +141,9 @@ p {
 p {
   color: #a3a3a3;
 }
+.article-entry a {
+  text-decoration: underline !important;
+}
 .outer {
   max-width: 970px;
   margin: 0 auto;
@@ -707,6 +710,7 @@ a.article-title:hover {
 }
 .article-entry a {
   color: #06d9ff;
+  text-decoration: none;
 }
 .article-entry a:hover {
   text-decoration: underline;
@@ -810,7 +814,7 @@ a.article-title:hover {
   background: #06d9ff;
   color: #fff;
   text-decoration: none;
-  text-shadow: 0 1px #45d1e2;
+  text-shadow: 0 1px #00b1d1;
 }
 .article-footer {
   display: none;
