@@ -73,6 +73,113 @@
     
   
     <div class="index-page">
+    <a href="/2017/06/27/隐式类型转换的方式/" >
+      <article id="post-隐式类型转换的方式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/27/隐式类型转换的方式/">隐式类型转换的方式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="数字运算符"><a href="#数字运算符" class="headerlink" title="数字运算符"></a>数字运算符</h2><p>使用数字运算符“+”或“-”：</p>
+<pre><code>10 + &#39;5&#39; = &#39;105&#39;  +转换为字符串
+10 - &#39;5&#39; = 5  -转换为数字
+</code></pre><h2 id="调用方法"><a href="#调用方法" class="headerlink" title=".调用方法"></a>.调用方法</h2><p>‘aaa’为直接类型，不含方法；new String(‘aaa’)为对象类型，含原型方法。’aaa’.split(‘’)时实际将直接类型转换为对象类型来操作，也是一种隐式类型转换。</p>
+<h2 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h2><p>略</p>
+<h2 id="或"><a href="#或" class="headerlink" title="== 或 ==="></a>== 或 ===</h2><p>略</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/06/27/隐式类型转换的方式/" data-id="cj4fn9zjm0004dswzl0qx5pzx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/06/27/隐式类型转换的方式/" class="article-date">
+  Posted by Hexo on <time datetime="2017-06-27T13:53:58.000Z" itemprop="datePublished">2017-06-27</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
+    <a href="/2017/06/27/JS中的一元运算符/" >
+      <article id="post-JS中的一元运算符" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/27/JS中的一元运算符/">JS中的一元运算符</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h2><p>delete运算符删除对以前定义的对象属性或方法的引用，例如：</p>
+<pre><code>var person = new Object();
+person.name = &#39;www&#39;;
+document.write(person.name); // www
+delete person.name;
+document.write(person.name); // undefined
+</code></pre><h2 id="void"><a href="#void" class="headerlink" title="void"></a>void</h2><p>void运算符对任何值都返回undefined，该操作符通常用于避免输出不该输出的值。</p>
+<h2 id="前增量-前减量运算符"><a href="#前增量-前减量运算符" class="headerlink" title="前增量/前减量运算符"></a>前增量/前减量运算符</h2><pre><code>var i = 100;
+var j = 10;
+document.write(++i + ++j); // 112
+</code></pre><h2 id="后增量-后减量运算符"><a href="#后增量-后减量运算符" class="headerlink" title="后增量/后减量运算符"></a>后增量/后减量运算符</h2><pre><code>var i = 100;
+var j = 10;
+document.write(i++ + j++ + &quot;&lt;br/&gt;&quot;); // 110
+document.write(i++ + j++ + &quot;&lt;br/&gt;&quot;); // 112
+</code></pre><h2 id="一元加法"><a href="#一元加法" class="headerlink" title="一元加法"></a>一元加法</h2><p>一元加法可以将字符串转换为数字：</p>
+<pre><code>var str = &#39;100&#39;;
+document.write(typeof(str)+&#39;&lt;br/&gt;&#39;); // string
+var num = +str;
+document.write(typeof(num)); // number
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/06/27/JS中的一元运算符/" data-id="cj4fn9zjo0005dswz4k89u2ve" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/06/27/JS中的一元运算符/" class="article-date">
+  Posted by Hexo on <time datetime="2017-06-27T13:49:58.000Z" itemprop="datePublished">2017-06-27</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/06/27/Object-defineProperty用法/" >
       <article id="post-Object-defineProperty用法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -220,7 +327,7 @@ var vm = new Vue({
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/Object-defineProperty用法/" data-id="cj4fm3wif0003w8wzbah2h6nu" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/Object-defineProperty用法/" data-id="cj4fn9zjf0001dswz3eghuy6t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -274,7 +381,7 @@ alert(color2);    //  yellow,black
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/" data-id="cj4fm3wi90001w8wzmtzss41o" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/" data-id="cj4fn9zj90000dswzcemdv5yw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -376,7 +483,7 @@ for (v of k) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" data-id="cj4fm3wi30000w8wzb8gulx9x" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" data-id="cj4fn9zji0002dswz67y03el5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -429,7 +536,7 @@ for (v of k) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/08/hello-world/" data-id="cj4fm3wic0002w8wzlg5cix4w" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/08/hello-world/" data-id="cj4fn9zjk0003dswzrxwm7z7t" class="article-share-link">Share</a>
       
       
     </footer>

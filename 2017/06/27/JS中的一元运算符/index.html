@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Array方法之slice和splice | Hexo</title>
+  <title>JS中的一元运算符 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="sliceslice是指定在一个数组中的元素创建一个新的数组，即原数组不会变 var color = new Array(&amp;#39;red&amp;#39;, &amp;#39;blue&amp;#39;, &amp;#39;yellow&amp;#39;, &amp;#39;black&amp;#39;); var color2 = color.slice(1,2); alert(color); //输出 red,blue,yellow,black">
+  <meta name="description" content="deletedelete运算符删除对以前定义的对象属性或方法的引用，例如： var person = new Object(); person.name = &amp;#39;www&amp;#39;; document.write(person.name); // www delete person.name; document.write(person.name); // undefined voidvoi">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Array方法之slice和splice">
-<meta property="og:url" content="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/index.html">
+<meta property="og:title" content="JS中的一元运算符">
+<meta property="og:url" content="https://totatolin.github.io/2017/06/27/JS中的一元运算符/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="sliceslice是指定在一个数组中的元素创建一个新的数组，即原数组不会变 var color = new Array(&amp;#39;red&amp;#39;, &amp;#39;blue&amp;#39;, &amp;#39;yellow&amp;#39;, &amp;#39;black&amp;#39;); var color2 = color.slice(1,2); alert(color); //输出 red,blue,yellow,black">
-<meta property="og:updated_time" content="2017-06-26T14:16:46.235Z">
+<meta property="og:description" content="deletedelete运算符删除对以前定义的对象属性或方法的引用，例如： var person = new Object(); person.name = &amp;#39;www&amp;#39;; document.write(person.name); // www delete person.name; document.write(person.name); // undefined voidvoi">
+<meta property="og:updated_time" content="2017-06-27T13:51:25.156Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Array方法之slice和splice">
-<meta name="twitter:description" content="sliceslice是指定在一个数组中的元素创建一个新的数组，即原数组不会变 var color = new Array(&amp;#39;red&amp;#39;, &amp;#39;blue&amp;#39;, &amp;#39;yellow&amp;#39;, &amp;#39;black&amp;#39;); var color2 = color.slice(1,2); alert(color); //输出 red,blue,yellow,black">
+<meta name="twitter:title" content="JS中的一元运算符">
+<meta name="twitter:description" content="deletedelete运算符删除对以前定义的对象属性或方法的引用，例如： var person = new Object(); person.name = &amp;#39;www&amp;#39;; document.write(person.name); // www delete person.name; document.write(person.name); // undefined voidvoi">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -71,7 +71,7 @@
 
 </header>
 <div class="outer">
-  <section id="main"><article id="post-Array方法之slice和splice" class="article article-type-post" itemscope itemprop="blogPost">
+  <section id="main"><article id="post-JS中的一元运算符" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -79,7 +79,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Array方法之slice和splice
+      JS中的一元运算符
     </h1>
   
 
@@ -88,31 +88,37 @@
     <div class="article-entry" itemprop="articleBody">
       
         <a id="more"></a>
-<h2 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h2><p>slice是指定在一个数组中的元素创建一个新的数组，即原数组不会变</p>
-<pre><code>var color = new Array(&#39;red&#39;, &#39;blue&#39;, &#39;yellow&#39;, &#39;black&#39;);
-var color2 = color.slice(1,2);
-alert(color); //输出 red,blue,yellow,black
-alert(color2); //输出 blue;注意：这里只有第二项一个值
-</code></pre><h2 id="splice"><a href="#splice" class="headerlink" title="splice"></a>splice</h2><p>splice是js中数组功能最强大的方法，它能够实现对数组元素的删除、插入、替换操作，返回值为被操作的值。</p>
-<p>splice删除：color.splice(1,2)(删除color中的1、2两项)；</p>
-<p>splice插入：color.splice(1,0,’brown’,’pink’)(在color键值为1的元素前插入两个值)</p>
-<p>splice替换：color.splice(1,2,’brown’,’pink’)(在color中替换1、2元素)</p>
-<pre><code>var color = new Array(&#39;red&#39;,&#39;blue&#39;,&#39;yellow&#39;,&#39;black&#39;);
-var color2 = color.splice(2,3,&#39;brown&#39;,&#39;pink&#39;);
-alert(color);     //  red,blue,brown,pink
-alert(color2);    //  yellow,black
+<h2 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h2><p>delete运算符删除对以前定义的对象属性或方法的引用，例如：</p>
+<pre><code>var person = new Object();
+person.name = &#39;www&#39;;
+document.write(person.name); // www
+delete person.name;
+document.write(person.name); // undefined
+</code></pre><h2 id="void"><a href="#void" class="headerlink" title="void"></a>void</h2><p>void运算符对任何值都返回undefined，该操作符通常用于避免输出不该输出的值。</p>
+<h2 id="前增量-前减量运算符"><a href="#前增量-前减量运算符" class="headerlink" title="前增量/前减量运算符"></a>前增量/前减量运算符</h2><pre><code>var i = 100;
+var j = 10;
+document.write(++i + ++j); // 112
+</code></pre><h2 id="后增量-后减量运算符"><a href="#后增量-后减量运算符" class="headerlink" title="后增量/后减量运算符"></a>后增量/后减量运算符</h2><pre><code>var i = 100;
+var j = 10;
+document.write(i++ + j++ + &quot;&lt;br/&gt;&quot;); // 110
+document.write(i++ + j++ + &quot;&lt;br/&gt;&quot;); // 112
+</code></pre><h2 id="一元加法"><a href="#一元加法" class="headerlink" title="一元加法"></a>一元加法</h2><p>一元加法可以将字符串转换为数字：</p>
+<pre><code>var str = &#39;100&#39;;
+document.write(typeof(str)+&#39;&lt;br/&gt;&#39;); // string
+var num = +str;
+document.write(typeof(num)); // number
 </code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/" data-id="cj4fn9zj90000dswzcemdv5yw" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/JS中的一元运算符/" data-id="cj4fn9zjo0005dswz4k89u2ve" class="article-share-link">Share</a>
       
       
     </footer>
   </div>
   <div class="article-meta">
-    <a href="/2017/06/10/Array方法之slice和splice/" class="article-date">
-  Posted by Hexo on <time datetime="2017-06-10T14:28:48.000Z" itemprop="datePublished">2017-06-10</time>
+    <a href="/2017/06/27/JS中的一元运算符/" class="article-date">
+  Posted by Hexo on <time datetime="2017-06-27T13:49:58.000Z" itemprop="datePublished">2017-06-27</time>
 </a>
     
   </div>
@@ -120,19 +126,19 @@ alert(color2);    //  yellow,black
     
 <nav id="article-nav">
   
-    <a href="/2017/06/27/Object-defineProperty用法/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/06/27/隐式类型转换的方式/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Object.defineProperty用法
+          隐式类型转换的方式
         
       </div>
     </a>
   
   
-    <a href="/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/06/27/Object-defineProperty用法/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">JS中的三种遍历方法：forEach,for...in,for...of</div>
+      <div class="article-nav-title">Object.defineProperty用法</div>
     </a>
   
 </nav>
