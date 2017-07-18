@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>null和undefined详解 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="区别当声明的变量还未被初始化时，变量的默认值为undefined。null用来表示尚未存在的对象，常用来表示函数企图返回一个不存在的对象。 undefined == null // true undefined === null // false null是一个表示‘无’的对象，转为数值时为0；undefined是一个表示‘无’的原始值，转为数值时为NaN。 Number(null) // 0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="null和undefined详解">
+<meta property="og:url" content="https://totatolin.github.io/2017/07/18/null和undefined详解/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="区别当声明的变量还未被初始化时，变量的默认值为undefined。null用来表示尚未存在的对象，常用来表示函数企图返回一个不存在的对象。 undefined == null // true undefined === null // false null是一个表示‘无’的对象，转为数值时为0；undefined是一个表示‘无’的原始值，转为数值时为NaN。 Number(null) // 0">
+<meta property="og:updated_time" content="2017-07-18T14:48:00.499Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="null和undefined详解">
+<meta name="twitter:description" content="区别当声明的变量还未被初始化时，变量的默认值为undefined。null用来表示尚未存在的对象，常用来表示函数企图返回一个不存在的对象。 undefined == null // true undefined === null // false null是一个表示‘无’的对象，转为数值时为0；undefined是一个表示‘无’的原始值，转为数值时为NaN。 Number(null) // 0">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/icon.ico">
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  <link href="css/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/paraiso-light.min.css">
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      
+<header id="header" style="width: 1400px;height: 360px;margin: 0 auto;">
+  <div id="banner"  ></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hello Blog</a>
+      </h1>
+      
+        
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a href="/" class="nav-icon">Hexo Blog</a>
+      </nav>
+      <nav id="sub-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">HOME</a>
+        
+          <a class="main-nav-link" href="/archives">ARCHIVES</a>
+        
+          <a class="main-nav-link" href="/about">ABOUT</a>
+        
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://totatolin.github.io"></form>
+      </div>
+    </div>
+  </div>
+
+</header>
+<div class="outer">
+  <section id="main"><article id="post-null和undefined详解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      null和undefined详解
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>当声明的变量还未被初始化时，变量的默认值为undefined。<br>null用来表示尚未存在的对象，常用来表示函数企图返回一个不存在的对象。</p>
+<pre><code>undefined == null // true
+undefined === null // false
+</code></pre><p>null是一个表示‘无’的对象，转为数值时为0；undefined是一个表示‘无’的原始值，转为数值时为NaN。</p>
+<pre><code>Number(null) // 0
+5 + null // 5
+
+Number(undefined) // NaN
+5 + undefined // NaN
+</code></pre><p>undefined表示‘缺少值’，就是此处应该有一个值，但是还没有定义。典型用法是：</p>
+<ol>
+<li>变量被声明了，但还没有赋值时，就等于undefined。</li>
+<li>调用函数时，应该提供的参数没有提供，该参数等于undefined。</li>
+<li>对象没有赋值的属性，该属性的值为undefined。</li>
+<li>函数没有返回值时，默认返回undefined。</li>
+</ol>
+<p>null表示‘没有对象’，即该处不应该有值。典型用法是：</p>
+<ol>
+<li>作为函数的参数，表示该函数的参数不是对象。</li>
+<li>作为对象原型链的终点。</li>
+</ol>
+<h2 id="关于赋值"><a href="#关于赋值" class="headerlink" title="关于赋值"></a>关于赋值</h2><p>undefined可以被赋值，而null不可以被赋值：</p>
+<ol>
+<li>undefined、NaN和Infinity都是全局对象window的属性。既然是属性，当然可以赋值。然而这三个属性又是不可写的属性，即它们的内部特性[[writable]]为false，所以赋值无效。</li>
+<li>null是一个字面量，准确地说叫做Null字面量。与true和false类似。它们都属于js的保留字，换句话说它们都是值，与数字值123、字符串值’fttbar’一样，当然不能被赋值了。</li>
+</ol>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>可以给undefined赋值，但是注意不要把它放到全局作用域：</p>
+<pre><code>function foo() {
+    var undefined = 10;
+    console.log(undefined);
+}
+foo(); // 10
+
+function foo() {
+    undefined = 10;
+    console.log(undefined);
+}
+foo(); // undefined
+</code></pre><p>通过Object.getOwnPropertyDescriptor方法，可以证明undefined是window对象的只读属性：</p>
+<pre><code>Object.getOwnPropertyDescriptor(window, &#39;undefined&#39;);
+
+/** 输出：Object {value: undefined, writable: false,
+enumerable: false, configurable: false} **/
+</code></pre><p>在严格模式下，给undefined赋值会报错。因为严格模式下，禁止给对象的只读属性赋值：</p>
+<pre><code>function foo() {
+    &#39;use strict&#39;;
+    undefined = 10;
+    console.log(undefined); // TypeError
+}
+foo();
+</code></pre><p>undefined和null的类型：</p>
+<pre><code>typeof undefined // &#39;undefined&#39;
+typeof null // &#39;object&#39;
+
+// 需要使用复合条件来检测null值得类型
+var a = null;
+(!a &amp;&amp; typeof a === &#39;object&#39;); // true
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cj59p284q000520wzopd9os1y" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/07/18/null和undefined详解/" class="article-date">
+  Posted by Hexo on <time datetime="2017-07-18T14:46:43.000Z" itemprop="datePublished">2017-07-18</time>
+</a>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/07/18/数组和类数组/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">数组和类数组</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+</div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      Copyright &copy; 2017 Lin Sen<br>
+      <p>
+      Theme by <a href="http//:fiowind.top">Fio</a> | <iframe style="display: inline-block;margin-left: 2px;margin-bottom: -5px;"src="https://ghbtns.com/github-btn.html?user=fiowind&repo=hexo-theme-sunshine&type=star&count=true" frameborder="0" scrolling="0" width="88px" height="20px"></iframe>
+      </p>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">HOME</a>
+  
+    <a href="/archives" class="mobile-nav-link">ARCHIVES</a>
+  
+    <a href="/about" class="mobile-nav-link">ABOUT</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+  </div>
+</body>
+</html>
