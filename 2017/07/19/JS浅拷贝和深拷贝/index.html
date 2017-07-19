@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JS浅拷贝和深拷贝 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="值和引用简单值（即标量基本类型值）总是通过值复制的方式来赋值/传递，包括null、undefined、字符串、数字、布尔和ES6中的symbol。 复合值–对象（包括数组和封装对象）和函数，则总是通过引用复制的方式来赋值/传递。 var a = 2; var b = a; // b是a的值得一个复本 b++; a; // 2 b; // 3  var c = [1,2,3]; var d = c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS浅拷贝和深拷贝">
+<meta property="og:url" content="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="值和引用简单值（即标量基本类型值）总是通过值复制的方式来赋值/传递，包括null、undefined、字符串、数字、布尔和ES6中的symbol。 复合值–对象（包括数组和封装对象）和函数，则总是通过引用复制的方式来赋值/传递。 var a = 2; var b = a; // b是a的值得一个复本 b++; a; // 2 b; // 3  var c = [1,2,3]; var d = c">
+<meta property="og:updated_time" content="2017-07-19T15:10:17.810Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS浅拷贝和深拷贝">
+<meta name="twitter:description" content="值和引用简单值（即标量基本类型值）总是通过值复制的方式来赋值/传递，包括null、undefined、字符串、数字、布尔和ES6中的symbol。 复合值–对象（包括数组和封装对象）和函数，则总是通过引用复制的方式来赋值/传递。 var a = 2; var b = a; // b是a的值得一个复本 b++; a; // 2 b; // 3  var c = [1,2,3]; var d = c">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/icon.ico">
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  <link href="css/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/paraiso-light.min.css">
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      
+<header id="header" style="width: 1400px;height: 360px;margin: 0 auto;">
+  <div id="banner"  ></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hello Blog</a>
+      </h1>
+      
+        
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a href="/" class="nav-icon">Hexo Blog</a>
+      </nav>
+      <nav id="sub-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">HOME</a>
+        
+          <a class="main-nav-link" href="/archives">ARCHIVES</a>
+        
+          <a class="main-nav-link" href="/about">ABOUT</a>
+        
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://totatolin.github.io"></form>
+      </div>
+    </div>
+  </div>
+
+</header>
+<div class="outer">
+  <section id="main"><article id="post-JS浅拷贝和深拷贝" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JS浅拷贝和深拷贝
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="值和引用"><a href="#值和引用" class="headerlink" title="值和引用"></a>值和引用</h2><p>简单值（即标量基本类型值）总是通过值复制的方式来赋值/传递，包括null、undefined、字符串、数字、布尔和ES6中的symbol。</p>
+<p>复合值–对象（包括数组和封装对象）和函数，则总是通过引用复制的方式来赋值/传递。</p>
+<pre><code>var a = 2;
+var b = a; // b是a的值得一个复本
+b++;
+a; // 2
+b; // 3
+
+var c = [1,2,3];
+var d = c; // d是[1,2,3]的一个引用
+d.push(4);
+c; // [1,2,3,4]
+d; // [1,2,3,4]
+</code></pre><p>变量a是一个标量基本类型值，持有该值得一个复本，b持有它的另一个复本。b更改时，a的值保持不变。</p>
+<p>c和d则分别指向同一个复合值[1,2,3]的两个不同引用。请注意，c和d仅仅是指向值[1,2,3],并非持有。所以它们更改的是同一个值，随后它们都指向更改后的新值[1,2,3,4]。</p>
+<p>由于引用指向的是值本身而非变量，所以一个引用无法更改另一个引用的指向。如下例，b=[4,5,6]并不影响a指向值[1,2,3]，除非b不是指向数组的引用，而是指向a的指针，但在js中不存在这样的困惑：</p>
+<pre><code>var a = [1,2,3];
+var b = a;
+a; // [1,2,3]
+b; // [1,2,3]
+
+b = [4,5,6];
+a; // [1,2,3]
+b; // [4,5,6]
+</code></pre><h2 id="浅拷贝和深拷贝"><a href="#浅拷贝和深拷贝" class="headerlink" title="浅拷贝和深拷贝"></a>浅拷贝和深拷贝</h2><p>在js中，对于Object和Array这类引用类型值，当从一个变量向另一个变量复制引用类型值时，这个值的副本其实是一个指针，两个变量指向同一个堆对象，改变其中一个变量，另一个也会受到影响。这种拷贝分为两种情况：拷贝引用和拷贝实例，也就是我们说的浅拷贝和深拷贝。</p>
+<h3 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h3><p>拷贝原对象的引用，这是最简单的浅拷贝。除了上述的方法，还有：</p>
+<h4 id="1-Object-assign"><a href="#1-Object-assign" class="headerlink" title="1.Object.assign()"></a>1.Object.assign()</h4><p>Object.assign()方法可以把任意多个的源对象自身的可枚举属性拷贝给目标对象，然后返回目标对象。</p>
+<pre><code>var x = {
+    a: 1,
+    b: { f: {g: 1} },
+    c: [1,2,3]
+};
+var y = Object.assign({}, x);
+console.log(y.b.f === x.b.f); // true
+</code></pre><h3 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h3><p>深拷贝也就是拷贝一个新的实例，新的实例和之前的实例互不影响。主要方法有：</p>
+<h4 id="1-Array的slice和concat方法"><a href="#1-Array的slice和concat方法" class="headerlink" title="1.Array的slice和concat方法"></a>1.Array的slice和concat方法</h4><p>Array的slice和concat方法不修改原数组，只会返回一个浅复制了原数组中的元素的一个新数组。之所以把它放在深拷贝里，是因为它看起来像是深拷贝。而实际上它是浅拷贝。原数组的元素会按照下述规则拷贝：</p>
+<ul>
+<li>如果该元素是个对象引用（不是实际的对象），slice会拷贝这个对象引用到新的数组里。两个对象引用都引用了同一个对象。如果被引用的对象发生改变，则新的和原来的数组中的这个元素也会发生改变。</li>
+<li>对于字符串、数字及布尔值来说（不是 String、Number 或者 Boolean 对象），slice 会拷贝这些值到新的数组里。在别的数组里修改这些字符串或数字或是布尔值，将不会影响另一个数组。</li>
+</ul>
+<pre><code>var o1 = [&#39;darko&#39;, {age: 22}];
+var o2 = o1.slice(); // 根据Array.prototype.slice()的特性，这里会返回一个o1的浅拷贝对象
+
+console.log(o1 === o2); // =&gt; false，说明o2拷贝的是o1的一个实例
+
+o2[0] = &#39;lin&#39;;
+console.log(o1[0]); // =&gt; &quot;darko&quot; o1和o2内部包含的基本类型值，复制的是其实例，不会相互影响
+
+o2[1].age = 23;
+console.log(o1[1].age); // =&gt;23 o1和o2内部包含的引用类型值，复制的是其引用，会相互影响
+</code></pre><h4 id="2-JSON对象的parse和stringfy"><a href="#2-JSON对象的parse和stringfy" class="headerlink" title="2.JSON对象的parse和stringfy"></a>2.JSON对象的parse和stringfy</h4><p>JSON对象parse方法可以将JSON字符串反序列化成JS对象，stringfy方法可以将JS对象序列化成JSON字符串，借助这个方法，也可以实现对象的深拷贝。</p>
+<pre><code>var source = { name: &#39;source&#39;, child: { name: &#39;child&#39; } };
+var target = JSON.parse(JSON.stringfy(source));
+target.name = &#39;target&#39;; // 改变target的name属性
+console.log(source.name); // source
+console.log(target.name); // target
+target.child.name = &#39;target child&#39;; // 改变target的child
+console.log(source.child.name); // child
+console.log(target.child.name); // target child
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj5b5aa9k0002dswz3gp8mbxm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/07/19/JS浅拷贝和深拷贝/" class="article-date">
+  Posted by Hexo on <time datetime="2017-07-19T15:04:54.000Z" itemprop="datePublished">2017-07-19</time>
+</a>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/07/18/null和undefined详解/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">null和undefined详解</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+</div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      Copyright &copy; 2017 Lin Sen<br>
+      <p>
+      Theme by <a href="http//:fiowind.top">Fio</a> | <iframe style="display: inline-block;margin-left: 2px;margin-bottom: -5px;"src="https://ghbtns.com/github-btn.html?user=fiowind&repo=hexo-theme-sunshine&type=star&count=true" frameborder="0" scrolling="0" width="88px" height="20px"></iframe>
+      </p>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">HOME</a>
+  
+    <a href="/archives" class="mobile-nav-link">ARCHIVES</a>
+  
+    <a href="/about" class="mobile-nav-link">ABOUT</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+  </div>
+</body>
+</html>
