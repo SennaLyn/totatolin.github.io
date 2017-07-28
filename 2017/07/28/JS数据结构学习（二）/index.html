@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JS数据结构学习（二） | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="集合（ES6 set）集合是由一组无序且唯一（不能重复）的项组成的。这个数据结构使用了与有限集合相同的数学概念，但应用在计算机科学的数据结构中。空集是不包含任何元素的集合。可以把集合想象成一个既没有重复元素，也没有顺序概念的数组。 实现声明集合的方法：  add(value):向集合添加一个新的项。 remove(value):从集合移除一个值。 has(value):如果值在集合中，返回tru">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS数据结构学习（二）">
+<meta property="og:url" content="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="集合（ES6 set）集合是由一组无序且唯一（不能重复）的项组成的。这个数据结构使用了与有限集合相同的数学概念，但应用在计算机科学的数据结构中。空集是不包含任何元素的集合。可以把集合想象成一个既没有重复元素，也没有顺序概念的数组。 实现声明集合的方法：  add(value):向集合添加一个新的项。 remove(value):从集合移除一个值。 has(value):如果值在集合中，返回tru">
+<meta property="og:updated_time" content="2017-07-28T13:47:28.905Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS数据结构学习（二）">
+<meta name="twitter:description" content="集合（ES6 set）集合是由一组无序且唯一（不能重复）的项组成的。这个数据结构使用了与有限集合相同的数学概念，但应用在计算机科学的数据结构中。空集是不包含任何元素的集合。可以把集合想象成一个既没有重复元素，也没有顺序概念的数组。 实现声明集合的方法：  add(value):向集合添加一个新的项。 remove(value):从集合移除一个值。 has(value):如果值在集合中，返回tru">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/icon.ico">
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  <link href="css/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/paraiso-light.min.css">
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      
+<header id="header" style="width: 1400px;height: 360px;margin: 0 auto;">
+  <div id="banner"  ></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SennaLyn's Blog</a>
+      </h1>
+      
+        
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a href="/" class="nav-icon">Hexo Blog</a>
+      </nav>
+      <nav id="sub-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">HOME</a>
+        
+          <a class="main-nav-link" href="/archives">ARCHIVES</a>
+        
+          <a class="main-nav-link" href="/about">ABOUT</a>
+        
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://totatolin.github.io"></form>
+      </div>
+    </div>
+  </div>
+
+</header>
+<div class="outer">
+  <section id="main"><article id="post-JS数据结构学习（二）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JS数据结构学习（二）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="集合（ES6-set）"><a href="#集合（ES6-set）" class="headerlink" title="集合（ES6 set）"></a>集合（ES6 set）</h2><p>集合是由一组无序且唯一（不能重复）的项组成的。这个数据结构使用了与有限集合相同的数学概念，但应用在计算机科学的数据结构中。<br>空集是不包含任何元素的集合。<br>可以把集合想象成一个既没有重复元素，也没有顺序概念的数组。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>声明集合的方法：</p>
+<ol>
+<li>add(value):向集合添加一个新的项。</li>
+<li>remove(value):从集合移除一个值。</li>
+<li>has(value):如果值在集合中，返回true，否则返回false。</li>
+<li>clear():移除集合中的所有项。</li>
+<li>size():返回集合所包含元素的数量。与数组的length属性类似。</li>
+<li>values():返回一个包含集合中所有值得数组。</li>
+</ol>
+<pre><code>function Set() {
+    var items = {};
+    this.add = function(value){
+        if (!this.has(value)){
+            items[value] = value;
+            return true;
+        }
+        return false;
+    };
+    this.remove = function(value){
+        if (this.has(value)){
+            delete items[value];
+            return true;
+        }
+        return false;
+    };
+    this.has = function(value){
+        return items.hasOwnProperty(value);
+    };
+    this.clear = function(){
+        items = {};
+    };
+    this.size = function(){
+        return Object.keys(items).length;
+    };
+    this.values = function(){
+        return Object.keys(items);
+    };
+}
+</code></pre><h4 id="并集"><a href="#并集" class="headerlink" title="并集"></a>并集</h4><pre><code>this.union = function(otherSet){
+    var unionSet = new Set(); //{1}
+    var values = this.values(); //{2}
+    for (var i=0; i&lt;values.length; i++){
+        unionSet.add(values[i]);
+    }
+    values = otherSet.values(); //{3}
+    for (var i=0; i&lt;values.length; i++){
+        unionSet.add(values[i]);
+    }
+    return unionSet;
+};
+</code></pre><p>测试上述代码：</p>
+<pre><code>var setA = new Set();
+setA.add(1);
+setA.add(2);
+setA.add(3);
+
+var setB = new Set();
+setB.add(3);
+setB.add(4);
+setB.add(5);
+setB.add(6);
+
+var unionAB = setA.union(setB);
+console.log(unionAB.values()); // [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;]
+</code></pre><h4 id="交集"><a href="#交集" class="headerlink" title="交集"></a>交集</h4><pre><code>this.intersection = function(otherSet){
+    var intersectionSet = new Set(); //{1}
+    var values = this.values();
+    for (var i=0; i&lt;values.length; i++){ //{2}
+        if (otherSet.has(values[i])){ //{3}
+            intersectionSet.add(values[i]); //{4}
+        }
+    }
+    return intersectionSet;
+}
+</code></pre><p>测试上述代码：</p>
+<pre><code>var setA = new Set();
+setA.add(1);
+setA.add(2);
+setA.add(3);
+
+var setB = new Set();
+setB.add(2);
+setB.add(3);
+setB.add(4);
+
+var intersectionAB = setA.intersection(setB);
+console.log(intersectionAB.values()); // [&#39;2&#39;, &#39;3&#39;]
+</code></pre><h4 id="差集"><a href="#差集" class="headerlink" title="差集"></a>差集</h4><pre><code>this.difference = function(otherSet){
+    var differenceSet = new Set();
+    var values = this.values();
+    for (var i=0; i&lt;values.length; i++){
+        if (!otherSet.has(values[i])){
+            differenceSet.add(values[i]);
+        }
+    }
+return differenceSet;
+};
+</code></pre><p>测试上述代码：</p>
+<pre><code>var setA = new Set();
+setA.add(1);
+setA.add(2);
+setA.add(3);
+
+var setB = new Set();
+setB.add(2);
+setB.add(3);
+setB.add(4);
+
+var differenceAB = setA.difference(setB);
+console.log(differenceAB.values()); // [&#39;1&#39;]
+</code></pre><h4 id="子集"><a href="#子集" class="headerlink" title="子集"></a>子集</h4><pre><code>this.subset = function(otherSet){
+    if (this.size() &gt; otherSet.size()){
+        return false;
+    } else {
+        var values = this.values();
+        for (var i=0; i&lt;values.length; i++){
+            if (!otherSet.has(values[i])){
+                return false;
+            }
+        }
+        return true; //{5}
+    }
+};
+</code></pre><p>测试上述代码：</p>
+<pre><code>var setA = new Set();
+setA.add(1);
+setA.add(2);
+
+var setB = new Set();
+setB.add(1);
+setB.add(2);
+setB.add(3);
+
+var setC = new Set();
+setC.add(2);
+setC.add(3);
+setC.add(4);
+
+console.log(setA.subset(setB));
+console.log(setA.subset(setC));
+// setA是setB的子集（因此输出为true），然而setA不是setC的子集（setC
+只包含了setA中的2，而不包含1），因此输出为false。
+</code></pre><h2 id="字典-ES6-map"><a href="#字典-ES6-map" class="headerlink" title="字典(ES6 map)"></a>字典(ES6 map)</h2><p>字典和集合很相似，集合以[值, 值]的形式存储元素，字典则是以[键, 值]的形式来存储元素，也称作映射。</p>
+<h2 id="散列表"><a href="#散列表" class="headerlink" title="散列表"></a>散列表</h2><p>散列算法的作用是尽可能快地在数据结构中找到一个值。如果要在数据结构中获得一个值，需要遍历整个数据结构来找到它。如果使用散列函数，就知道值得具体位置，因此能够快速检索到该值。散列函数的作用是给定一个键值，然后返回值在表中的地址。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cj5nxfbi90005vswz1jlf7h1v" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/07/28/JS数据结构学习（二）/" class="article-date">
+  Posted by Hexo on <time datetime="2017-07-28T13:47:01.000Z" itemprop="datePublished">2017-07-28</time>
+</a>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/28/JS数据结构学习（三）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          JS数据结构学习（三）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/28/JS数据结构学习（一）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">JS数据结构学习（一）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+</div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      Copyright &copy; 2017 Lin Sen<br>
+      <p>
+      Theme by <a href="http//:fiowind.top">Fio</a> | <iframe style="display: inline-block;margin-left: 2px;margin-bottom: -5px;"src="https://ghbtns.com/github-btn.html?user=fiowind&repo=hexo-theme-sunshine&type=star&count=true" frameborder="0" scrolling="0" width="88px" height="20px"></iframe>
+      </p>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">HOME</a>
+  
+    <a href="/archives" class="mobile-nav-link">ARCHIVES</a>
+  
+    <a href="/about" class="mobile-nav-link">ABOUT</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+  </div>
+</body>
+</html>

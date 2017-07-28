@@ -73,6 +73,409 @@
     
   
     <div class="index-page">
+    <a href="/2017/07/28/JS数据结构学习（三）/" >
+      <article id="post-JS数据结构学习（三）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/28/JS数据结构学习（三）/">JS数据结构学习（三）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="树"><a href="#树" class="headerlink" title="树"></a>树</h2><p>树是一种分层数据的抽象模型。一个树结构包含一系列存在父子关系的节点。每个节点都有一个父节点（除了顶部的第一个节点）以及零个或多个子节点。位于树顶部的节点叫作根节点。它没有父节点。树中的每个元素都叫作节点，节点分为内部节点和外部节点。至少有一个子节点的节点称为内部节点。没有子元素的节点称为外部节点。</p>
+<h3 id="二叉树和二叉搜索树"><a href="#二叉树和二叉搜索树" class="headerlink" title="二叉树和二叉搜索树"></a>二叉树和二叉搜索树</h3><p>二叉树中的节点最多只能有两个子节点：一个是左侧子节点，另一个是右侧子节点。<br>二叉搜索树是二叉树的一种，但是它只允许你在左侧节点存储（比父节点）小的值，在右侧节点存储（比父节点）大（或者等于）的值。</p>
+<h3 id="实现二叉搜索树"><a href="#实现二叉搜索树" class="headerlink" title="实现二叉搜索树"></a>实现二叉搜索树</h3><p>对于树，存在两个指针，一个指向左侧子节点，另一个指向右侧子节点。</p>
+<ol>
+<li>insert(key):向树中插入一个新的键。</li>
+<li>search(key):在树中查找一个键，如果节点存在，则返回true；如果不存在，则返回false。</li>
+<li>inOrderTraverse:通过中序遍历方式遍历所有节点。</li>
+<li>preOrderTraverse:通过先序遍历方式遍历所有节点。</li>
+<li>postOrderTraverse:通过后序遍历方式遍历所有节点。</li>
+<li>min:返回树中最小的值/键。</li>
+<li>max:返回树中最大的值/键。</li>
+<li>remove(key):从树中移除某个键。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cj5nxfbi30003vswzj7cfbr3r" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/07/28/JS数据结构学习（三）/" class="article-date">
+  Posted by Hexo on <time datetime="2017-07-28T13:48:36.000Z" itemprop="datePublished">2017-07-28</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
+    <a href="/2017/07/28/JS数据结构学习（二）/" >
+      <article id="post-JS数据结构学习（二）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/28/JS数据结构学习（二）/">JS数据结构学习（二）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="集合（ES6-set）"><a href="#集合（ES6-set）" class="headerlink" title="集合（ES6 set）"></a>集合（ES6 set）</h2><p>集合是由一组无序且唯一（不能重复）的项组成的。这个数据结构使用了与有限集合相同的数学概念，但应用在计算机科学的数据结构中。<br>空集是不包含任何元素的集合。<br>可以把集合想象成一个既没有重复元素，也没有顺序概念的数组。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>声明集合的方法：</p>
+<ol>
+<li>add(value):向集合添加一个新的项。</li>
+<li>remove(value):从集合移除一个值。</li>
+<li>has(value):如果值在集合中，返回true，否则返回false。</li>
+<li>clear():移除集合中的所有项。</li>
+<li>size():返回集合所包含元素的数量。与数组的length属性类似。</li>
+<li>values():返回一个包含集合中所有值得数组。</li>
+</ol>
+<pre><code>function Set() {
+    var items = {};
+    this.add = function(value){
+        if (!this.has(value)){
+            items[value] = value;
+            return true;
+        }
+        return false;
+    };
+    this.remove = function(value){
+        if (this.has(value)){
+            delete items[value];
+            return true;
+        }
+        return false;
+    };
+    this.has = function(value){
+        return items.hasOwnProperty(value);
+    };
+    this.clear = function(){
+        items = {};
+    };
+    this.size = function(){
+        return Object.keys(items).length;
+    };
+    this.values = function(){
+        return Object.keys(items);
+    };
+}
+</code></pre><h4 id="并集"><a href="#并集" class="headerlink" title="并集"></a>并集</h4><pre><code>this.union = function(otherSet){
+    var unionSet = new Set(); //{1}
+    var values = this.values(); //{2}
+    for (var i=0; i&lt;values.length; i++){
+        unionSet.add(values[i]);
+    }
+    values = otherSet.values(); //{3}
+    for (var i=0; i&lt;values.length; i++){
+        unionSet.add(values[i]);
+    }
+    return unionSet;
+};
+</code></pre><p>测试上述代码：</p>
+<pre><code>var setA = new Set();
+setA.add(1);
+setA.add(2);
+setA.add(3);
+
+var setB = new Set();
+setB.add(3);
+setB.add(4);
+setB.add(5);
+setB.add(6);
+
+var unionAB = setA.union(setB);
+console.log(unionAB.values()); // [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;]
+</code></pre><h4 id="交集"><a href="#交集" class="headerlink" title="交集"></a>交集</h4><pre><code>this.intersection = function(otherSet){
+    var intersectionSet = new Set(); //{1}
+    var values = this.values();
+    for (var i=0; i&lt;values.length; i++){ //{2}
+        if (otherSet.has(values[i])){ //{3}
+            intersectionSet.add(values[i]); //{4}
+        }
+    }
+    return intersectionSet;
+}
+</code></pre><p>测试上述代码：</p>
+<pre><code>var setA = new Set();
+setA.add(1);
+setA.add(2);
+setA.add(3);
+
+var setB = new Set();
+setB.add(2);
+setB.add(3);
+setB.add(4);
+
+var intersectionAB = setA.intersection(setB);
+console.log(intersectionAB.values()); // [&#39;2&#39;, &#39;3&#39;]
+</code></pre><h4 id="差集"><a href="#差集" class="headerlink" title="差集"></a>差集</h4><pre><code>this.difference = function(otherSet){
+    var differenceSet = new Set();
+    var values = this.values();
+    for (var i=0; i&lt;values.length; i++){
+        if (!otherSet.has(values[i])){
+            differenceSet.add(values[i]);
+        }
+    }
+return differenceSet;
+};
+</code></pre><p>测试上述代码：</p>
+<pre><code>var setA = new Set();
+setA.add(1);
+setA.add(2);
+setA.add(3);
+
+var setB = new Set();
+setB.add(2);
+setB.add(3);
+setB.add(4);
+
+var differenceAB = setA.difference(setB);
+console.log(differenceAB.values()); // [&#39;1&#39;]
+</code></pre><h4 id="子集"><a href="#子集" class="headerlink" title="子集"></a>子集</h4><pre><code>this.subset = function(otherSet){
+    if (this.size() &gt; otherSet.size()){
+        return false;
+    } else {
+        var values = this.values();
+        for (var i=0; i&lt;values.length; i++){
+            if (!otherSet.has(values[i])){
+                return false;
+            }
+        }
+        return true; //{5}
+    }
+};
+</code></pre><p>测试上述代码：</p>
+<pre><code>var setA = new Set();
+setA.add(1);
+setA.add(2);
+
+var setB = new Set();
+setB.add(1);
+setB.add(2);
+setB.add(3);
+
+var setC = new Set();
+setC.add(2);
+setC.add(3);
+setC.add(4);
+
+console.log(setA.subset(setB));
+console.log(setA.subset(setC));
+// setA是setB的子集（因此输出为true），然而setA不是setC的子集（setC
+只包含了setA中的2，而不包含1），因此输出为false。
+</code></pre><h2 id="字典-ES6-map"><a href="#字典-ES6-map" class="headerlink" title="字典(ES6 map)"></a>字典(ES6 map)</h2><p>字典和集合很相似，集合以[值, 值]的形式存储元素，字典则是以[键, 值]的形式来存储元素，也称作映射。</p>
+<h2 id="散列表"><a href="#散列表" class="headerlink" title="散列表"></a>散列表</h2><p>散列算法的作用是尽可能快地在数据结构中找到一个值。如果要在数据结构中获得一个值，需要遍历整个数据结构来找到它。如果使用散列函数，就知道值得具体位置，因此能够快速检索到该值。散列函数的作用是给定一个键值，然后返回值在表中的地址。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cj5nxfbi90005vswz1jlf7h1v" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/07/28/JS数据结构学习（二）/" class="article-date">
+  Posted by Hexo on <time datetime="2017-07-28T13:47:01.000Z" itemprop="datePublished">2017-07-28</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
+    <a href="/2017/07/28/JS数据结构学习（一）/" >
+      <article id="post-JS数据结构学习（一）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/28/JS数据结构学习（一）/">JS数据结构学习（一）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><p>是一种遵从后进先出（LIFO）原则的有序集合。新添加的或待删除的元素都保存在栈的末尾，称作栈顶，另一端就叫栈底。在栈里，新元素都靠近栈顶，旧元素都接近栈底。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>声明栈的方法：</p>
+<ol>
+<li>push():添加一个（或多个）新元素到栈顶。</li>
+<li>pop():移除栈顶的元素，同时返回被移除的元素。</li>
+<li>peek():返回栈顶的元素，不对栈做任何修改（这个方法不会移除栈顶的元素，仅仅返回它）。</li>
+<li>isEmpty():如果栈里没有任何元素就返回true，否则返回false。</li>
+<li>clear():移除栈里的所有元素。</li>
+<li>size():返回栈里的元素个数。这个方法和数组的length属性很类似。</li>
+</ol>
+<pre><code>function Stack() {
+    var items = [];
+
+    this.push = function(element) {
+        items.push(element);
+    };
+
+    this.pop() = function() {
+        return items.pop();
+    };
+
+    this.peek = function() {
+        return items[items.length-1];
+    };
+
+    this.isEmpty = function() {
+        return items.length === 0;
+    };
+
+    this.clear = function() {
+        items = [];
+    };
+
+    this.size = function() {
+        return items.length;
+    }
+}
+</code></pre><h2 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h2><p>队列是遵循先进先出（FIFO）原则的一组有序的项。队列在尾部添加新元素，并从顶部移除元素。最新添加的元素必须排在队列的末尾。</p>
+<h3 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h3><p>声明队列的方法：</p>
+<ol>
+<li>enqueue(element(s)):向队列尾部添加一个（或多个）新的项。</li>
+<li>dequeue():移除队列的第一（即排在队列最前面的）项，并返回被移除的元素。</li>
+<li>front():返回队列中第一个元素。队列不做任何变动。</li>
+<li>isEmpty():如果队列中不包含任何元素，返回true，否则返回false。</li>
+<li>clear():移除栈里的所有元素。</li>
+<li>size():返回队列包含的元素个数，与数组的length属性类似。</li>
+</ol>
+<pre><code>function Queue() {
+    var items = [];
+
+    this.enqueue = function(element) {
+        items.push(element);
+    };
+
+    this.dequeue = function() {
+        return items.shift();
+    };
+
+    this.front = function() {
+        return items[0];
+    };
+
+    this.isEmpty = function() {
+        return items.length === 0;
+    };
+
+    this.clear = function() {
+        items = [];
+    };
+
+    this.size = function() {
+        return items.length;
+    }
+}
+</code></pre><h3 id="优先队列"><a href="#优先队列" class="headerlink" title="优先队列"></a>优先队列</h3><p>队列实现的一个修改版，元素的添加和移除是基于优先级的。实现一个优先队列，有两种选项：设置优先级，然后在正确的位置添加元素；或者用入列操作添加元素，然后按照优先级移除它们。</p>
+<pre><code>function PriorityQueue() {
+    var items = [];
+
+    function QueueElement(element, priority) {
+        this.element = element;
+        this.priority = priority;
+    }
+
+    this.enqueue = function(element, priority) {
+        var queueElement = new QueueElement(element, priority);
+        if(this.isEmpty()) {
+            items.push(queueElement);
+        } else {
+            var added = false;
+            for(var i=0;i&lt;items.length;i++) {
+                if(queueElement.priority &lt; items[i].priority) {
+                    items.splice(i, 0, queueElement);
+                    added = true;
+                    break;
+                }
+            }
+            if(!added) {
+                items.push(queueElement);
+            }
+        }
+    }
+}
+</code></pre><h3 id="循环队列–击鼓传花"><a href="#循环队列–击鼓传花" class="headerlink" title="循环队列–击鼓传花"></a>循环队列–击鼓传花</h3><p>还有另一个修改版的队列实现，就是循环队列。循环队列的一个例子就是击鼓传花游戏。在这个游戏中，孩子们围成一个圆圈，把花尽快地传递给旁边的人。某一时刻传花停止，这个时候花在谁手里，谁就退出圆圈结束游戏。重复这个过程，直到只剩一个孩子（胜者）。</p>
+<pre><code>function hotPotato (nameList, num){
+    var queue = new Queue(); // {1}
+    for (var i=0; i&lt;nameList.length; i++){
+        queue.enqueue(nameList[i]); // {2}
+    }
+    var eliminated = &#39;&#39;;
+    while (queue.size() &gt; 1){
+        for (var i=0; i&lt;num; i++){
+            queue.enqueue(queue.dequeue()); // {3}
+        }
+        eliminated = queue.dequeue();// {4}
+    console.log(eliminated + &#39;在击鼓传花游戏中被淘汰。&#39;);
+    }
+    return queue.dequeue();// {5}
+}
+var names = [&#39;John&#39;,&#39;Jack&#39;,&#39;Camila&#39;,&#39;Ingrid&#39;,&#39;Carl&#39;];
+var winner = hotPotato(names, 7);
+console.log(&#39;胜利者：&#39; + winner);
+</code></pre><h2 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h2><p>链表存储有序的元素集合，但不同于数组，链表中的元素在内存中并不是连续放置的。每个元素由一个存储元素本身的节点和一个指向下一个元素的引用（也称指针或链接）组成。相对于传统的数组，链表的一个好处在于，添加或移除元素的时候不需要移动其他元素。然而，链表需要使用指针，因此实现链表时需要额外注意。数组的另一个细节是可以直接访问任何位置的任何元素，而要想访问链表中间的一个元素，需要从起点开始迭代列表直到找到所需的元素。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cj5nxfbi40004vswz5xp13kad" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/07/28/JS数据结构学习（一）/" class="article-date">
+  Posted by Hexo on <time datetime="2017-07-28T13:45:44.000Z" itemprop="datePublished">2017-07-28</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/07/28/JS的真值和假值/" >
       <article id="post-JS的真值和假值" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -121,7 +524,7 @@ console.log( 0 == NaN ) // false
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj5nx12om0005t0wzj6y3gt6d" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj5nxfbii0008vswze348hhzf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -221,7 +624,7 @@ console.log(target.child.name); // target child
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj5nx12oh0003t0wz0kh0l1bh" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj5nxfbia0006vswz8pkwdg42" class="article-share-link">Share</a>
       
       
     </footer>
@@ -319,7 +722,7 @@ var a = null;
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cj5nx12ow0008t0wzbtp2pexm" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cj5nxfbil000avswzh6oxtedw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -422,7 +825,7 @@ var arr = Array.prototype.slice.call(a); // arr === [1,2,3]
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cj5nx12oy000at0wz95azwj0t" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cj5nxfbio000cvswzmxv5r6zz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -565,7 +968,7 @@ console.log(numbers.some(isOutsideRange, range))
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" data-id="cj5nx12o60000t0wzr2esv1ww" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" data-id="cj5nxfbhs0000vswzx5hdgsnc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -676,7 +1079,7 @@ person1.hasOwnProperty(&#39;name&#39;) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/03/原型和原型链/" data-id="cj5nx12ox0009t0wz21o9u039" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/03/原型和原型链/" data-id="cj5nxfbim000bvswzc51kt0l9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -723,7 +1126,7 @@ person1.hasOwnProperty(&#39;name&#39;) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/隐式类型转换的方式/" data-id="cj5nx12p0000bt0wzkn8l5xih" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/隐式类型转换的方式/" data-id="cj5nxfbiq000dvswzrjou0i4v" class="article-share-link">Share</a>
       
       
     </footer>
@@ -731,286 +1134,6 @@ person1.hasOwnProperty(&#39;name&#39;) // true
   <div class="article-meta">
     <a href="/2017/06/27/隐式类型转换的方式/" class="article-date">
   Posted by Hexo on <time datetime="2017-06-27T13:53:58.000Z" itemprop="datePublished">2017-06-27</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/06/27/JS中的一元运算符/" >
-      <article id="post-JS中的一元运算符" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/27/JS中的一元运算符/">JS中的一元运算符</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h2><p>delete运算符删除对以前定义的对象属性或方法的引用，例如：</p>
-<pre><code>var person = new Object();
-person.name = &#39;www&#39;;
-document.write(person.name); // www
-delete person.name;
-document.write(person.name); // undefined
-</code></pre><h2 id="void"><a href="#void" class="headerlink" title="void"></a>void</h2><p>void运算符对任何值都返回undefined，该操作符通常用于避免输出不该输出的值。</p>
-<h2 id="前增量-前减量运算符"><a href="#前增量-前减量运算符" class="headerlink" title="前增量/前减量运算符"></a>前增量/前减量运算符</h2><pre><code>var i = 100;
-var j = 10;
-document.write(++i + ++j); // 112
-</code></pre><h2 id="后增量-后减量运算符"><a href="#后增量-后减量运算符" class="headerlink" title="后增量/后减量运算符"></a>后增量/后减量运算符</h2><pre><code>var i = 100;
-var j = 10;
-document.write(i++ + j++ + &quot;&lt;br/&gt;&quot;); // 110
-document.write(i++ + j++ + &quot;&lt;br/&gt;&quot;); // 112
-</code></pre><h2 id="一元加法"><a href="#一元加法" class="headerlink" title="一元加法"></a>一元加法</h2><p>一元加法可以将字符串转换为数字：</p>
-<pre><code>var str = &#39;100&#39;;
-document.write(typeof(str)+&#39;&lt;br/&gt;&#39;); // string
-var num = +str;
-document.write(typeof(num)); // number
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/JS中的一元运算符/" data-id="cj5nx12oc0001t0wzkizx4spw" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/06/27/JS中的一元运算符/" class="article-date">
-  Posted by Hexo on <time datetime="2017-06-27T13:49:58.000Z" itemprop="datePublished">2017-06-27</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/06/27/Object-defineProperty用法/" >
-      <article id="post-Object-defineProperty用法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/27/Object-defineProperty用法/">Object.defineProperty用法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="三个参数（均为必填）"><a href="#三个参数（均为必填）" class="headerlink" title="三个参数（均为必填）"></a>三个参数（均为必填）</h2><ol>
-<li>obj:需要定义属性的对象（目标对象）</li>
-<li>prop:需要被定义或修改的属性名（对象上的属性或者方法）</li>
-<li>descriptor:需被定义或修改的属性的描述符</li>
-</ol>
-<pre><code>// Object.defineProperty(obj, prop, descriptor)
-var obj = {};
-Object.defineProperty(obj, &#39;a&#39;, {
-    value: 2,
-    writable: true,
-    configurable: true,
-    enumerable: true
-});
-obj.a; // 2
-</code></pre><h2 id="descriptor参数详解"><a href="#descriptor参数详解" class="headerlink" title="descriptor参数详解"></a>descriptor参数详解</h2><h3 id="value-属性的值"><a href="#value-属性的值" class="headerlink" title="value:属性的值"></a>value:属性的值</h3><pre><code>var obj = {};
-Object.defineProperty(obj, &#39;a&#39;, {
-    value: 2
-})
-console.log(obj.a); // 2
-</code></pre><h3 id="writable-属性的值是否能被修改"><a href="#writable-属性的值是否能被修改" class="headerlink" title="writable:属性的值是否能被修改"></a>writable:属性的值是否能被修改</h3><pre><code>var obj = {};
-Object.defineProperty(obj, &#39;a&#39;, {
-    value: 2,
-    writable: false, // 不可写！
-    configurable: true,
-    enumerable: true
-})
-console.log(obj.a); // 2
-obj.a = 3;
-console.log(obj.a); // 2
-</code></pre><h3 id="configurable-是否能够配置value-writable-enumerable"><a href="#configurable-是否能够配置value-writable-enumerable" class="headerlink" title="configurable:是否能够配置value, writable, enumerable"></a>configurable:是否能够配置value, writable, enumerable</h3><pre><code>var obj = {};
-Object.defineProperty(obj, &#39;a&#39;, {
-    value: 2,
-    writable: true,
-    configurable: false, // 不可配置！
-    enumerable: true
-})
-console.log(obj.a); // 2
-Object.defineProperty(obj, &#39;a&#39;, {
-    value: 3,
-    writable: true,
-    configurable: true,
-    enumerable: true
-})
-// TypeError: Cannot redefine property: a
-</code></pre><h3 id="enumerable-属性是否能在for…in或者Object-keys中被枚举出来"><a href="#enumerable-属性是否能在for…in或者Object-keys中被枚举出来" class="headerlink" title="enumerable:属性是否能在for…in或者Object.keys中被枚举出来"></a>enumerable:属性是否能在for…in或者Object.keys中被枚举出来</h3><pre><code>var obj = {};
-Object.defineProperty(obj, &#39;a&#39;, {
-    value: 2,
-    writable: true,
-    configurable: true,
-    enumerable: false // 不可枚举！
-})
-console.log(Object.keys(obj)); // []
-Object.defineProperty(obj, &#39;a&#39;, {
-    value: 2,
-    writable: true,
-    configurable: true,
-    enumerable: true
-})
-console.log(Object.keys(obj)); // [&#39;a&#39;]
-</code></pre><h3 id="get-set"><a href="#get-set" class="headerlink" title="get/set"></a>get/set</h3><p>对于set和get，我的理解是它们是一对勾子函数，当你对一个对象的某个属性赋值时，则会自动调用相应的set函数；而当获取属性时，则调用get函数。这也是实现双向数据绑定的关键。</p>
-<pre><code>var obj = {}
-var a
-
-Object.defineProperty(obj, &#39;a&#39;, {
-    get: function() {
-        console.log(&#39;get x&#39;)
-
-        // 我们可以在这里对返回的值做任何操作
-        return x + 1
-    },
-    set: function(newValue) {
-        console.log(&#39;set x to&#39;, newValue)
-        x = newValue
-    }
-})
-
-obj.a = 100
-
-console.log(obj.a);
-
-/*
-output:
-  set x to 100
-  get x
-  101
-*/
-</code></pre><h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>数据描述符和存取描述符不能混合使用</p>
-<pre><code>Object.defineProperty(o, &quot;conflict&quot;, {
-  // value是数据描述符
-  value: 1,
-  // get是存取描述符
-  get: function() {
-    return 2;
-  }
-});
-</code></pre><h2 id="视图和数据变化绑定"><a href="#视图和数据变化绑定" class="headerlink" title="视图和数据变化绑定"></a>视图和数据变化绑定</h2><pre><code>&lt;div&gt;
-    &lt;p&gt;你好，&lt;span id=&#39;nickName&#39;&gt;&lt;/span&gt;&lt;/p&gt;
-    &lt;div id=&quot;introduce&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-</code></pre><pre><code>//视图控制器
-var userInfo = {};
-Object.defineProperty(userInfo, &quot;nickName&quot;, {
-    get: function(){
-        return document.getElementById(&#39;nickName&#39;).innerHTML;
-    },
-    set: function(nick){
-        document.getElementById(&#39;nickName&#39;).innerHTML = nick;
-    }
-});
-Object.defineProperty(userInfo, &quot;introduce&quot;, {
-    get: function(){
-        return document.getElementById(&#39;introduce&#39;).innerHTML;
-    },
-    set: function(introduce){
-        document.getElementById(&#39;introduce&#39;).innerHTML = introduce;
-    }
-})
-</code></pre><pre><code>userInfo.nickName = &quot;xxx&quot;;
-userInfo.introduce = &quot;我是xxx，我来自云南，...&quot;
-</code></pre><h2 id="vue数据变动"><a href="#vue数据变动" class="headerlink" title="vue数据变动"></a>vue数据变动</h2><p>但是，这个例子只是数据和dom节点的绑定，而vue.js更为复杂一点，它在网页dom和accessor之间会有两层，一层是Wacher，一层是Directive，比如以下代码。</p>
-<pre><code>var a = { b: 1 }
-var vm = new Vue({ 
-  data: data
-})
-</code></pre><p>把一个普通对象（a={b:1}）传给 Vue 实例作为它的 data 选项，Vue.js 将遍历它的属性，用Object.defineProperty 将它们转为 getter/setter,如图绿色的部分所示。<br>每次用户更改data里的数据的时候，比如a.b =1，setter就会重新通知Watcher进行变动，Watcher再通知Directive对dom节点进行更改。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/Object-defineProperty用法/" data-id="cj5nx12or0007t0wzbldlpue9" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/06/27/Object-defineProperty用法/" class="article-date">
-  Posted by Hexo on <time datetime="2017-06-27T13:17:54.000Z" itemprop="datePublished">2017-06-27</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/06/10/Array方法之slice和splice/" >
-      <article id="post-Array方法之slice和splice" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/10/Array方法之slice和splice/">Array方法之slice和splice</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h2><p>slice是指定在一个数组中的元素创建一个新的数组，即原数组不会变</p>
-<pre><code>var color = new Array(&#39;red&#39;, &#39;blue&#39;, &#39;yellow&#39;, &#39;black&#39;);
-var color2 = color.slice(1,2);
-alert(color); //输出 red,blue,yellow,black
-alert(color2); //输出 blue;注意：这里只有第二项一个值
-</code></pre><h2 id="splice"><a href="#splice" class="headerlink" title="splice"></a>splice</h2><p>splice是js中数组功能最强大的方法，它能够实现对数组元素的删除、插入、替换操作，返回值为被操作的值。</p>
-<p>splice删除：color.splice(1,2)(删除color中的1、2两项)；</p>
-<p>splice插入：color.splice(1,0,’brown’,’pink’)(在color键值为1的元素前插入两个值)</p>
-<p>splice替换：color.splice(1,2,’brown’,’pink’)(在color中替换1、2元素)</p>
-<pre><code>var color = new Array(&#39;red&#39;,&#39;blue&#39;,&#39;yellow&#39;,&#39;black&#39;);
-var color2 = color.splice(2,3,&#39;brown&#39;,&#39;pink&#39;);
-alert(color);     //  red,blue,brown,pink
-alert(color2);    //  yellow,black
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/" data-id="cj5nx12oj0004t0wz0xfutnpc" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/06/10/Array方法之slice和splice/" class="article-date">
-  Posted by Hexo on <time datetime="2017-06-10T14:28:48.000Z" itemprop="datePublished">2017-06-10</time>
 </a>
     
   </div>
