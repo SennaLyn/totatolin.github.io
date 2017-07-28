@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Array方法之slice和splice | Hexo</title>
+  <title>JS的真值和假值 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="sliceslice是指定在一个数组中的元素创建一个新的数组，即原数组不会变 var color = new Array(&amp;#39;red&amp;#39;, &amp;#39;blue&amp;#39;, &amp;#39;yellow&amp;#39;, &amp;#39;black&amp;#39;); var color2 = color.slice(1,2); alert(color); //输出 red,blue,yellow,black">
+  <meta name="description" content="定义JS中的每个值都有固定的布尔值，在布尔表达式中评估该值时，该值就会转换为固有的布尔值。这些固有的值称为真值或假值。结果为false的值称为假值，其余的皆为真值。 假值JS中有六个假值： false null undefined 0 &amp;#39;&amp;#39; // 空字符串 NaN 虽然这六个值都为假值，它们之间并非都相等： console.log( false == null )      //">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Array方法之slice和splice">
-<meta property="og:url" content="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/index.html">
+<meta property="og:title" content="JS的真值和假值">
+<meta property="og:url" content="https://totatolin.github.io/2017/07/28/JS的真值和假值/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="sliceslice是指定在一个数组中的元素创建一个新的数组，即原数组不会变 var color = new Array(&amp;#39;red&amp;#39;, &amp;#39;blue&amp;#39;, &amp;#39;yellow&amp;#39;, &amp;#39;black&amp;#39;); var color2 = color.slice(1,2); alert(color); //输出 red,blue,yellow,black">
-<meta property="og:updated_time" content="2017-06-26T14:16:46.235Z">
+<meta property="og:description" content="定义JS中的每个值都有固定的布尔值，在布尔表达式中评估该值时，该值就会转换为固有的布尔值。这些固有的值称为真值或假值。结果为false的值称为假值，其余的皆为真值。 假值JS中有六个假值： false null undefined 0 &amp;#39;&amp;#39; // 空字符串 NaN 虽然这六个值都为假值，它们之间并非都相等： console.log( false == null )      //">
+<meta property="og:updated_time" content="2017-07-28T13:39:25.345Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Array方法之slice和splice">
-<meta name="twitter:description" content="sliceslice是指定在一个数组中的元素创建一个新的数组，即原数组不会变 var color = new Array(&amp;#39;red&amp;#39;, &amp;#39;blue&amp;#39;, &amp;#39;yellow&amp;#39;, &amp;#39;black&amp;#39;); var color2 = color.slice(1,2); alert(color); //输出 red,blue,yellow,black">
+<meta name="twitter:title" content="JS的真值和假值">
+<meta name="twitter:description" content="定义JS中的每个值都有固定的布尔值，在布尔表达式中评估该值时，该值就会转换为固有的布尔值。这些固有的值称为真值或假值。结果为false的值称为假值，其余的皆为真值。 假值JS中有六个假值： false null undefined 0 &amp;#39;&amp;#39; // 空字符串 NaN 虽然这六个值都为假值，它们之间并非都相等： console.log( false == null )      //">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -71,7 +71,7 @@
 
 </header>
 <div class="outer">
-  <section id="main"><article id="post-Array方法之slice和splice" class="article article-type-post" itemscope itemprop="blogPost">
+  <section id="main"><article id="post-JS的真值和假值" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -79,7 +79,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Array方法之slice和splice
+      JS的真值和假值
     </h1>
   
 
@@ -88,31 +88,44 @@
     <div class="article-entry" itemprop="articleBody">
       
         <a id="more"></a>
-<h2 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h2><p>slice是指定在一个数组中的元素创建一个新的数组，即原数组不会变</p>
-<pre><code>var color = new Array(&#39;red&#39;, &#39;blue&#39;, &#39;yellow&#39;, &#39;black&#39;);
-var color2 = color.slice(1,2);
-alert(color); //输出 red,blue,yellow,black
-alert(color2); //输出 blue;注意：这里只有第二项一个值
-</code></pre><h2 id="splice"><a href="#splice" class="headerlink" title="splice"></a>splice</h2><p>splice是js中数组功能最强大的方法，它能够实现对数组元素的删除、插入、替换操作，返回值为被操作的值。</p>
-<p>splice删除：color.splice(1,2)(删除color中的1、2两项)；</p>
-<p>splice插入：color.splice(1,0,’brown’,’pink’)(在color键值为1的元素前插入两个值)</p>
-<p>splice替换：color.splice(1,2,’brown’,’pink’)(在color中替换1、2元素)</p>
-<pre><code>var color = new Array(&#39;red&#39;,&#39;blue&#39;,&#39;yellow&#39;,&#39;black&#39;);
-var color2 = color.splice(2,3,&#39;brown&#39;,&#39;pink&#39;);
-alert(color);     //  red,blue,brown,pink
-alert(color2);    //  yellow,black
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>JS中的每个值都有固定的布尔值，在布尔表达式中评估该值时，该值就会转换为固有的布尔值。这些固有的值称为真值或假值。结果为false的值称为假值，其余的皆为真值。</p>
+<h2 id="假值"><a href="#假值" class="headerlink" title="假值"></a>假值</h2><p>JS中有六个假值：</p>
+<pre><code>false
+null
+undefined
+0
+&#39;&#39; // 空字符串
+NaN
+</code></pre><p>虽然这六个值都为假值，它们之间并非都相等：</p>
+<pre><code>console.log( false == null )      // false
+console.log( false == undefined ) // false
+console.log( false == 0 )         // true
+console.log( false == &#39;&#39; )        // true
+console.log( false == NaN )       // false
+
+console.log( null == undefined ) // true
+console.log( null == 0 )         // false
+console.log( null == &#39;&#39; )        // false
+console.log( null == NaN )       // false
+
+console.log( undefined == 0)   // false
+console.log( undefined == &#39;&#39;)  // false
+console.log( undefined == NaN) // false
+
+console.log( 0 == &#39;&#39; )  // true
+console.log( 0 == NaN ) // false
 </code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/" data-id="cj5nx12oj0004t0wz0xfutnpc" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj5nx12om0005t0wzj6y3gt6d" class="article-share-link">Share</a>
       
       
     </footer>
   </div>
   <div class="article-meta">
-    <a href="/2017/06/10/Array方法之slice和splice/" class="article-date">
-  Posted by Hexo on <time datetime="2017-06-10T14:28:48.000Z" itemprop="datePublished">2017-06-10</time>
+    <a href="/2017/07/28/JS的真值和假值/" class="article-date">
+  Posted by Hexo on <time datetime="2017-07-28T13:39:02.000Z" itemprop="datePublished">2017-07-28</time>
 </a>
     
   </div>
@@ -120,19 +133,10 @@ alert(color2);    //  yellow,black
     
 <nav id="article-nav">
   
-    <a href="/2017/06/27/Object-defineProperty用法/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Object.defineProperty用法
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/07/19/JS浅拷贝和深拷贝/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">JS中的三种遍历方法：forEach,for...in,for...of</div>
+      <div class="article-nav-title">JS浅拷贝和深拷贝</div>
     </a>
   
 </nav>

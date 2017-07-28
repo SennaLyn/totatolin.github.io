@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://sennalyn.github.io/page/2/index.html">
+<meta property="og:url" content="https://totatolin.github.io/page/2/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
@@ -36,7 +36,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hello Blog</a>
+        <a href="/" id="logo">SennaLyn's Blog</a>
       </h1>
       
         
@@ -61,7 +61,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://sennalyn.github.io"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://totatolin.github.io"></form>
       </div>
     </div>
   </div>
@@ -71,6 +71,108 @@
   <section id="main">
     <div class="content">
     
+  
+    <div class="index-page">
+    <a href="/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" >
+      <article id="post-JS中的三种遍历方法：forEach-for-in-for-of" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/">JS中的三种遍历方法：forEach,for...in,for...of</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="forEach方法"><a href="#forEach方法" class="headerlink" title="forEach方法"></a>forEach方法</h2><h3 id="1、基本用法"><a href="#1、基本用法" class="headerlink" title="1、基本用法"></a>1、基本用法</h3><p>相比于传统的JS遍历方法简单了许多，但是不足处在于不能中断循环，不能使用break语句或使用return语句。</p>
+<pre><code>[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;].forEach((v) =&gt; {
+    console.log(v);
+})
+// 输出&#39;a&#39;, &#39;b&#39;, &#39;c&#39;
+</code></pre><hr>
+<h2 id="for…in方法"><a href="#for…in方法" class="headerlink" title="for…in方法"></a>for…in方法</h2><h3 id="1、基本用法-1"><a href="#1、基本用法-1" class="headerlink" title="1、基本用法"></a>1、基本用法</h3><p>简单来说，for…in是用来遍历键名的方法。</p>
+<pre><code>var k = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;];
+for (i in k) {
+    console.log(i);
+}
+// 输出为&#39;0&#39;,&#39;1&#39;,&#39;2&#39;，且为字符串
+</code></pre><h3 id="2、可以遍历字符串（同for…of方法）"><a href="#2、可以遍历字符串（同for…of方法）" class="headerlink" title="2、可以遍历字符串（同for…of方法）"></a>2、可以遍历字符串（同for…of方法）</h3><pre><code>var k = &#39;abc&#39;;
+for (i in k) {
+    console.log(k[i]);
+}
+// 输出为&#39;a&#39;,&#39;b&#39;,&#39;c&#39;
+</code></pre><h3 id="3、可以使用break终止（同for…of方法）"><a href="#3、可以使用break终止（同for…of方法）" class="headerlink" title="3、可以使用break终止（同for…of方法）"></a>3、可以使用break终止（同for…of方法）</h3><pre><code>var k = [10,20,30];
+for (i in k) {
+    console.log(k[i]);
+    if (k[i]&gt;15) {break;}
+}
+// 输出为10, 20
+</code></pre><h3 id="4、可以遍历对象"><a href="#4、可以遍历对象" class="headerlink" title="4、可以遍历对象"></a>4、可以遍历对象</h3><pre><code>var k = {
+  &#39;a&#39;: &#39;x&#39;,
+  &#39;b&#39;: &#39;y&#39;,
+  &#39;c&#39;: &#39;z&#39;
+};
+for (i in k) {
+    console.log(k[i]);
+}
+// 输出为&#39;x&#39;, &#39;y&#39;, &#39;z&#39;
+</code></pre><hr>
+<h2 id="for…of方法"><a href="#for…of方法" class="headerlink" title="for…of方法"></a>for…of方法</h2><h3 id="1、基本用法-2"><a href="#1、基本用法-2" class="headerlink" title="1、基本用法"></a>1、基本用法</h3><p>简单来说，for…of是用来遍历键值的方法。</p>
+<pre><code>var k = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;];
+for (v of k) {
+    console.log(v);
+}
+// 输出为&#39;a&#39;,&#39;b&#39;,&#39;c&#39;
+</code></pre><h3 id="2、可以遍历字符串（同for…in方法）"><a href="#2、可以遍历字符串（同for…in方法）" class="headerlink" title="2、可以遍历字符串（同for…in方法）"></a>2、可以遍历字符串（同for…in方法）</h3><pre><code>var k = &#39;abc&#39;;
+for (v of k) {
+    console.log(v);
+}
+// 输出为&#39;a&#39;,&#39;b&#39;,&#39;c&#39;
+</code></pre><h3 id="3、可以使用break终止（同for…in方法）"><a href="#3、可以使用break终止（同for…in方法）" class="headerlink" title="3、可以使用break终止（同for…in方法）"></a>3、可以使用break终止（同for…in方法）</h3><pre><code>var k = [10,20,30];
+for (v of k) {
+    console.log(v);
+    if (v&gt;15) {break;}
+}
+// 输出为10, 20
+</code></pre><h3 id="4、可以支持Map和Set对象遍历"><a href="#4、可以支持Map和Set对象遍历" class="headerlink" title="4、可以支持Map和Set对象遍历"></a>4、可以支持Map和Set对象遍历</h3><pre><code>var k = new Map([[&#39;a&#39;, 1], [&#39;b&#39;, 2], [&#39;c&#39;, 3]]);
+for ([i, v] of k) {
+    console.log(v);
+}
+// 输出为1, 2, 3
+</code></pre><pre><code>var k = new Set([1,1,2,2,3,3]);
+for (v of k) {
+    console.log(v);
+}
+// 输出为1,2,3
+</code></pre><hr>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" data-id="cj5nx12of0002t0wzepcdhtb9" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" class="article-date">
+  Posted by Hexo on <time datetime="2017-06-08T15:22:42.000Z" itemprop="datePublished">2017-06-08</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
   
     <div class="index-page">
     <a href="/2017/06/08/hello-world/" >
@@ -107,7 +209,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://sennalyn.github.io/2017/06/08/hello-world/" data-id="cj5nwlkai0006p0wzc9lvo28g" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/08/hello-world/" data-id="cj5nx12op0006t0wzb58g00gt" class="article-share-link">Share</a>
       
       
     </footer>
