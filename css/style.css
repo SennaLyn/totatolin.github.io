@@ -1485,12 +1485,6 @@ pre .javascript .function {
   line-height: 1.6;
 }
 .widget .list-i {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: box;
-  display: flex;
   -webkit-box-align: center;
   -moz-box-align: center;
   -ms-flex-align: center;
@@ -1520,6 +1514,11 @@ pre .javascript .function {
 }
 .widget .list-i i:hover {
   background: #06d9ff;
+}
+.widget .list-i span {
+  font-size: 20px;
+  margin-bottom: -10px;
+  display: block;
 }
 .widget ul,
 .widget ol {
