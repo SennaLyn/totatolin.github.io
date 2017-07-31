@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JS的算法--排序算法 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="冒泡排序最简单的排序方式，但是运行性能是最差的。冒泡排序比较任何两个相邻的项，如果第一个比第二个大，则交换它们。元素项向上移动至正确的顺序，就好像气泡升至表面一样，因此得名。首先，声明一个名为length的变量，用来存储数组的长度。接着，外循环会从数组的第一位迭代至最后一位，它控制了在数组中经过多少轮排序。然后，内循环从第一位开始，每一轮减少（i+1）位，内循环实际上进行当前项和下一项的比较。如">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS的算法--排序算法">
+<meta property="og:url" content="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="冒泡排序最简单的排序方式，但是运行性能是最差的。冒泡排序比较任何两个相邻的项，如果第一个比第二个大，则交换它们。元素项向上移动至正确的顺序，就好像气泡升至表面一样，因此得名。首先，声明一个名为length的变量，用来存储数组的长度。接着，外循环会从数组的第一位迭代至最后一位，它控制了在数组中经过多少轮排序。然后，内循环从第一位开始，每一轮减少（i+1）位，内循环实际上进行当前项和下一项的比较。如">
+<meta property="og:updated_time" content="2017-07-31T14:16:35.141Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS的算法--排序算法">
+<meta name="twitter:description" content="冒泡排序最简单的排序方式，但是运行性能是最差的。冒泡排序比较任何两个相邻的项，如果第一个比第二个大，则交换它们。元素项向上移动至正确的顺序，就好像气泡升至表面一样，因此得名。首先，声明一个名为length的变量，用来存储数组的长度。接着，外循环会从数组的第一位迭代至最后一位，它控制了在数组中经过多少轮排序。然后，内循环从第一位开始，每一轮减少（i+1）位，内循环实际上进行当前项和下一项的比较。如">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/icon.ico">
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  <link href="css/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/paraiso-light.min.css">
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      
+<header id="header" style="width: 1400px;height: 360px;margin: 0 auto;">
+  <div id="banner"  ></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SennaLyn's Blog</a>
+      </h1>
+      
+        
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a href="/" class="nav-icon">Hexo Blog</a>
+      </nav>
+      <nav id="sub-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">HOME</a>
+        
+          <a class="main-nav-link" href="/archives">ARCHIVES</a>
+        
+          <a class="main-nav-link" href="/about">ABOUT</a>
+        
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://totatolin.github.io"></form>
+      </div>
+    </div>
+  </div>
+
+</header>
+<div class="outer">
+  <section id="main"><article id="post-JS的算法-排序算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JS的算法--排序算法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>最简单的排序方式，但是运行性能是最差的。<br>冒泡排序比较任何两个相邻的项，如果第一个比第二个大，则交换它们。元素项向上移动至正确的顺序，就好像气泡升至表面一样，因此得名。<br>首先，声明一个名为length的变量，用来存储数组的长度。接着，外循环会从数组的第一位迭代至最后一位，它控制了在数组中经过多少轮排序。然后，内循环从第一位开始，每一轮减少（i+1）位，内循环实际上进行当前项和下一项的比较。如果这两项顺序不对（当前项比下一项大），则交换它们，意思是位置为j+1的值将会被换置到位置j处，反之亦然。</p>
+<pre><code>this.bubbleSort = function(array){
+    var length = array.length;
+    var swap = function(index1, index2){
+        var aux = array[index1];
+        array[index1] = array[index2];
+        array[index2] = aux;
+    };
+    for (var i=0; i&lt;length; i++){
+        for (var j=0; j&lt;length-i-1; j++ ){
+            if (array[j] &gt; array[j+1]){
+                swap(j, j+1);
+            }
+        }
+    }
+    console.log(array);
+};
+</code></pre><h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p>选择排序算法是一种原址比较排序算法。选择排序大致的思路是找到数据结构中的最小值并将其放置在第一位，接着找到第二小的值并将其放在第二位，以此类推。<br>首先声明一些将在算法内使用的变量。接着，外循环迭代数组，并控制迭代轮次（数组的第n个值–下一个最小值）。我们假设本迭代轮次的第一个值为数组最小值；如果是，则改变最小值至新最小值。当内循环结束，将得出数组第n小的值。最后，如果该最小值和原最小值不同，则交换其值。</p>
+<pre><code>this.selectionSort = function(){
+    var length = array.length,
+        indexMin;
+    for (var i=0; i&lt;length-1; i++){
+        indexMin = i;
+        for (var j=i; j&lt;length; j++){
+            if(array[indexMin]&gt;array[j]){
+                indexMin = j;
+            }
+        }
+        if (i !== indexMin){
+            swap(i, indexMin);
+        }
+    }
+};
+</code></pre><h3 id="未完待续。。。"><a href="#未完待续。。。" class="headerlink" title="未完待续。。。"></a>未完待续。。。</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cj5s8o12l0009a0wzz0o18jjt" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/07/31/JS的算法-排序算法/" class="article-date">
+  Posted by Hexo on <time datetime="2017-07-31T14:15:19.000Z" itemprop="datePublished">2017-07-31</time>
+</a>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/07/28/JS数据结构学习（三）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">JS数据结构学习（三）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+</div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      Copyright &copy; 2017 Lin Sen<br>
+      <p>
+      Theme by <a href="http//:fiowind.top">Fio</a> | <iframe style="display: inline-block;margin-left: 2px;margin-bottom: -5px;"src="https://ghbtns.com/github-btn.html?user=fiowind&repo=hexo-theme-sunshine&type=star&count=true" frameborder="0" scrolling="0" width="88px" height="20px"></iframe>
+      </p>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">HOME</a>
+  
+    <a href="/archives" class="mobile-nav-link">ARCHIVES</a>
+  
+    <a href="/about" class="mobile-nav-link">ABOUT</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+  </div>
+</body>
+</html>
