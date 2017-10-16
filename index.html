@@ -73,6 +73,245 @@
     
   
     <div class="index-page">
+    <a href="/2017/10/16/JS类/" >
+      <article id="post-JS类" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/16/JS类/">JS类</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="ES5"><a href="#ES5" class="headerlink" title="ES5"></a>ES5</h2><h3 id="构造函数方法"><a href="#构造函数方法" class="headerlink" title="构造函数方法"></a>构造函数方法</h3><pre><code>var Book = function (id, name, price) {
+    var num = 1; // 私有属性（外界访问不到）
+    function checkId () {} // 私有方法（外界访问不到）
+    this.id = id; // 公有属性（外界可以访问）
+    this.copy = function () {} // 公有方法（外界可以访问）
+    this.getNum = function () {} // 特权方法（可以通过该方法访问私有属性）
+}
+Book.prototype = {
+    isJSBook: false, // 共有属性
+    display: function () {} // 共有方法
+}
+Book.isChinese = true; // 类的静态共有属性（对象不能访问）
+Book.resetTime = function () {} // 类的静态共有方法（对象不能访问）
+
+var b = new Book(11, &#39;js&#39;, 50);
+console.log(b.num); // undefined
+console.log(b.isJSBook); // false
+console.log(b.id); // 11
+console.log(b.isChinese); // undefined
+</code></pre><h3 id="Object-create-方法"><a href="#Object-create-方法" class="headerlink" title="Object.create()方法"></a>Object.create()方法</h3><p>用这个方法，“类”就是一个对象，不是函数。</p>
+<pre><code>var Book = {
+    id: 1,
+    checkId: function () {}
+}
+var b = Object.create(Book);
+</code></pre><h3 id="极简主义方法"><a href="#极简主义方法" class="headerlink" title="极简主义方法"></a>极简主义方法</h3><pre><code>
+</code></pre><h2 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h2><pre><code>class Book {
+    #id; // 私有属性
+    #getId() {return #id}; // 私有方法
+    constructor(id, name) {
+        #id = id;
+        this.name = name;
+    }
+}
+</code></pre><h3 id="私有方法的实现"><a href="#私有方法的实现" class="headerlink" title="私有方法的实现"></a>私有方法的实现</h3><p>私有方法是常见需求，但 ES6 不提供，只能通过变通方法模拟实现。<br>一种做法是在命名上加以区别。_bar方法前面的下划线，表示这是一个只限于内部使用的私有方法。但是，这种命名是不保险的，在类的外部，还是可以调用到这个方法。</p>
+<pre><code>class Widget {
+
+  // 公有方法
+  foo (baz) {
+    this._bar(baz);
+  }
+
+  // 私有方法
+  _bar(baz) {
+    return this.snaf = baz;
+  }
+
+  // ...
+}
+</code></pre><p>另一种方法就是索性将私有方法移出模块，因为模块内部的所有方法都是对外可见的。foo是公有方法，内部调用了bar.call(this, baz)。这使得bar实际上成为了当前模块的私有方法。</p>
+<pre><code>class Widget {
+  foo (baz) {
+    bar.call(this, baz);
+  }
+
+  // ...
+}
+
+function bar(baz) {
+  return this.snaf = baz;
+}
+</code></pre><p>还有一种方法是利用Symbol值的唯一性，将私有方法的名字命名为一个Symbol值。bar和snaf都是Symbol值，导致第三方无法获取到它们，因此达到了私有方法和私有属性的效果。</p>
+<pre><code>const bar = Symbol(&#39;bar&#39;);
+const snaf = Symbol(&#39;snaf&#39;);
+
+export default class myClass{
+
+  // 公有方法
+  foo(baz) {
+    this[bar](baz);
+  }
+
+  // 私有方法
+  [bar](baz) {
+    return this[snaf] = baz;
+  }
+
+  // ...
+};
+</code></pre><h3 id="this的指向"><a href="#this的指向" class="headerlink" title="this的指向"></a>this的指向</h3><p>类的方法内部如果含有this，它默认指向类的实例。但是，必须非常小心，一旦单独使用该方法，很可能报错。printName方法中的this，默认指向Logger类的实例。但是，如果将这个方法提取出来单独使用，this会指向该方法运行时所在的环境，因为找不到print方法而导致报错。</p>
+<pre><code>class Logger {
+  printName(name = &#39;there&#39;) {
+    this.print(`Hello ${name}`);
+  }
+
+  print(text) {
+    console.log(text);
+  }
+}
+
+const logger = new Logger();
+const { printName } = logger;
+printName(); // TypeError: Cannot read property &#39;print&#39; of undefined
+</code></pre><p>一个比较简单的解决方法是，在构造方法中绑定this，这样就不会找不到print方法了。</p>
+<pre><code>class Logger {
+  constructor() {
+    this.printName = this.printName.bind(this);
+  }
+
+  // ...
+}
+</code></pre><p>另一种解决方法是使用箭头函数。</p>
+<pre><code>class Logger {
+  constructor() {
+    this.printName = (name = &#39;there&#39;) =&gt; {
+      this.print(`Hello ${name}`);
+    };
+  }
+
+  // ...
+}
+</code></pre><p>还有一种解决方法是使用Proxy，获取方法的时候，自动绑定this。</p>
+<pre><code>function selfish (target) {
+  const cache = new WeakMap();
+  const handler = {
+    get (target, key) {
+      const value = Reflect.get(target, key);
+      if (typeof value !== &#39;function&#39;) {
+        return value;
+      }
+      if (!cache.has(value)) {
+        cache.set(value, value.bind(target));
+      }
+      return cache.get(value);
+    }
+  };
+  const proxy = new Proxy(target, handler);
+  return proxy;
+}
+
+const logger = selfish(new Logger());
+</code></pre><h3 id="Class的取值函数（getter）和存值函数（setter）"><a href="#Class的取值函数（getter）和存值函数（setter）" class="headerlink" title="Class的取值函数（getter）和存值函数（setter）"></a>Class的取值函数（getter）和存值函数（setter）</h3><p>与 ES5 一样，在“类”的内部可以使用get和set关键字，对某个属性设置存值函数和取值函数，拦截该属性的存取行为。prop属性有对应的存值函数和取值函数，因此赋值和读取行为都被自定义了。</p>
+<pre><code>class MyClass {
+  constructor() {
+    // ...
+  }
+  get prop() {
+    return &#39;getter&#39;;
+  }
+  set prop(value) {
+    console.log(&#39;setter: &#39;+value);
+  }
+}
+
+let inst = new MyClass();
+
+inst.prop = 123;
+// setter: 123
+
+inst.prop
+// &#39;getter&#39;
+</code></pre><p>存值函数和取值函数是设置在属性的 Descriptor 对象上的。存值函数和取值函数是定义在html属性的描述对象上面，这与 ES5 完全一致。</p>
+<pre><code>class CustomHTMLElement {
+  constructor(element) {
+    this.element = element;
+  }
+
+  get html() {
+    return this.element.innerHTML;
+  }
+
+  set html(value) {
+    this.element.innerHTML = value;
+  }
+}
+
+var descriptor = Object.getOwnPropertyDescriptor(
+  CustomHTMLElement.prototype, &quot;html&quot;
+);
+
+&quot;get&quot; in descriptor  // true
+&quot;set&quot; in descriptor  // true
+</code></pre><h3 id="Class的静态方法"><a href="#Class的静态方法" class="headerlink" title="Class的静态方法"></a>Class的静态方法</h3><p>类相当于实例的原型，所有在类中定义的方法，都会被实例继承。如果在一个方法前，加上static关键字，就表示该方法不会被实例继承，而是直接通过类来调用，这就称为“静态方法”。Foo类的classMethod方法前有static关键字，表明该方法是一个静态方法，可以直接在Foo类上调用（Foo.classMethod()），而不是在Foo类的实例上调用。如果在实例上调用静态方法，会抛出一个错误，表示不存在该方法。</p>
+<pre><code>class Foo {
+  static classMethod() {
+    return &#39;hello&#39;;
+  }
+}
+
+Foo.classMethod() // &#39;hello&#39;
+
+var foo = new Foo();
+foo.classMethod()
+// TypeError: foo.classMethod is not a function
+</code></pre><p>注意，如果静态方法包含this关键字，这个this指的是类，而不是实例。静态方法bar调用了this.baz，这里的this指的是Foo类，而不是Foo的实例，等同于调用Foo.baz。另外，从这个例子还可以看出，静态方法可以与非静态方法重名。</p>
+<pre><code>class Foo {
+  static bar () {
+    this.baz();
+  }
+  static baz () {
+    console.log(&#39;hello&#39;);
+  }
+  baz () {
+    console.log(&#39;world&#39;);
+  }
+}
+
+Foo.bar() // hello
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cj8u9bsci000gjswztt72s5q7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/10/16/JS类/" class="article-date">
+  Posted by Hexo on <time datetime="2017-10-16T14:10:28.000Z" itemprop="datePublished">2017-10-16</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/07/31/JS的算法-排序算法/" >
       <article id="post-JS的算法-排序算法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -128,7 +367,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cj5s8o12l0009a0wzz0o18jjt" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cj8u9afxd0005jswz0tphmxhi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -182,7 +421,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cj5s8o12d0006a0wz1eejvcuy" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cj8u9afxf0007jswzx9z6fi75" class="article-share-link">Share</a>
       
       
     </footer>
@@ -368,7 +607,7 @@ console.log(setA.subset(setC));
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cj5s8o12a0005a0wzy0b3zxmu" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cj8u9afxs000cjswzj10zi7y6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -531,7 +770,7 @@ console.log(&#39;胜利者：&#39; + winner);
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cj5s8o1230002a0wztiyho06a" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cj8u9afx00004jswz4n54cf10" class="article-share-link">Share</a>
       
       
     </footer>
@@ -598,7 +837,7 @@ console.log( 0 == NaN ) // false
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj5s8o12k0008a0wzxkdhv141" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj8u9afxo000ajswzs0joh82b" class="article-share-link">Share</a>
       
       
     </footer>
@@ -698,7 +937,7 @@ console.log(target.child.name); // target child
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj5s8o12f0007a0wz56rqmj8b" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj8u9afxn0009jswzjdx9zvz0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -796,7 +1035,7 @@ var a = null;
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cj5s8o12u000fa0wzvtx9yvae" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cj8u9afxw000fjswzvcgugtq1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -899,7 +1138,7 @@ var arr = Array.prototype.slice.call(a); // arr === [1,2,3]
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cj5s8o12r000da0wzdevffi7k" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cj8u9afxu000ejswzvh733uh1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1042,7 +1281,7 @@ console.log(numbers.some(isOutsideRange, range))
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" data-id="cj5s8o1250003a0wzs599o50g" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" data-id="cj8u9afwy0003jswz0kylzbux" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1050,117 +1289,6 @@ console.log(numbers.some(isOutsideRange, range))
   <div class="article-meta">
     <a href="/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" class="article-date">
   Posted by Hexo on <time datetime="2017-07-04T14:20:20.000Z" itemprop="datePublished">2017-07-04</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/07/03/原型和原型链/" >
-      <article id="post-原型和原型链" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/03/原型和原型链/">原型和原型链</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><p>使用构造函数来创建对象</p>
-<pre><code>function Person() {
-
-}
-var person1 = new Person()
-</code></pre><p>Person就是一个构造函数，通过new创建了person1对象实例。其实构造函数就和普通函数没有多大区别，首字母大写只是约定俗成，不大写照样可以。关键是调用它的方式——通过new，那么这里又会牵扯到另一个问题，使用new调用后会内部会执行哪些操作。</p>
-<h2 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h2><pre><code>function Person() {
-
-}
-Person.prototype.name = &#39;lin&#39;
-var person1 = new Person()
-console.log(person1.name) // lin
-</code></pre><p>这个并不是构造函数专有，每个函数都会有一个prototype属性，这个属性是一个指针，指向一个对象，记住只有函数才有，并且通过bind()绑定的也没有。prototype指向Person.prototype，Person.prototype就是原型对象，也就是person1的原型。原型对象的好处是可以让所有对象实例共享它所包含的属性和方法。</p>
-<h2 id="proto"><a href="#proto" class="headerlink" title="proto"></a><strong>proto</strong></h2><pre><code>function Person() {
-
-}
-Person.prototype.name = &#39;lin&#39;
-var person1 = new Person()
-console.log(person1.__proto__ === Person.prototype) // true
-</code></pre><p>所以总结可得proto就是用来将对象与该对象的原型相连。</p>
-<pre><code>// instanceof这个操作符只能处理对象(person1)和函数(带.prototype引用的Person)之间的关系
-person1 instanceof Person // true
-
-// isPrototypeOf如果[[prototype]]指向调用此方法的对象，那么这个方法就会返回true
-Person.prototype.isPrototypeOf(person1) // true
-
-// Object.getPrototypeOf这个方法返回[[prototype]]的值，可以获取到一个对象的原型
-Object.getPrototypeOf(person1) === Person.prototype // true
-</code></pre><h2 id="constuctor"><a href="#constuctor" class="headerlink" title="constuctor"></a>constuctor</h2><pre><code>function Person() {
-
-}
-var person1 = new Person()
-Person.prototype.constructor === Person // true
-person1.constructor === Person // true
-</code></pre><h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><p>我们既然探索完了他们的关系，那我们来继续探索一下原型和原型链的奥秘所在，其实原型链就是依托proto和prototype连接起来的。<br>下面代码中在实例属性和原型属性都有一个名为name的属性，但是最后输出来的是实例属性上的值。当我们读取一个属性的时候，如果在实例属性上找到了，就读取它，不会管原型属性上是否还有相同的属性，这其实就是属性屏蔽。即当实例属性和原型属性拥有相同名字的时候，实例属性会屏蔽原型属性，记住只是屏蔽，不会修改，原型属性那个值还在。</p>
-<pre><code>function Person() {
-
-}
-// 原型属性
-Person.prototype.name = &#39;lin&#39;
-
-var person1 = new Person()
-
-// 实例属性
-person1.name = &#39;L&#39;
-
-console.log(person1.name) // L
-</code></pre><p>下面代码中person1实例并没有name属性，但仍然可以输出值，就是在原型上找到的。</p>
-<pre><code>function Person() {
-
-}
-// 原型属性
-Person.prototype.name = &#39;lin&#39;
-
-var person1 = new Person()
-
-console.log(person1.name) // lin
-</code></pre><p>使用方法hasOwnProperty，属性只有存在于实例中才会返回true</p>
-<pre><code>function Person() {
-
-}
-var person1 = new Person()
-
-// 实例属性
-person1.name = &#39;L&#39;
-person1.hasOwnProperty(&#39;name&#39;) // true
-</code></pre><p>in操作符则会遍历所有属性，不管是实例上的，还是原型上的。</p>
-<pre><code>&#39;name&#39; in person1 // true
-</code></pre><p>Object.prototype没有原型，为null，它就是尽头。</p>
-<pre><code>Object.prototype.__proto__ // null
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/03/原型和原型链/" data-id="cj5s8o12p000ca0wzqn4td9pb" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/07/03/原型和原型链/" class="article-date">
-  Posted by Hexo on <time datetime="2017-07-03T14:15:57.000Z" itemprop="datePublished">2017-07-03</time>
 </a>
     
   </div>
