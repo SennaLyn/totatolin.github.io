@@ -73,6 +73,136 @@
     
   
     <div class="index-page">
+    <a href="/2017/10/18/JS类的继承/" >
+      <article id="post-JS类的继承" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/18/JS类的继承/">JS类的继承</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="ES5"><a href="#ES5" class="headerlink" title="ES5"></a>ES5</h2><h3 id="原型继承"><a href="#原型继承" class="headerlink" title="原型继承"></a>原型继承</h3><pre><code>// 声明父类
+function SuperClass () {
+    this.superValue = true;
+}
+// 为父类添加共有方法
+SuperClass.prototype.getSuperValue = function () {
+    return this.superValue;
+}
+// 声明子类
+function SubClass () {
+    this.subValue = false;
+}
+// 继承父类
+SubClass.prototype = new SuperClass();
+// 为子类添加共有方法
+SubClass.prototype.getSubValue = function () {
+    return this.subValue;
+}
+
+var instance = new SubClass();
+console.log(instance.getSuperValue()); // true
+console.log(instance.getSubValue()); // false
+
+console.log(instance instanceof SuperClass); // true
+console.log(instance instanceof SubClass); // true
+console.log(SubClass instanceof SuperClass); // false instanceof只是判断前面的对象是否是后面类（对象）的实例，并不表示两者的继承。
+</code></pre><p>原型继承有两个缺点。其一，由于子类通过其原型prototype对父类实例化，继承了父类。所以说父类中的共有属性要是引用类型，就会在子类中被所有实例共用，因此一个子类的实例更改子类原型从父类构造函数中继承来的共有属性就会直接影响到其他子类。其二，由于子类实现的继承是靠其原型prototype对父类的实例化实现的，因此在创建父类的时候，是无法向父类传递参数的，因而在实例化父类的时候也无法对父类构造函数内的属性进行初始化。</p>
+<pre><code>function SuperClass () {
+    this.books = [&#39;js&#39;, &#39;html&#39;, &#39;css&#39;]
+}
+function SubClass () {}
+SubClass.prototype = new SuperClass();
+var instance1 = new SubClass();
+var instance2 = new SubClass();
+console.log(instance2.books); // [&#39;js&#39;, &#39;html&#39;, &#39;css&#39;]
+instance1.books.push(&#39;blog&#39;);
+console.log(instance2.books); // [&#39;js&#39;, &#39;html&#39;, &#39;css&#39;, &#39;blog&#39;]
+</code></pre><h3 id="构造函数继承"><a href="#构造函数继承" class="headerlink" title="构造函数继承"></a>构造函数继承</h3><pre><code>// 声明父类
+function SuperClass (id) {
+    // 引用类型共有属性
+    this.books = [&#39;js&#39;, &#39;html&#39;, &#39;css&#39;];
+    this.id = id;
+}
+// 父类声明原型方法
+SuperClass.prototype.showBooks = function () {
+    console.log(this.books);
+}
+// 声明子类
+function SubClass (id) {
+    // 继承父类
+    SuperClass.call(this, id);
+}
+// 创建第一个子类的实例
+var instance1 = new SubClass(10);
+// 创建第二个子类的实例
+var instance2 = new SubClass(11);
+
+instance1.books.push(&#39;blog&#39;);
+console.log(instance1.books); // [&#39;js&#39;, &#39;html&#39;, &#39;css&#39;, &#39;blog&#39;]
+console.log(instance1.id); // 10
+console.log(instance2.books); // [&#39;js&#39;, &#39;html&#39;, &#39;css&#39;]
+console.log(instance2.id); // 11
+
+instance1.showBooks); // TypeError
+</code></pre><p>SuperClass.call(this, id);这条语句是构造函数式继承的精华，由于call这个方法可以更改函数的作用环境。因此在子类中，对superClass调用这个方法就是将子类中的变量在父类中执行一遍，由于父类中是给this绑定属性的，因此子类自然也就继承了父类的共有属性。由于这种类型的继承没有涉及原型prototype，所以父类的原型方法自然不会被子类继承，而如果要想被子类继承就必须要放在构造函数中，这样创建出来的每个实例都会单独拥有一份而不能共用，这样就违背了代码复用的原则。为了综合这两种模式的优点，后来有了组合式继承。</p>
+<h3 id="组合继承"><a href="#组合继承" class="headerlink" title="组合继承"></a>组合继承</h3><pre><code>// 声明父类
+function SuperClass (name) {
+    // 值类型共有属性
+    this.name = name;
+    // 引用类型共有属性
+    this.books = [&#39;html&#39;, &#39;css&#39;, &#39;js&#39;];
+}
+// 父类原型共有方法
+SuperClass.prototype.getName = function () {
+    console.log(this.name);
+}
+// 声明子类
+function SubClass (name, time) {
+    // 构造函数式继承父类name属性
+    SuperClass.call(this, name);
+    // 子类中新增共有属性
+    this.time = time;
+}
+// 类式继承 子类型原型继承父类
+SubClass.prototype = new SuperClass();
+// 子类原型方法
+SubClass.prototype.getTime = function () {
+    console.log(this.time);
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cj8x42ok4000dr4wzdbts5jub" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/10/18/JS类的继承/" class="article-date">
+  Posted by Hexo on <time datetime="2017-10-18T14:04:54.000Z" itemprop="datePublished">2017-10-18</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/10/16/JS类/" >
       <article id="post-JS类" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -293,7 +423,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cj8u9bsci000gjswztt72s5q7" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cj8x42ojw0008r4wz0wyu31zp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -367,7 +497,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cj8u9afxd0005jswz0tphmxhi" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cj8x42ojz000ar4wz2k80dj67" class="article-share-link">Share</a>
       
       
     </footer>
@@ -421,7 +551,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cj8u9afxf0007jswzx9z6fi75" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cj8x42ojp0005r4wz4z2v9wzp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -607,7 +737,7 @@ console.log(setA.subset(setC));
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cj8u9afxs000cjswzj10zi7y6" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cj8x42ojk0004r4wz38hy61eu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -770,7 +900,7 @@ console.log(&#39;胜利者：&#39; + winner);
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cj8u9afx00004jswz4n54cf10" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cj8x42ojh0002r4wzyuh7epcb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -837,7 +967,7 @@ console.log( 0 == NaN ) // false
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj8u9afxo000ajswzs0joh82b" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj8x42ojr0007r4wzinq9tnt9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -937,7 +1067,7 @@ console.log(target.child.name); // target child
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj8u9afxn0009jswzjdx9zvz0" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj8x42ojq0006r4wz4zzehf2p" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1035,7 +1165,7 @@ var a = null;
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cj8u9afxw000fjswzvcgugtq1" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cj8x42ok3000cr4wzmsl0m9lz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1138,7 +1268,7 @@ var arr = Array.prototype.slice.call(a); // arr === [1,2,3]
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cj8u9afxu000ejswzvh733uh1" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cj8x42oka000gr4wzdphs7r5a" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1146,149 +1276,6 @@ var arr = Array.prototype.slice.call(a); // arr === [1,2,3]
   <div class="article-meta">
     <a href="/2017/07/18/数组和类数组/" class="article-date">
   Posted by Hexo on <time datetime="2017-07-18T14:44:30.000Z" itemprop="datePublished">2017-07-18</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" >
-      <article id="post-Array方法之fill、filter、every、some、map、reduce" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/04/Array方法之fill、filter、every、some、map、reduce/">Array方法之fill、filter、every、some、map、reduce</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="fill方法"><a href="#fill方法" class="headerlink" title="fill方法"></a>fill方法</h2><p>使用指定值填充数组。</p>
-<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><pre><code>array.fill(value [ , start [ , end]])
-</code></pre><h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p>array：必需。数组对象。<br>value：必需。用于填充数组的值。<br>start：可选。用于填充数组值的起始索引。默认值为0。<br>end：可选。用于填充数组值的结束索引。默认值是this对象的length属性。</p>
-<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>如果start为负，则start被视为length+start，其中，length是数组的长度。如果end为负，则end被视为length+end。</p>
-<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><pre><code>[0, 0, 0].fill(7, 1) // [0, 7, 7]
-[0, 0, 0].fill(7) // [7, 7, 7]
-</code></pre><h2 id="filter方法"><a href="#filter方法" class="headerlink" title="filter方法"></a>filter方法</h2><p>返回数组中的满足回调函数中指定的条件的元素。</p>
-<h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><pre><code>array.filter(callback[, thisArg])
-</code></pre><h3 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h3><p>array：必需。一个数组对象。<br>callback：必需。一个接受最多三个参数的函数。对于数组中的每个元素，filter方法都会调用callback函数一次。<br>thisArg：可选。可在callback函数中为其引用this关键字的对象。如果省略thisArg，则undefined将用作this值。</p>
-<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><p>一个包含回调函数为其返回true的所有值得新数组。如果回调函数为array的所有元素返回false，则新数组的长度为0。</p>
-<h3 id="备注-1"><a href="#备注-1" class="headerlink" title="备注"></a>备注</h3><p>对于数组中的每个元素，filter方法都会调用callback函数一次（采用升序索引顺序）。不为数组中缺少的元素调用该回调函数。除了数组对象外，filter方法可由具有length属性且具有已按数字编制索引的属性名的任何对象使用。</p>
-<h3 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h3><p>不带第三个参数</p>
-<pre><code>var arr = [5, &#39;element&#39;, 10, &#39;the&#39;, true]
-
-var result = arr.filter(
-    function (value) {
-        return (typeof value === &#39;string&#39;)
-    }
-)
-
-console.log(result) // element, the
-</code></pre><p>带第三个参数</p>
-<pre><code>var numbers = [6, 12, &#39;15&#39;, 16, &#39;the&#39;, -12]
-
-var checkNumericRange = function (value) {
-    if (typeof value !== &#39;number&#39;)
-        return false
-    else
-        return value &gt;= this.mininum &amp;&amp; value &lt;= this.maxinum
-}
-
-var obj = { mininum: 10, maxinum: 20 }
-
-var result = numbers.filter(checkNumericRange, obj)
-
-console.log(result) // 12, 16
-</code></pre><h2 id="every方法"><a href="#every方法" class="headerlink" title="every方法"></a>every方法</h2><h3 id="语法-2"><a href="#语法-2" class="headerlink" title="语法"></a>语法</h3><pre><code>array.every(callback[, thisArg])
-</code></pre><h3 id="参数-2"><a href="#参数-2" class="headerlink" title="参数"></a>参数</h3><p>array：必需。一个数组对象。<br>callback：必需。一个接受最多三个参数的函数。every方法会为array中的每个元素调用callback函数，直到callback返回false，或直到到达数组的结尾。<br>thisArg：可选。可在callback函数中为其引用this关键字的对象。如果省略thisArg，则undefined将用作this值。</p>
-<h3 id="返回值-1"><a href="#返回值-1" class="headerlink" title="返回值"></a>返回值</h3><p>如果callback函数为所有数组元素返回true，则为true；否则为false。如果数组没有元素，则every方法将返回true。</p>
-<h3 id="备注-2"><a href="#备注-2" class="headerlink" title="备注"></a>备注</h3><p>every方法会按升序顺序对每个数组元素调用一次callback函数，直到callback函数返回false。如果找到导致callback返回false的元素，则every方法会立即返回false。否则，every方法返回true。</p>
-<h3 id="实例-2"><a href="#实例-2" class="headerlink" title="实例"></a>实例</h3><p>不带第三个参数</p>
-<pre><code>var numbers = [2, 4, 5, 6, 8]
-
-function CheckIfEven(value, index, ar) {
-    console.log(value + &#39;&#39;)
-    if (value % 2 === 0)
-        return true
-    else
-        return false
-}
-
-if (numbers.every(CheckIfEven))
-    console.log(&#39;All are even&#39;)
-else
-    console.log(&#39;Some are not even&#39;)
-
-// 2 4 5 Some are not even
-</code></pre><p>带第三个参数</p>
-<pre><code>var numbers = [10, 15, 19]
-
-var checkNumericRange = function(value) {
-    if (typeof value !== &#39;number&#39;)
-        return false
-    else
-        return value &gt;= this.mininum &amp;&amp; value &lt;= this.maxinum
-}
-
-var obj = { mininum: 10, maxinum: 20 }
-
-if (numbers.every(checkNumericRange, obj))
-    console.log(&#39;All are within range&#39;)
-else 
-    console.log(&#39;Some are not within range&#39;)
-
-// All are within range
-</code></pre><h2 id="some方法"><a href="#some方法" class="headerlink" title="some方法"></a>some方法</h2><h3 id="语法-3"><a href="#语法-3" class="headerlink" title="语法"></a>语法</h3><pre><code>array.some(callback[, thisArg])
-</code></pre><h3 id="参数-3"><a href="#参数-3" class="headerlink" title="参数"></a>参数</h3><p>array：必需。一个数组对象。<br>callback：必需。一个接受最多三个参数的函数。some方法会为array中的每个元素调用callback函数，直到callback返回true，或直到到达数组的结尾<br>thisArg：可选。可在callback函数中为其引用this关键字的对象。如果省略thisArg，则undefined将用作this值。</p>
-<h3 id="返回值-2"><a href="#返回值-2" class="headerlink" title="返回值"></a>返回值</h3><p>如果callback函数为任何数组元素均返回true，则为true；否则为false</p>
-<h3 id="备注-3"><a href="#备注-3" class="headerlink" title="备注"></a>备注</h3><p>some方法会按升序索引顺序对每个数组元素调用callback函数，直到callback函数返回true。如果找到导致callback返回true的元素，则some方法会立即返回true。如果回调不对任何元素返回true，则some方法会返回false。</p>
-<h3 id="实例-3"><a href="#实例-3" class="headerlink" title="实例"></a>实例</h3><p>不带第三个参数</p>
-<pre><code>var numbers = [1, 15, 4, 10, 11, 22]
-
-function CheckIfEven(value, index, ar) {
-    if (value % 2 === 0)
-        return true
-}
-
-var evens = numbers.some(CheckIfEven)
-
-console.log(evens)
-// true
-</code></pre><p>带第三个参数</p>
-<pre><code>var numbers = [6, 12, 16, 22, -12]
-
-var isOutsideRange = function (value) {
-    return value &lt; this.mininum || value &gt; this.maxinum
-}
-
-var range = { mininum: 10, maxinum: 20 }
-
-console.log(numbers.some(isOutsideRange, range))
-// true
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" data-id="cj8u9afwy0003jswz0kylzbux" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" class="article-date">
-  Posted by Hexo on <time datetime="2017-07-04T14:20:20.000Z" itemprop="datePublished">2017-07-04</time>
 </a>
     
   </div>
