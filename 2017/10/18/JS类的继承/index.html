@@ -11,7 +11,7 @@
 <meta property="og:url" content="https://totatolin.github.io/2017/10/18/JS类的继承/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="ES5原型继承// 声明父类 function SuperClass () {     this.superValue = true; } // 为父类添加共有方法 SuperClass.prototype.getSuperValue = function () {     return this.superValue; } // 声明子类 function SubClass () {">
-<meta property="og:updated_time" content="2017-10-19T13:33:28.980Z">
+<meta property="og:updated_time" content="2017-10-20T14:24:54.526Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS类的继承">
 <meta name="twitter:description" content="ES5原型继承// 声明父类 function SuperClass () {     this.superValue = true; } // 为父类添加共有方法 SuperClass.prototype.getSuperValue = function () {     return this.superValue; } // 声明子类 function SubClass () {">
@@ -236,12 +236,89 @@ var mix = function () {
     // 返回目标对象
     return target;
 }
-</code></pre><p>但是在使用的时候需要传入目标对象（）</p>
+</code></pre><p>但是在使用的时候需要传入目标对象（第一个参数–需要继承的对象）。可以将它绑定到原生对象Object上，这样所有的对象就可以拥有这个方法。</p>
+<pre><code>Object.prototype.mix = function () {
+    var i = 0, // 从第一个参数起为被继承的对象
+        len = arguments.length, // 获取参数长度
+        arg; // 缓存参数对象
+    // 遍历被继承的对象
+    for (; i &lt; len; i++) {
+        // 缓存当前对象
+        arg = arguments[i];
+        // 遍历被继承对象中的属性
+        for (var property in arg) {
+            // 将被继承对象中的属性复制到目标对象中
+            this[property] = arg[property];
+        }
+    }
+}
 
+otherBook.mix(book1, book2);
+console.log(otherBook); // Object {color: &#39;blue&#39;, name: &#39;JavaScript&#39;, mix: function}
+</code></pre><h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><p>多态，就是同一个方法多种调用方法。</p>
+<pre><code>function add () {
+    // 获取参数
+    var arg = arguments,
+        // 获取参数长度
+        len = arg.length;
+    switch (len) {
+        // 如果没有参数
+        case 0:
+            return 10;
+        // 如果只有一个参数
+        case 1:
+            return 10 + arg[0];
+        // 如果有两个参数
+        case 2:
+            return arg[0] + arg[1];
+    }
+}
+
+console.log(add()); // 10
+console.log(add(5)); // 15
+console.log(add(6, 7)); // 13
+</code></pre><p>或者转化成类形式，将不同运算方法封装在类内，这样代码更易懂</p>
+<pre><code>function Add () {
+    // 无参数算法
+    function zero () {
+        return 10;
+    }
+    // 一个参数算法
+    function one (num) {
+        return 10 + num;
+    }
+    // 两个参数算法
+    function two (num1, num2) {
+        return num1 + num2;
+    }
+    // 相加共有方法
+    this.add = function () {
+        var arg = arguments,
+        // 获取参数长度
+        len = arg.length;
+        switch (len) {
+            // 如果没有参数
+            case 0:
+                return zero();
+            // 如果只有一个参数
+            case 1:
+                return one(arg[0]);
+            //如果有两个参数
+            case 2:
+                return two(arg[0], arg[1]);
+        }
+    }
+}
+
+var A = new Add();
+console.log(A.add()); // 10
+console.log(A.add(5)); // 15
+console.log(A.add(6, 7)); // 13
+</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cj8yiavki0006towz3wjobhgs" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cj8zzm74l00053gwzme545650" class="article-share-link">Share</a>
       
       
     </footer>

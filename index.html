@@ -239,12 +239,89 @@ var mix = function () {
     // 返回目标对象
     return target;
 }
-</code></pre><p>但是在使用的时候需要传入目标对象（）</p>
+</code></pre><p>但是在使用的时候需要传入目标对象（第一个参数–需要继承的对象）。可以将它绑定到原生对象Object上，这样所有的对象就可以拥有这个方法。</p>
+<pre><code>Object.prototype.mix = function () {
+    var i = 0, // 从第一个参数起为被继承的对象
+        len = arguments.length, // 获取参数长度
+        arg; // 缓存参数对象
+    // 遍历被继承的对象
+    for (; i &lt; len; i++) {
+        // 缓存当前对象
+        arg = arguments[i];
+        // 遍历被继承对象中的属性
+        for (var property in arg) {
+            // 将被继承对象中的属性复制到目标对象中
+            this[property] = arg[property];
+        }
+    }
+}
 
+otherBook.mix(book1, book2);
+console.log(otherBook); // Object {color: &#39;blue&#39;, name: &#39;JavaScript&#39;, mix: function}
+</code></pre><h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><p>多态，就是同一个方法多种调用方法。</p>
+<pre><code>function add () {
+    // 获取参数
+    var arg = arguments,
+        // 获取参数长度
+        len = arg.length;
+    switch (len) {
+        // 如果没有参数
+        case 0:
+            return 10;
+        // 如果只有一个参数
+        case 1:
+            return 10 + arg[0];
+        // 如果有两个参数
+        case 2:
+            return arg[0] + arg[1];
+    }
+}
+
+console.log(add()); // 10
+console.log(add(5)); // 15
+console.log(add(6, 7)); // 13
+</code></pre><p>或者转化成类形式，将不同运算方法封装在类内，这样代码更易懂</p>
+<pre><code>function Add () {
+    // 无参数算法
+    function zero () {
+        return 10;
+    }
+    // 一个参数算法
+    function one (num) {
+        return 10 + num;
+    }
+    // 两个参数算法
+    function two (num1, num2) {
+        return num1 + num2;
+    }
+    // 相加共有方法
+    this.add = function () {
+        var arg = arguments,
+        // 获取参数长度
+        len = arg.length;
+        switch (len) {
+            // 如果没有参数
+            case 0:
+                return zero();
+            // 如果只有一个参数
+            case 1:
+                return one(arg[0]);
+            //如果有两个参数
+            case 2:
+                return two(arg[0], arg[1]);
+        }
+    }
+}
+
+var A = new Add();
+console.log(A.add()); // 10
+console.log(A.add(5)); // 15
+console.log(A.add(6, 7)); // 13
+</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cj8yiavki0006towz3wjobhgs" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cj8zzm74l00053gwzme545650" class="article-share-link">Share</a>
       
       
     </footer>
@@ -483,7 +560,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cj8yiavky000etowz3s6j0b4g" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cj8zzm756000e3gwzc67d5e0g" class="article-share-link">Share</a>
       
       
     </footer>
@@ -557,7 +634,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cj8yiavkj0007towzghp3yqtr" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cj8zzm75b000h3gwzrs0va3od" class="article-share-link">Share</a>
       
       
     </footer>
@@ -611,7 +688,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cj8yiavjw0003towzudpqgpn5" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cj8zzm73e00013gwzw5ls1u99" class="article-share-link">Share</a>
       
       
     </footer>
@@ -797,7 +874,7 @@ console.log(setA.subset(setC));
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cj8yiavko0008towzdnmnkwtx" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cj8zzm758000g3gwzdj3rqd0w" class="article-share-link">Share</a>
       
       
     </footer>
@@ -960,7 +1037,7 @@ console.log(&#39;胜利者：&#39; + winner);
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cj8yiavkp0009towzh1zc0ojw" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cj8zzm70z00003gwzuk7qmt3x" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1027,7 +1104,7 @@ console.log( 0 == NaN ) // false
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj8yiavkr000atowzmscqz5k7" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj8zzm73m00043gwzmit4a9y9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1127,7 +1204,7 @@ console.log(target.child.name); // target child
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj8yiavk90005towz08c2m5qt" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj8zzm757000f3gwzkhyvpl0i" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1225,7 +1302,7 @@ var a = null;
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cj8yiavkt000btowzc6ffngkh" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cj8zzm74t00083gwzw9bxy2dw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1328,7 +1405,7 @@ var arr = Array.prototype.slice.call(a); // arr === [1,2,3]
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cj8yiavl2000gtowzye438z1r" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cj8zzm74o00073gwznju7cgka" class="article-share-link">Share</a>
       
       
     </footer>
