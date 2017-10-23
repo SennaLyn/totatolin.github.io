@@ -73,6 +73,257 @@
     
   
     <div class="index-page">
+    <a href="/2017/10/23/web缓存机制/" >
+      <article id="post-web缓存机制" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/23/web缓存机制/">web缓存机制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="浏览器缓存"><a href="#浏览器缓存" class="headerlink" title="浏览器缓存"></a>浏览器缓存</h2><h3 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h3><h4 id="max-age"><a href="#max-age" class="headerlink" title="max-age"></a>max-age</h4><p>max-age（单位为s）指定设置缓存最大的有效时间，定义的是时间长短。当浏览器向服务器发送请求后，在max-age这段时间里浏览器就不会再向服务器发送请求了。<br>我们来找个资源看下。比如shang.qq.com上的css资源，max-age=2592000，也就是说缓存有效期为2592000秒（也就是30天）。于是在30天内都会使用这个版本的资源，即使服务器上的资源发生了变化，浏览器也不会得到通知。max-age会覆盖掉Expires，后面会有讨论。</p>
+<h4 id="s-maxage"><a href="#s-maxage" class="headerlink" title="s-maxage"></a>s-maxage</h4><p>s-maxage（单位为s）同max-age，只用于共享缓存（比如CDN缓存）。<br>比如，当s-maxage=60时，在这60秒中，即使更新了CDN的内容，浏览器也不会进行请求。也就是说max-age用于普通缓存，而s-maxage用于代理缓存。如果存在s-maxage，则会覆盖掉max-age和Expires header。</p>
+<h4 id="public"><a href="#public" class="headerlink" title="public"></a>public</h4><p>public 指定响应会被缓存，并且在多用户间共享。如果没有指定public还是private，则默认为public。</p>
+<h4 id="private"><a href="#private" class="headerlink" title="private"></a>private</h4><p>private 响应只作为私有的缓存，不能在用户间共享。如果要求HTTP认证，响应会自动设置为private。</p>
+<h4 id="no-cache"><a href="#no-cache" class="headerlink" title="no-cache"></a>no-cache</h4><p>no-cache 指定不缓存响应，表明资源不进行缓存，但是设置了no-cache之后并不代表浏览器不缓存，而是在缓存前要向服务器确认资源是否被更改。因此有的时候只设置no-cache防止缓存还是不够保险，还可以加上private指令，将过期时间设为过去的时间。</p>
+<h4 id="no-store"><a href="#no-store" class="headerlink" title="no-store"></a>no-store</h4><p>no-store 绝对禁止缓存，一看就知道如果用了这个命令当然就是不会进行缓存啦～每次请求资源都要从服务器重新获取。</p>
+<h4 id="must-revalidate"><a href="#must-revalidate" class="headerlink" title="must-revalidate"></a>must-revalidate</h4><p>must-revalidate指定如果页面是过期的，则去服务器进行获取。这个指令并不常用，就不做过多的讨论了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/10/23/web缓存机制/" data-id="cj948buse000jb0wzcn085tan" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/10/23/web缓存机制/" class="article-date">
+  Posted by Hexo on <time datetime="2017-10-23T13:40:13.000Z" itemprop="datePublished">2017-10-23</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
+    <a href="/2017/10/23/IndexedDB存储机制/" >
+      <article id="post-IndexedDB存储机制" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/23/IndexedDB存储机制/">IndexedDB存储机制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="IndexedDB存储与WebSQL存储的比较及选择"><a href="#IndexedDB存储与WebSQL存储的比较及选择" class="headerlink" title="IndexedDB存储与WebSQL存储的比较及选择"></a>IndexedDB存储与WebSQL存储的比较及选择</h2><h3 id="IndexedDB"><a href="#IndexedDB" class="headerlink" title="IndexedDB"></a>IndexedDB</h3><p>IndexedDB 是一种可以让你在用户的浏览器内持久化存储数据的方法。IndexedDB 为生成 Web Application 提供了丰富的查询能力，使我们的应用在在线和离线时都可以正常工作。IndexedDB里数据以对象的形式存储，每个对象都有一个key值索引。IndexedDB里的操作都是事务性的。一种对象存储在一个objectStore里，objectStore就相当于关系数据库里的表。IndexedDB可以有很多objectStore，objectStore里可以有很多对象。每个对象可以用key值获取。</p>
+<p>特点：</p>
+<ol>
+<li>使用NoSQL数据库</li>
+<li>支持事务、游标、索引等数据库操作</li>
+<li>一般浏览器会分配50M-250M不等的内存</li>
+<li>持久化存储，清除浏览器缓存不会被删除（localStorage是会被删除的）</li>
+<li>支持多种数据格式：arrayBuffer、String、Object、Array、File、Blob、ImageData都ok</li>
+<li>不支持跨域，一个域可以有多个数据库</li>
+<li>开发中需要谨记的一个特性：异步操作，换句话说，所有操作都需要在回调函数中完成</li>
+<li>存储空间大，IndexedDB的存储空间比localStorage大得多，一般来说不少于250MB。IE的储存上限是250MB，Chrome和Opera是硬盘剩余空间的某个百分比，Firefox则没有上限。</li>
+</ol>
+<p>浏览器支持：</p>
+<ol>
+<li>IE10+</li>
+<li>Firefox 10+、Chrome 23+、Opera 15+</li>
+<li>iPhone ios8-ios10 safari支持(X5内核不支持)</li>
+<li>Android X5内核支持</li>
+</ol>
+<h3 id="WebSQL"><a href="#WebSQL" class="headerlink" title="WebSQL"></a>WebSQL</h3><p>Web SQL Database API 实际上并不包含在 HTML5 规范之中。它是一个独立的规范，它引入了一套使用 SQL 操作客户端数据库的 API。最新版本的 Chrome，Safari 和 Opera 浏览器都支持 Web SQL Database。</p>
+<p>特点：</p>
+<ol>
+<li>使用MySQL数据库</li>
+<li>相比传统存储，能方便的进行对象存储，能进行大量的数据的处理</li>
+<li>w3c规范已经不再支持</li>
+<li>浏览器支持较差，Web Sql API的主要实现者是Chrome、Safari、Opera、Android、IOS、BB。IE和FF都不支持Web Sql API。</li>
+</ol>
+<h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><ol>
+<li>IndexedDB对浏览器的兼容性比WebSQL更好</li>
+<li>WebSQL已经被w3c规范摒弃</li>
+</ol>
+<h2 id="创建IndexedDB数据库"><a href="#创建IndexedDB数据库" class="headerlink" title="创建IndexedDB数据库"></a>创建IndexedDB数据库</h2><p>调用indexedDB.open方法就可以创建或者打开一个indexedDB。代码中定义了一个myDB对象，在创建indexedDB request的成功毁掉函数中，把request获取的DB对象赋值给了myDB的db属性，这样就可以使用myDB.db来访问创建的indexedDB了。</p>
+<pre><code>function openDB (name) {
+    var request=window.indexedDB.open(name);
+    request.onerror=function(e){
+        console.log(&#39;OPen Error!&#39;);
+    };
+    request.onsuccess=function(e){
+        myDB.db=e.target.result;
+    };
+}
+
+var myDB={
+    name:&#39;test&#39;,
+    version:1,
+    db:null
+};
+openDB(myDB.name);
+</code></pre><p>我们注意到除了onerror和onsuccess，IDBOpenDBRequest还有一个类似回调函数句柄——onupgradeneeded。这个句柄在我们请求打开的数据库的版本号和已经存在的数据库版本号不一致的时候调用。<br>indexedDB.open()方法还有第二个可选参数，数据库版本号，数据库创建的时候默认版本号为1，当我们传入的版本号和数据库当前版本号不一致的时候onupgradeneeded就会被调用，当然我们不能试图打开比当前数据库版本低的version，否则调用的就是onerror了，修改一下刚才例子</p>
+<pre><code>function openDB (name,version) {
+    var version=version || 1;
+    var request=window.indexedDB.open(name,version);
+    request.onerror=function(e){
+        console.log(e.currentTarget.error.message);
+    };
+    request.onsuccess=function(e){
+        myDB.db=e.target.result;
+    };
+    request.onupgradeneeded=function(e){
+        console.log(&#39;DB version changed to &#39;+version);
+    };
+}
+
+var myDB={
+    name:&#39;test&#39;,
+    version:3,
+    db:null
+};
+openDB(myDB.name,myDB.version);
+</code></pre><h2 id="关闭与删除数据库"><a href="#关闭与删除数据库" class="headerlink" title="关闭与删除数据库"></a>关闭与删除数据库</h2><p>关闭数据库可以直接调用数据库对象的close方法</p>
+<pre><code>function closeDB(db){
+    db.close();
+}
+</code></pre><p>删除数据库使用indexedDB对象的deleteDatabase方法</p>
+<pre><code>function deleteDB(name){
+    indexedDB.deleteDatabase(name);
+}
+</code></pre><h2 id="object-store"><a href="#object-store" class="headerlink" title="object store"></a>object store</h2><p>有了数据库后我们自然希望创建一个表用来存储数据，但indexedDB中没有表的概念，而是objectStore，一个数据库中可以包含多个objectStore，objectStore是一个灵活的数据结构，可以存放多种类型数据。也就是说一个objectStore相当于一张表，里面存储的每条数据和一个键相关联。我们可以使用每条记录中的某个指定字段作为键值（keyPath），也可以使用自动生成的递增数字作为键值（keyGenerator），也可以不指定。选择键的类型不同，objectStore可以存储的数据结构也有差异。</p>
+<h3 id="给object-store添加数据"><a href="#给object-store添加数据" class="headerlink" title="给object store添加数据"></a>给object store添加数据</h3><p>因为对新数据的操作都需要在transaction中进行，而transaction又要求指定object store，所以我们只能在创建数据库的时候初始化object store以供后面使用，这正是onupgradeneeded的一个重要作用。这样在创建数据库的时候我们就为其添加了一个名为students的object store，准备一些数据以供添加。</p>
+<pre><code>function openDB (name,version) {
+    var version=version || 1;
+    var request=window.indexedDB.open(name,version);
+    request.onerror=function(e){
+        console.log(e.currentTarget.error.message);
+    };
+    request.onsuccess=function(e){
+        myDB.db=e.target.result;
+    };
+    request.onupgradeneeded=function(e){
+        var db=e.target.result;
+        if(!db.objectStoreNames.contains(&#39;students&#39;)){
+            db.createObjectStore(&#39;students&#39;,{keyPath:&quot;id&quot;});
+        }
+        console.log(&#39;DB version changed to &#39;+version);
+    };
+}
+
+var students=[{ 
+    id:1001, 
+    name:&quot;Byron&quot;, 
+    age:24 
+},{ 
+    id:1002, 
+    name:&quot;Frank&quot;, 
+    age:30 
+},{ 
+    id:1003, 
+    name:&quot;Aaron&quot;, 
+    age:26 
+}];
+
+function addData(db,storeName){
+    var transaction=db.transaction(storeName,&#39;readwrite&#39;); 
+    var store=transaction.objectStore(storeName); 
+
+    for(var i=0;i&lt;students.length;i++){
+        store.add(students[i]);
+    }
+}
+
+
+openDB(myDB.name,myDB.version);
+setTimeout(function(){
+    addData(myDB.db,&#39;students&#39;);
+},1000);
+</code></pre><h3 id="查找数据"><a href="#查找数据" class="headerlink" title="查找数据"></a>查找数据</h3><p>可以调用object store的get方法通过键获取数据，以使用keyPath做键为例</p>
+<pre><code>function getDataByKey(db,storeName,value){
+    var transaction=db.transaction(storeName,&#39;readwrite&#39;); 
+    var store=transaction.objectStore(storeName); 
+    var request=store.get(value); 
+    request.onsuccess=function(e){ 
+        var student=e.target.result; 
+        console.log(student.name); 
+    };
+}
+</code></pre><h3 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h3><p>可以调用object store的put方法更新数据，会自动替换键值相同的记录，达到更新目的，没有相同的则添加，以使用keyPath做键为例</p>
+<pre><code>function updateDataByKey(db,storeName,value){
+    var transaction=db.transaction(storeName,&#39;readwrite&#39;); 
+    var store=transaction.objectStore(storeName); 
+    var request=store.get(value); 
+    request.onsuccess=function(e){ 
+        var student=e.target.result; 
+        student.age=35;
+        store.put(student); 
+    };
+}
+</code></pre><h3 id="删除数据及object-store"><a href="#删除数据及object-store" class="headerlink" title="删除数据及object store"></a>删除数据及object store</h3><p>调用object store的delete方法根据键值删除记录</p>
+<pre><code>function deleteDataByKey(db,storeName,value){
+    var transaction=db.transaction(storeName,&#39;readwrite&#39;); 
+    var store=transaction.objectStore(storeName); 
+    store.delete(value); 
+}
+</code></pre><p>调用object store的clear方法可以清空object store</p>
+<pre><code>function clearObjectStore(db,storeName){
+    var transaction=db.transaction(storeName,&#39;readwrite&#39;); 
+    var store=transaction.objectStore(storeName); 
+    store.clear();
+}
+</code></pre><p>调用数据库实例的deleteObjectStore方法可以删除一个object store，这个就得在onupgradeneeded里面调用了</p>
+<pre><code>if(db.objectStoreNames.contains(&#39;students&#39;)){ 
+    db.deleteObjectStore(&#39;students&#39;); 
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/10/23/IndexedDB存储机制/" data-id="cj9489s56000ib0wzni3h2ham" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/10/23/IndexedDB存储机制/" class="article-date">
+  Posted by Hexo on <time datetime="2017-10-23T13:38:36.000Z" itemprop="datePublished">2017-10-23</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/10/18/JS类的继承/" >
       <article id="post-JS类的继承" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -317,11 +568,160 @@ var A = new Add();
 console.log(A.add()); // 10
 console.log(A.add(5)); // 15
 console.log(A.add(6, 7)); // 13
+</code></pre><h2 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Class可以通过extends关键字实现继承，这比ES5的通过修改原型链实现继承，要清晰方便的多。下面代码定义了一个ColorPoint类，该类通过extends关键字，继承了Point类的所有属性和方法。但是由于没有部署任何代码，所以这两个类完全一样，等于复制了一个Point类。</p>
+<pre><code>class Point {
+}
+
+class ColorPoint extends Point {
+}
+</code></pre><p>下面代码中，constructor方法和toString方法之中，都出现了super关键字，它在这里表示父类的构造函数，用来新建父类的this对象。</p>
+<pre><code>class ColorPoint extends Point {
+  constructor(x, y, color) {
+    super(x, y); // 调用父类的constructor(x, y)
+    this.color = color;
+  }
+
+  toString() {
+    return this.color + &#39; &#39; + super.toString(); // 调用父类的toString()
+  }
+}
+</code></pre><p>子类必须在constructor方法中调用super方法，否则新建实例时会报错。这是因为子类没有自己的this对象，而是继承父类的this对象，然后对其进行加工。如果不调用super方法，子类就得不到this对象。下面代码中，ColorPoint继承了父类Point，但是它的构造函数没有调用super方法，导致新建实例时报错。</p>
+<pre><code>class Point { /* ... */ }
+
+class ColorPoint extends Point {
+  constructor() {
+  }
+}
+
+let cp = new ColorPoint(); // ReferenceError
+</code></pre><p>在子类的构造函数中，只有调用super之后，才可以使用this关键字，否则会报错。这是因为子类实例的构建，是基于对父类实例加工，只有super方法才能返回父类实例。下面代码中，子类的constructor方法没有调用super之前，就使用this关键字，结果报错，而放在super方法之后就是正确的。</p>
+<pre><code>class Point {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+}
+
+class ColorPoint extends Point {
+  constructor(x, y, color) {
+    this.color = color; // ReferenceError
+    super(x, y);
+    this.color = color; // 正确
+  }
+}
+</code></pre><p>父类的静态方法，也会被子类继承。</p>
+<pre><code>class A {
+  static hello() {
+    console.log(&#39;hello world&#39;);
+  }
+}
+
+class B extends A {
+}
+
+B.hello()  // hello world
+</code></pre><h3 id="Object-getPrototypeOf"><a href="#Object-getPrototypeOf" class="headerlink" title="Object.getPrototypeOf()"></a>Object.getPrototypeOf()</h3><p>Object.getPrototypeOf方法可以用来从子类上获取父类。可以使用这个方法判断，一个类是否继承了另一个类。</p>
+<pre><code>Object.getPrototypeOf(ColorPoint) === Point
+// true
+</code></pre><h3 id="super关键字"><a href="#super关键字" class="headerlink" title="super关键字"></a>super关键字</h3><p>super这个关键字，既可以当作函数使用，也可以当作对象使用。在这两种情况下，它的用法完全不同。</p>
+<p>第一种情况，super作为函数调用时，代表父类的构造函数。ES6 要求，子类的构造函数必须执行一次super函数。子类B的构造函数之中的super()，代表调用父类的构造函数。这是必须的，否则 JavaScript 引擎会报错。</p>
+<pre><code>class A {}
+
+class B extends A {
+  constructor() {
+    super();
+  }
+}
+</code></pre><p>super虽然代表了父类A的构造函数，但是返回的是子类B的实例，即super内部的this指的是B，因此super()在这里相当于A.prototype.constructor.call(this)。下面代码中，new.target指向当前正在执行的函数。可以看到，在super()执行时，它指向的是子类B的构造函数，而不是父类A的构造函数。也就是说，super()内部的this指向的是B。</p>
+<pre><code>class A {
+  constructor() {
+    console.log(new.target.name);
+  }
+}
+class B extends A {
+  constructor() {
+    super();
+  }
+}
+new A() // A
+new B() // B
+</code></pre><p>作为函数时，super()只能用在子类的构造函数之中，用在其他地方就会报错。</p>
+<pre><code>class A {}
+
+class B extends A {
+  m() {
+    super(); // 报错
+  }
+}
+</code></pre><p>第二种情况，super作为对象时，在普通方法中，指向父类的原型对象；在静态方法中，指向父类。下面代码中，子类B当中的super.p()，就是将super当作一个对象使用。这时，super在普通方法之中，指向A.prototype，所以super.p()就相当于A.prototype.p()。</p>
+<pre><code>class A {
+  p() {
+    return 2;
+  }
+}
+
+class B extends A {
+  constructor() {
+    super();
+    console.log(super.p()); // 2
+  }
+}
+
+let b = new B();
+</code></pre><p>由于super指向父类的原型对象，所以定义在父类实例上的方法或属性，是无法通过super调用的。p是父类A实例的属性，super.p就引用不到它。</p>
+<pre><code>class A {
+  constructor() {
+    this.p = 2;
+  }
+}
+
+class B extends A {
+  get m() {
+    return super.p;
+  }
+}
+
+let b = new B();
+b.m // undefined
+</code></pre><p>如果属性定义在父类的原型对象上，super就可以取到。</p>
+<pre><code>class A {}
+A.prototype.x = 2;
+
+class B extends A {
+  constructor() {
+    super();
+    console.log(super.x) // 2
+  }
+}
+
+let b = new B();
+</code></pre><p>ES6 规定，通过super调用父类的方法时，super会绑定子类的this。下面代码中，super.print()虽然调用的是A.prototype.print()，但是A.prototype.print()会绑定子类B的this，导致输出的是2，而不是1。也就是说，实际上执行的是super.print.call(this)。</p>
+<pre><code>class A {
+  constructor() {
+    this.x = 1;
+  }
+  print() {
+    console.log(this.x);
+  }
+}
+
+class B extends A {
+  constructor() {
+    super();
+    this.x = 2;
+  }
+  m() {
+    super.print();
+  }
+}
+
+let b = new B();
+b.m() // 2
 </code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cj8zzm74l00053gwzme545650" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cj9486uwi000db0wzi6htabuy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -560,7 +960,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cj8zzm756000e3gwzc67d5e0g" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cj9486uwd000ab0wz56d3ml0h" class="article-share-link">Share</a>
       
       
     </footer>
@@ -634,7 +1034,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cj8zzm75b000h3gwzrs0va3od" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cj9486uw40006b0wzcc1nkh78" class="article-share-link">Share</a>
       
       
     </footer>
@@ -688,7 +1088,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cj8zzm73e00013gwzw5ls1u99" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cj9486uw50007b0wzzy6zsu21" class="article-share-link">Share</a>
       
       
     </footer>
@@ -874,7 +1274,7 @@ console.log(setA.subset(setC));
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cj8zzm758000g3gwzdj3rqd0w" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cj9486uwq000gb0wzrxp1upfi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1037,7 +1437,7 @@ console.log(&#39;胜利者：&#39; + winner);
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cj8zzm70z00003gwzuk7qmt3x" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cj9486uw20005b0wzmp83swnz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1104,7 +1504,7 @@ console.log( 0 == NaN ) // false
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj8zzm73m00043gwzmit4a9y9" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj9486uwa0008b0wzylwns0ae" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1204,7 +1604,7 @@ console.log(target.child.name); // target child
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj8zzm757000f3gwzkhyvpl0i" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj9486uvp0004b0wz7i2brso4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1212,207 +1612,6 @@ console.log(target.child.name); // target child
   <div class="article-meta">
     <a href="/2017/07/19/JS浅拷贝和深拷贝/" class="article-date">
   Posted by Hexo on <time datetime="2017-07-19T15:04:54.000Z" itemprop="datePublished">2017-07-19</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/07/18/null和undefined详解/" >
-      <article id="post-null和undefined详解" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/18/null和undefined详解/">null和undefined详解</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>当声明的变量还未被初始化时，变量的默认值为undefined。<br>null用来表示尚未存在的对象，常用来表示函数企图返回一个不存在的对象。</p>
-<pre><code>undefined == null // true
-undefined === null // false
-</code></pre><p>null是一个表示‘无’的对象，转为数值时为0；undefined是一个表示‘无’的原始值，转为数值时为NaN。</p>
-<pre><code>Number(null) // 0
-5 + null // 5
-
-Number(undefined) // NaN
-5 + undefined // NaN
-</code></pre><p>undefined表示‘缺少值’，就是此处应该有一个值，但是还没有定义。典型用法是：</p>
-<ol>
-<li>变量被声明了，但还没有赋值时，就等于undefined。</li>
-<li>调用函数时，应该提供的参数没有提供，该参数等于undefined。</li>
-<li>对象没有赋值的属性，该属性的值为undefined。</li>
-<li>函数没有返回值时，默认返回undefined。</li>
-</ol>
-<p>null表示‘没有对象’，即该处不应该有值。典型用法是：</p>
-<ol>
-<li>作为函数的参数，表示该函数的参数不是对象。</li>
-<li>作为对象原型链的终点。</li>
-</ol>
-<h2 id="关于赋值"><a href="#关于赋值" class="headerlink" title="关于赋值"></a>关于赋值</h2><p>undefined可以被赋值，而null不可以被赋值：</p>
-<ol>
-<li>undefined、NaN和Infinity都是全局对象window的属性。既然是属性，当然可以赋值。然而这三个属性又是不可写的属性，即它们的内部特性[[writable]]为false，所以赋值无效。</li>
-<li>null是一个字面量，准确地说叫做Null字面量。与true和false类似。它们都属于js的保留字，换句话说它们都是值，与数字值123、字符串值’fttbar’一样，当然不能被赋值了。</li>
-</ol>
-<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>可以给undefined赋值，但是注意不要把它放到全局作用域：</p>
-<pre><code>function foo() {
-    var undefined = 10;
-    console.log(undefined);
-}
-foo(); // 10
-
-function foo() {
-    undefined = 10;
-    console.log(undefined);
-}
-foo(); // undefined
-</code></pre><p>通过Object.getOwnPropertyDescriptor方法，可以证明undefined是window对象的只读属性：</p>
-<pre><code>Object.getOwnPropertyDescriptor(window, &#39;undefined&#39;);
-
-/** 输出：Object {value: undefined, writable: false,
-enumerable: false, configurable: false} **/
-</code></pre><p>在严格模式下，给undefined赋值会报错。因为严格模式下，禁止给对象的只读属性赋值：</p>
-<pre><code>function foo() {
-    &#39;use strict&#39;;
-    undefined = 10;
-    console.log(undefined); // TypeError
-}
-foo();
-</code></pre><p>undefined和null的类型：</p>
-<pre><code>typeof undefined // &#39;undefined&#39;
-typeof null // &#39;object&#39;
-
-// 需要使用复合条件来检测null值得类型
-var a = null;
-(!a &amp;&amp; typeof a === &#39;object&#39;); // true
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cj8zzm74t00083gwzw9bxy2dw" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/07/18/null和undefined详解/" class="article-date">
-  Posted by Hexo on <time datetime="2017-07-18T14:46:43.000Z" itemprop="datePublished">2017-07-18</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/07/18/数组和类数组/" >
-      <article id="post-数组和类数组" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/18/数组和类数组/">数组和类数组</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>在js中，数组可以容纳任何类型的值，可以是字符串、数字、对象，甚至是其他数组（多维数组就是通过这种方式来实现的）：</p>
-<pre><code>var a = [1, &#39;2&#39;, [3]];
-a.length; // 3
-</code></pre><p>对数组声明后即可向其中加入值，不需要预先设定大小：</p>
-<pre><code>var a = [];
-a.length; // 0
-
-a[0] = 1;
-a[1] = &#39;2&#39;;
-a[2] = [3];
-a.length; // 3
-</code></pre><p>使用delete运算符可以将单元从数组中删除，但是删除后，数组的length属性并不会发生变化。</p>
-<p>创建稀疏数组，空白单元为undefined，但仍占有length；字符串键值不占有length;字符串键值能够被强制转换为十进制数字的话，会被当作数字索引来处理：</p>
-<pre><code>var a = [];
-a[0] = 1;
-a[&#39;2&#39;] = 2; // 稀疏数组，仍存在a[1]；该字符串键值可以转换为数字，当作a[2]处理
-a[&#39;foo&#39;] = 3; // 该字符串键值不能转为数字，不占有length
-
-a.length; // 3
-a[0] === 1 
-a[1] === undefined 
-a[2] === 2
-</code></pre><h2 id="类数组"><a href="#类数组" class="headerlink" title="类数组"></a>类数组</h2><p>有时需要将类数组（一组通过数字索引的值）转换为真正的数组，这一般通过数组工具函数（如indexof(..)、concat(..)、forEach(..)等）实现。</p>
-<p>一些DOM查询操作会返回DOM元素列表，它们并非真正意义上的数组，但十分类似；通过arguments对象（类数组）将函数的参数当作列表来访问（从ES6开始已废止）。工具函数slice(..)经常被用于这类转换：</p>
-<pre><code>function foo() {
-    var arr = Array.prototype.slice.call(arguments);
-    arr.push(&#39;bam&#39;);
-    console.log(arr);
-}
-foo(&#39;bar&#39;, &#39;baz&#39;); // [&#39;bar&#39;, &#39;baz&#39;, &#39;bam&#39;]
-</code></pre><p>ES6中的内置工具函数Array.from(..)也能实现同样的功能：</p>
-<pre><code>var arr = Array.from(arguments);
-</code></pre><h2 id="类数组详解"><a href="#类数组详解" class="headerlink" title="类数组详解"></a>类数组详解</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>拥有length属性，其他属性（索引）为非负整数（对象中的索引会被当做字符串来处理，这里你可以当做是个非负整数串来理解）；不具有数组所具有的方法。实际上，只要有length属性，且它的属性值为number类型就行。</p>
-<p>类数组示例：</p>
-<pre><code>var a = {&#39;1&#39;:&#39;gg&#39;,&#39;2&#39;:&#39;love&#39;,&#39;4&#39;:&#39;meimei&#39;,length:5};
-Array.prototype.join.call(a,&#39;+&#39;); // &#39;+gg+love+meimei&#39;
-</code></pre><p>非类数组示例（没有length属性，所以不是类数组）：</p>
-<pre><code>var c = {&#39;1&#39;:2};
-</code></pre><p>js中常见的类数组有arguments对象和DOM方法的返回结果。</p>
-<h3 id="类数组判断"><a href="#类数组判断" class="headerlink" title="类数组判断"></a>类数组判断</h3><pre><code>function isArrayLike(o) {
-    if (o &amp;&amp;                                // o is not null, undefined, etc.
-        typeof o === &#39;object&#39; &amp;&amp;            // o is an object
-        isFinite(o.length) &amp;&amp;               // o.length is a finite number
-        o.length &gt;= 0 &amp;&amp;                    // o.length is non-negative
-        o.length===Math.floor(o.length) &amp;&amp;  // o.length is an integer
-        o.length &lt; 4294967296)              // o.length &lt; 2^32
-        return true;                        // Then o is array-like
-    else
-        return false;                       // Otherwise it is not
-}
-</code></pre><h3 id="类数组表现"><a href="#类数组表现" class="headerlink" title="类数组表现"></a>类数组表现</h3><p>之所以称为‘类数组’，就是因为和‘数组’类似。不能直接使用数组方法，但你可以像使用数组那样，使用类数组。</p>
-<pre><code>var a = {&#39;0&#39;:&#39;a&#39;, &#39;1&#39;:&#39;b&#39;, &#39;2&#39;:&#39;c&#39;, length:3};  // An array-like object
-Array.prototype.join.call(a, &#39;+&#39;&#39;);  // =&gt; &#39;a+b+c&#39;
-Array.prototype.slice.call(a, 0);   // =&gt; [&#39;a&#39;,&#39;b&#39;,&#39;c&#39;]
-Array.prototype.map.call(a, function(x) { 
-    return x.toUpperCase();
-});                                 // =&gt; [&#39;A&#39;,&#39;B&#39;,&#39;C&#39;]
-</code></pre><h3 id="类数组对象转化为数组"><a href="#类数组对象转化为数组" class="headerlink" title="类数组对象转化为数组"></a>类数组对象转化为数组</h3><p>有时候处理类数组对象的最好方法是将其转化为数组，然后就可以直接使用数组方法啦。</p>
-<pre><code>Array.prototype.slice.call(arguments)
-
-var a = {&#39;0&#39;:1,&#39;1&#39;:2,&#39;2&#39;:3,length:3};
-var arr = Array.prototype.slice.call(a); // arr === [1,2,3]
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cj8zzm74o00073gwznju7cgka" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/07/18/数组和类数组/" class="article-date">
-  Posted by Hexo on <time datetime="2017-07-18T14:44:30.000Z" itemprop="datePublished">2017-07-18</time>
 </a>
     
   </div>
