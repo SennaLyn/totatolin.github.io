@@ -73,6 +73,145 @@
     
   
     <div class="index-page">
+    <a href="/2017/10/30/跨域详细梳理/" >
+      <article id="post-跨域详细梳理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/30/跨域详细梳理/">跨域详细梳理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="什么是跨域"><a href="#什么是跨域" class="headerlink" title="什么是跨域"></a>什么是跨域</h2><p>跨域一词从字面意思看，就是跨域名嘛，但实际上跨域的范围绝对不止那么狭隘。具体概念如下：只要协议、域名、端口有任何一个不同，都被当作是不同的域。之所以会产生跨域这个问题呢，其实也很容易想明白，要是随便引用外部文件，不同标签下的页面引用类似的彼此的文件，浏览器很容易懵逼的，安全也得不到保障了就。什么事，都是安全第一嘛。但在安全限制的同时也给注入iframe或是ajax应用上带来了不少麻烦。所以我们要通过一些方法使本域的js能够操作其他域的页面对象或者使其他域的js能操作本域的页面对象（iframe之间）。下面是具体的跨域情况详解：</p>
+<pre><code>URL                      说明       是否允许通信
+http://www.a.com/a.js
+http://www.a.com/b.js     同一域名下   允许
+
+http://www.a.com/lab/a.js
+http://www.a.com/script/b.js 同一域名下不同文件夹 允许
+
+http://www.a.com:8000/a.js
+http://www.a.com/b.js     同一域名，不同端口  不允许
+
+http://www.a.com/a.js
+https://www.a.com/b.js 同一域名，不同协议 不允许
+
+http://www.a.com/a.js
+http://70.32.92.74/b.js 域名和域名对应ip 不允许
+
+http://www.a.com/a.js
+http://script.a.com/b.js 主域相同，子域不同 不允许（cookie这种情况下也不允许访问）
+
+http://www.a.com/a.js
+http://a.com/b.js 同一域名，不同二级域名（同上） 不允许（cookie这种情况下也不允许访问）
+
+http://www.cnblogs.com/a.js
+http://www.a.com/b.js 不同域名 不允许
+</code></pre><h2 id="有src的标签可实现跨域"><a href="#有src的标签可实现跨域" class="headerlink" title="有src的标签可实现跨域"></a>有src的标签可实现跨域</h2><p>所有具有src属性的HTML标签都是可以跨域的，包括<img>, <srcipt>，该方法需要创建一个DOM对象，且只能用于GET方法。</srcipt></p>
+<p>在document.body中append一个具有src属性的HTML标签，src属性值指向的URL会以GET方法被访问，该访问是可以跨域的。其实样式表的<link>标签也是可以跨域的，只要是有src或href的HTML标签都有跨域的能力。</p>
+<p>不同的HTML标签发送HTTP请求的时机不同，例如<img>在更改src属性时就会发送请求，而script, iframe, link[rel=stylesheet]只有在添加到DOM树之后才会发送HTTP请求：</p>
+<pre><code>var img = new Image();
+img.src = &#39;http://some/picture&#39;;        // 发送HTTP请求
+
+var ifr = $(&#39;&lt;iframe&gt;&#39;, {src: &#39;http://b.a.com/bar&#39;});
+$(&#39;body&#39;).append(ifr);                  // 发送HTTP请求
+</code></pre><h2 id="设置document-domain跨域"><a href="#设置document-domain跨域" class="headerlink" title="设置document.domain跨域"></a>设置document.domain跨域</h2><p>相同主域名不同子域名下的页面，可以设置document.domain让它们同域，同域document提供的是页面间的互操作，需要载入iframe页面。</p>
+<pre><code>// 在www.a.com/a.html中
+document.domain = &#39;a.com&#39;;
+var ifr = document.createElement(&#39;iframe&#39;);
+ifr.src = &#39;http://www.script.a.com/b.html&#39;;
+ifr.display = none;
+document.body.appendChild(ifr);
+ifr.onload = function(){
+    var doc = ifr.contentDocument || ifr.contentWindow.document;
+    //在这里操作doc，也就是b.html
+    ifr.onload = null;
+};
+</code></pre><pre><code>// 在www.script.a.com/b.html中
+document.domain = &#39;a.com&#39;;
+</code></pre><h2 id="使用jsonp进行跨域"><a href="#使用jsonp进行跨域" class="headerlink" title="使用jsonp进行跨域"></a>使用jsonp进行跨域</h2><p>jsonp = json（json数据） + padding（填充）<br>其实对于常用性来说，jsonp应该是使用最经常的一种跨域方式了，他不受浏览器兼容性的限制。但是他也有他的局限性，只能发送 GET 请求，需要服务端和前端规定好，写法丑陋。它的原理在于浏览器请求 script 资源不受同源策略限制，并且请求到 script 资源后立即执行。</p>
+<h3 id="浏览器端"><a href="#浏览器端" class="headerlink" title="浏览器端"></a>浏览器端</h3><p>首先全局注册一个callback回调函数，记住这个函数名字（比如：resolveJson），这个函数接受一个参数，参数是期望的到的服务端返回数据，函数的具体内容是处理这个数据。然后动态生成一个 script 标签，src 为：请求资源的地址＋获取函数的字段名＋回调函数名称，这里的获取函数的字段名是要和服务端约定好的，是为了让服务端拿到回调函数名称。（如：www.qiute.com?callbackName=resolveJson）。</p>
+<pre><code>function resolveJosn(result) {
+    console.log(result.name);
+}
+var jsonpScript= document.createElement(&quot;script&quot;);
+jsonpScript.type = &quot;text/javascript&quot;;
+jsonpScript.src = &quot;https://www.qiute.com?callbackName=resolveJson&quot;;
+document.getElementsByTagName(&quot;head&quot;)[0].appendChild(jsonpScript);
+</code></pre><h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><p>在接受到浏览器端 script 的请求之后，从url的query的callbackName获取到回调函数的名字，例子中是resolveJson。然后动态生成一段javascript片段去给这个函数传入参数执行这个函数。比如：</p>
+<pre><code>resolveJson({name: &#39;qiutc&#39;});
+</code></pre><h3 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h3><p>服务端返回这个 script 之后，浏览器端获取到 script 资源，然后会立即执行这个 javascript，也就是上面那个片段。这样就能根据之前写好的回调函数处理这些数据了。</p>
+<h2 id="window-name跨域"><a href="#window-name跨域" class="headerlink" title="window.name跨域"></a>window.name跨域</h2><p>window对象有个name属性，该属性有个特征：即在一个窗口(window)的生命周期内,窗口载入的所有的页面都是共享一个 window.name 的，每个页面对 window.name 都有读写的权限，window.name 是持久存在一个窗口载入过的所有页面中的，并不会因新页面的载入而进行重置。比如有一个www.qiutc.me/a.html页面，需要通过a.html页面里的js来获取另一个位于不同域上的页面www.qiutc.com/data.html里的数据。data.html页面里的代码很简单，就是给当前的window.name设置一个a.html页面想要得到的数据值。data.html里的代码：</p>
+<pre><code>&lt;script&gt;
+window.name = &#39;我是被期望得到的数据&#39;;
+&lt;/script&gt;
+</code></pre><p>那么在 a.html 页面中，我们怎么把 data.html 页面载入进来呢？显然我们不能直接在 a.html 页面中通过改变 window.location 来载入data.html页面（这简直扯蛋）因为我们想要即使 a.html页面不跳转也能得到 data.html 里的数据。答案就是在 a.html 页面中使用一个隐藏的 iframe 来充当一个中间人角色，由 iframe 去获取 data.html 的数据，然后 a.html 再去得到 iframe 获取到的数据。充当中间人的 iframe 想要获取到data.html的通过window.name设置的数据，只需要把这个iframe的src设为www.qiutc.com/data.html就行了。然后a.html想要得到iframe所获取到的数据，也就是想要得到iframe的window.name的值，还必须把这个iframe的src设成跟a.html页面同一个域才行，不然根据前面讲的同源策略，a.html是不能访问到iframe里的window.name属性的。这就是整个跨域过程。</p>
+<pre><code>// a.html
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+  &lt;script&gt;
+    function getData() {
+        var iframe =document.getElementById(&#39;iframe&#39;);
+        iframe.onload = function() {
+            var data = iframe.contentWindow.name; // 得到
+        }
+        iframe.src = &#39;b.html&#39;;  // 这里b和a同源
+    }
+  &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;iframe src=&quot;https://www.qiutc.com/data.html&quot; style=&quot;display:none&quot; onload=&quot;getData()&quot;&lt;/iframe&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><h2 id="window-postMessage跨域"><a href="#window-postMessage跨域" class="headerlink" title="window.postMessage跨域"></a>window.postMessage跨域</h2><p>HTML5允许窗口之间发送消息，浏览器需要支持HTML5，获取窗口句柄后才能相互通信。这是一个安全的跨域通信方法，postMessage(message,targetOrigin)也是HTML5引入的特性。可以给任何一个window发送消息，不论是否同源。第二个参数可以是*但如果你设置了一个URL但不相符，那么该事件不会被分发。看一个普通的使用方式吧：</p>
+<pre><code>// URL: http://a.com/foo
+var win = window.open(&#39;http://b.com/bar&#39;);
+win.postMessage(&#39;Hello, bar!&#39;, &#39;http://b.com&#39;);
+</code></pre><pre><code>// URL: http://b.com/bar
+window.addEventListener(&#39;message&#39;,function(event) {
+    console.log(event.data);
+});
+</code></pre><h2 id="跨域资源共享（CORS）"><a href="#跨域资源共享（CORS）" class="headerlink" title="跨域资源共享（CORS）"></a>跨域资源共享（CORS）</h2><p>服务器设置Access-Control-Allow-OriginHTTP响应头之后，浏览器将会允许跨域请求，浏览器需要支持HTML5，可以支持POST，PUT等方法。前面提到的跨域手段都是某种意义上的Hack， HTML5标准中提出的跨域资源共享（Cross Origin Resource Share，CORS）才是正道。 它支持其他的HTTP方法如PUT, POST等，可以从本质上解决跨域问题。</p>
+<p>例如，从<a href="http://a.com要访问http://b.com的数据，通常情况下Chrome会因跨域请求而报错：" target="_blank" rel="external">http://a.com要访问http://b.com的数据，通常情况下Chrome会因跨域请求而报错：</a></p>
+<pre><code>XMLHttpRequest cannot load http://b.com. No &#39;Access-Control-Allow-Origin&#39; header is present on the requested resource. Origin &#39;http://a.com&#39; is therefore not allowed access.
+</code></pre><p>错误原因是被请求资源没有设置Access-Control-Allow-Origin，所以我们在b.com的服务器中设置这个响应头字段即可：</p>
+<pre><code>Access-Control-Allow-Origin: *              # 允许所有域名访问，或者
+Access-Control-Allow-Origin: http://a.com   # 只允许所有域名访问
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/10/30/跨域详细梳理/" data-id="cj9e9c7lt000k20wzoelobr2n" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/10/30/跨域详细梳理/" class="article-date">
+  Posted by Hexo on <time datetime="2017-10-30T14:06:05.000Z" itemprop="datePublished">2017-10-30</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/10/26/使用DocumentFragment加快DOM渲染速度/" >
       <article id="post-使用DocumentFragment加快DOM渲染速度" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -113,7 +252,7 @@ function CreateFragments(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/26/使用DocumentFragment加快DOM渲染速度/" data-id="cj98koyfc000easwztjza8jji" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/26/使用DocumentFragment加快DOM渲染速度/" data-id="cj9e9c7lq000i20wz2s6tio6d" class="article-share-link">Share</a>
       
       
     </footer>
@@ -169,7 +308,7 @@ function CreateFragments(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/23/web缓存机制/" data-id="cj98koygn000kaswzaajc1b5j" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/23/web缓存机制/" data-id="cj9e9c7ln000g20wzva7cn64r" class="article-share-link">Share</a>
       
       
     </footer>
@@ -372,7 +511,7 @@ setTimeout(function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/23/IndexedDB存储机制/" data-id="cj98koygn000jaswz5i0js1s0" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/23/IndexedDB存储机制/" data-id="cj9e9c7ku000220wz8j3aumas" class="article-share-link">Share</a>
       
       
     </footer>
@@ -788,7 +927,7 @@ b.m() // 2
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cj98koygn000iaswzewcbf5bw" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cj9e9c7lf000b20wz1qpprm15" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1027,7 +1166,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cj98koyfc000aaswzhd7gz7za" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cj9e9c7lh000c20wzyidp793f" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1101,7 +1240,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cj98koyex0007aswztztmd6lh" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cj9e9c7le000a20wz4xkl36u0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1155,7 +1294,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cj98koyex0006aswzmhrjn0cm" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cj9e9c7l6000720wzd196uwpo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1341,7 +1480,7 @@ console.log(setA.subset(setC));
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cj98koyex0004aswz5q3pe62r" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cj9e9c7l5000620wzkm4pxjo8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1504,7 +1643,7 @@ console.log(&#39;胜利者：&#39; + winner);
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cj98koyfc0009aswzsx5qpx3r" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cj9e9c7l3000520wzx71sp28q" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1512,73 +1651,6 @@ console.log(&#39;胜利者：&#39; + winner);
   <div class="article-meta">
     <a href="/2017/07/28/JS数据结构学习（一）/" class="article-date">
   Posted by Hexo on <time datetime="2017-07-28T13:45:44.000Z" itemprop="datePublished">2017-07-28</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/07/28/JS的真值和假值/" >
-      <article id="post-JS的真值和假值" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/28/JS的真值和假值/">JS的真值和假值</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>JS中的每个值都有固定的布尔值，在布尔表达式中评估该值时，该值就会转换为固有的布尔值。这些固有的值称为真值或假值。结果为false的值称为假值，其余的皆为真值。</p>
-<h2 id="假值"><a href="#假值" class="headerlink" title="假值"></a>假值</h2><p>JS中有六个假值：</p>
-<pre><code>false
-null
-undefined
-0
-&#39;&#39; // 空字符串
-NaN
-</code></pre><p>虽然这六个值都为假值，它们之间并非都相等：</p>
-<pre><code>console.log( false == null )      // false
-console.log( false == undefined ) // false
-console.log( false == 0 )         // true
-console.log( false == &#39;&#39; )        // true
-console.log( false == NaN )       // false
-
-console.log( null == undefined ) // true
-console.log( null == 0 )         // false
-console.log( null == &#39;&#39; )        // false
-console.log( null == NaN )       // false
-
-console.log( undefined == 0)   // false
-console.log( undefined == &#39;&#39;)  // false
-console.log( undefined == NaN) // false
-
-console.log( 0 == &#39;&#39; )  // true
-console.log( 0 == NaN ) // false
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj98koyfc0008aswzzoe8b0lo" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/07/28/JS的真值和假值/" class="article-date">
-  Posted by Hexo on <time datetime="2017-07-28T13:39:02.000Z" itemprop="datePublished">2017-07-28</time>
 </a>
     
   </div>

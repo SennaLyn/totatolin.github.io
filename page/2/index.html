@@ -73,6 +73,73 @@
     
   
     <div class="index-page">
+    <a href="/2017/07/28/JS的真值和假值/" >
+      <article id="post-JS的真值和假值" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/28/JS的真值和假值/">JS的真值和假值</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>JS中的每个值都有固定的布尔值，在布尔表达式中评估该值时，该值就会转换为固有的布尔值。这些固有的值称为真值或假值。结果为false的值称为假值，其余的皆为真值。</p>
+<h2 id="假值"><a href="#假值" class="headerlink" title="假值"></a>假值</h2><p>JS中有六个假值：</p>
+<pre><code>false
+null
+undefined
+0
+&#39;&#39; // 空字符串
+NaN
+</code></pre><p>虽然这六个值都为假值，它们之间并非都相等：</p>
+<pre><code>console.log( false == null )      // false
+console.log( false == undefined ) // false
+console.log( false == 0 )         // true
+console.log( false == &#39;&#39; )        // true
+console.log( false == NaN )       // false
+
+console.log( null == undefined ) // true
+console.log( null == 0 )         // false
+console.log( null == &#39;&#39; )        // false
+console.log( null == NaN )       // false
+
+console.log( undefined == 0)   // false
+console.log( undefined == &#39;&#39;)  // false
+console.log( undefined == NaN) // false
+
+console.log( 0 == &#39;&#39; )  // true
+console.log( 0 == NaN ) // false
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj9e9c7ld000920wzbfwrojkw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/07/28/JS的真值和假值/" class="article-date">
+  Posted by Hexo on <time datetime="2017-07-28T13:39:02.000Z" itemprop="datePublished">2017-07-28</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/07/19/JS浅拷贝和深拷贝/" >
       <article id="post-JS浅拷贝和深拷贝" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -154,7 +221,7 @@ console.log(target.child.name); // target child
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj98koyex0005aswziochzq03" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj9e9c7lb000820wzj36kr1ec" class="article-share-link">Share</a>
       
       
     </footer>
@@ -252,7 +319,7 @@ var a = null;
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cj98koyfc000daswzj6wgrycx" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cj9e9c7lm000f20wztgbnl9iy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -355,7 +422,7 @@ var arr = Array.prototype.slice.call(a); // arr === [1,2,3]
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cj98koyfc000faswzbr4uc9es" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cj9e9c7ls000j20wzsphgeda4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -498,7 +565,7 @@ console.log(numbers.some(isOutsideRange, range))
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" data-id="cj98koyeh0001aswz6dyj8msw" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" data-id="cj9e9c7kl000020wzm5m7wf2m" class="article-share-link">Share</a>
       
       
     </footer>
@@ -609,7 +676,7 @@ person1.hasOwnProperty(&#39;name&#39;) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/03/原型和原型链/" data-id="cj98koyfs000haswzx1skqqvn" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/03/原型和原型链/" data-id="cj9e9c7lp000h20wzd0e9638h" class="article-share-link">Share</a>
       
       
     </footer>
@@ -656,7 +723,7 @@ person1.hasOwnProperty(&#39;name&#39;) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/隐式类型转换的方式/" data-id="cj98koyfc000gaswzfxbasv1h" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/隐式类型转换的方式/" data-id="cj9e9c7lv000l20wzr7ege8k7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -716,7 +783,7 @@ document.write(typeof(num)); // number
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/JS中的一元运算符/" data-id="cj98koyeh0000aswzw5yvzfdn" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/JS中的一元运算符/" data-id="cj9e9c7kr000120wz3hk81c8c" class="article-share-link">Share</a>
       
       
     </footer>
@@ -882,7 +949,7 @@ var vm = new Vue({
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/Object-defineProperty用法/" data-id="cj98koyfc000baswzmwl98wja" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/Object-defineProperty用法/" data-id="cj9e9c7li000d20wz2j8pz6z7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -936,7 +1003,7 @@ alert(color2);    //  yellow,black
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/" data-id="cj98koyex0002aswz4hj151q9" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/" data-id="cj9e9c7ky000320wz94opx1l5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -944,108 +1011,6 @@ alert(color2);    //  yellow,black
   <div class="article-meta">
     <a href="/2017/06/10/Array方法之slice和splice/" class="article-date">
   Posted by Hexo on <time datetime="2017-06-10T14:28:48.000Z" itemprop="datePublished">2017-06-10</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" >
-      <article id="post-JS中的三种遍历方法：forEach-for-in-for-of" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/">JS中的三种遍历方法：forEach,for...in,for...of</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="forEach方法"><a href="#forEach方法" class="headerlink" title="forEach方法"></a>forEach方法</h2><h3 id="1、基本用法"><a href="#1、基本用法" class="headerlink" title="1、基本用法"></a>1、基本用法</h3><p>相比于传统的JS遍历方法简单了许多，但是不足处在于不能中断循环，不能使用break语句或使用return语句。</p>
-<pre><code>[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;].forEach((v) =&gt; {
-    console.log(v);
-})
-// 输出&#39;a&#39;, &#39;b&#39;, &#39;c&#39;
-</code></pre><hr>
-<h2 id="for…in方法"><a href="#for…in方法" class="headerlink" title="for…in方法"></a>for…in方法</h2><h3 id="1、基本用法-1"><a href="#1、基本用法-1" class="headerlink" title="1、基本用法"></a>1、基本用法</h3><p>简单来说，for…in是用来遍历键名的方法。</p>
-<pre><code>var k = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;];
-for (i in k) {
-    console.log(i);
-}
-// 输出为&#39;0&#39;,&#39;1&#39;,&#39;2&#39;，且为字符串
-</code></pre><h3 id="2、可以遍历字符串（同for…of方法）"><a href="#2、可以遍历字符串（同for…of方法）" class="headerlink" title="2、可以遍历字符串（同for…of方法）"></a>2、可以遍历字符串（同for…of方法）</h3><pre><code>var k = &#39;abc&#39;;
-for (i in k) {
-    console.log(k[i]);
-}
-// 输出为&#39;a&#39;,&#39;b&#39;,&#39;c&#39;
-</code></pre><h3 id="3、可以使用break终止（同for…of方法）"><a href="#3、可以使用break终止（同for…of方法）" class="headerlink" title="3、可以使用break终止（同for…of方法）"></a>3、可以使用break终止（同for…of方法）</h3><pre><code>var k = [10,20,30];
-for (i in k) {
-    console.log(k[i]);
-    if (k[i]&gt;15) {break;}
-}
-// 输出为10, 20
-</code></pre><h3 id="4、可以遍历对象"><a href="#4、可以遍历对象" class="headerlink" title="4、可以遍历对象"></a>4、可以遍历对象</h3><pre><code>var k = {
-  &#39;a&#39;: &#39;x&#39;,
-  &#39;b&#39;: &#39;y&#39;,
-  &#39;c&#39;: &#39;z&#39;
-};
-for (i in k) {
-    console.log(k[i]);
-}
-// 输出为&#39;x&#39;, &#39;y&#39;, &#39;z&#39;
-</code></pre><hr>
-<h2 id="for…of方法"><a href="#for…of方法" class="headerlink" title="for…of方法"></a>for…of方法</h2><h3 id="1、基本用法-2"><a href="#1、基本用法-2" class="headerlink" title="1、基本用法"></a>1、基本用法</h3><p>简单来说，for…of是用来遍历键值的方法。</p>
-<pre><code>var k = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;];
-for (v of k) {
-    console.log(v);
-}
-// 输出为&#39;a&#39;,&#39;b&#39;,&#39;c&#39;
-</code></pre><h3 id="2、可以遍历字符串（同for…in方法）"><a href="#2、可以遍历字符串（同for…in方法）" class="headerlink" title="2、可以遍历字符串（同for…in方法）"></a>2、可以遍历字符串（同for…in方法）</h3><pre><code>var k = &#39;abc&#39;;
-for (v of k) {
-    console.log(v);
-}
-// 输出为&#39;a&#39;,&#39;b&#39;,&#39;c&#39;
-</code></pre><h3 id="3、可以使用break终止（同for…in方法）"><a href="#3、可以使用break终止（同for…in方法）" class="headerlink" title="3、可以使用break终止（同for…in方法）"></a>3、可以使用break终止（同for…in方法）</h3><pre><code>var k = [10,20,30];
-for (v of k) {
-    console.log(v);
-    if (v&gt;15) {break;}
-}
-// 输出为10, 20
-</code></pre><h3 id="4、可以支持Map和Set对象遍历"><a href="#4、可以支持Map和Set对象遍历" class="headerlink" title="4、可以支持Map和Set对象遍历"></a>4、可以支持Map和Set对象遍历</h3><pre><code>var k = new Map([[&#39;a&#39;, 1], [&#39;b&#39;, 2], [&#39;c&#39;, 3]]);
-for ([i, v] of k) {
-    console.log(v);
-}
-// 输出为1, 2, 3
-</code></pre><pre><code>var k = new Set([1,1,2,2,3,3]);
-for (v of k) {
-    console.log(v);
-}
-// 输出为1,2,3
-</code></pre><hr>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" data-id="cj98koyex0003aswz4ptfsgr0" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" class="article-date">
-  Posted by Hexo on <time datetime="2017-06-08T15:22:42.000Z" itemprop="datePublished">2017-06-08</time>
 </a>
     
   </div>
