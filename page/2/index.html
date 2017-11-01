@@ -73,6 +73,169 @@
     
   
     <div class="index-page">
+    <a href="/2017/07/28/JS数据结构学习（一）/" >
+      <article id="post-JS数据结构学习（一）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/28/JS数据结构学习（一）/">JS数据结构学习（一）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><p>是一种遵从后进先出（LIFO）原则的有序集合。新添加的或待删除的元素都保存在栈的末尾，称作栈顶，另一端就叫栈底。在栈里，新元素都靠近栈顶，旧元素都接近栈底。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>声明栈的方法：</p>
+<ol>
+<li>push():添加一个（或多个）新元素到栈顶。</li>
+<li>pop():移除栈顶的元素，同时返回被移除的元素。</li>
+<li>peek():返回栈顶的元素，不对栈做任何修改（这个方法不会移除栈顶的元素，仅仅返回它）。</li>
+<li>isEmpty():如果栈里没有任何元素就返回true，否则返回false。</li>
+<li>clear():移除栈里的所有元素。</li>
+<li>size():返回栈里的元素个数。这个方法和数组的length属性很类似。</li>
+</ol>
+<pre><code>function Stack() {
+    var items = [];
+
+    this.push = function(element) {
+        items.push(element);
+    };
+
+    this.pop() = function() {
+        return items.pop();
+    };
+
+    this.peek = function() {
+        return items[items.length-1];
+    };
+
+    this.isEmpty = function() {
+        return items.length === 0;
+    };
+
+    this.clear = function() {
+        items = [];
+    };
+
+    this.size = function() {
+        return items.length;
+    }
+}
+</code></pre><h2 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h2><p>队列是遵循先进先出（FIFO）原则的一组有序的项。队列在尾部添加新元素，并从顶部移除元素。最新添加的元素必须排在队列的末尾。</p>
+<h3 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h3><p>声明队列的方法：</p>
+<ol>
+<li>enqueue(element(s)):向队列尾部添加一个（或多个）新的项。</li>
+<li>dequeue():移除队列的第一（即排在队列最前面的）项，并返回被移除的元素。</li>
+<li>front():返回队列中第一个元素。队列不做任何变动。</li>
+<li>isEmpty():如果队列中不包含任何元素，返回true，否则返回false。</li>
+<li>clear():移除栈里的所有元素。</li>
+<li>size():返回队列包含的元素个数，与数组的length属性类似。</li>
+</ol>
+<pre><code>function Queue() {
+    var items = [];
+
+    this.enqueue = function(element) {
+        items.push(element);
+    };
+
+    this.dequeue = function() {
+        return items.shift();
+    };
+
+    this.front = function() {
+        return items[0];
+    };
+
+    this.isEmpty = function() {
+        return items.length === 0;
+    };
+
+    this.clear = function() {
+        items = [];
+    };
+
+    this.size = function() {
+        return items.length;
+    }
+}
+</code></pre><h3 id="优先队列"><a href="#优先队列" class="headerlink" title="优先队列"></a>优先队列</h3><p>队列实现的一个修改版，元素的添加和移除是基于优先级的。实现一个优先队列，有两种选项：设置优先级，然后在正确的位置添加元素；或者用入列操作添加元素，然后按照优先级移除它们。</p>
+<pre><code>function PriorityQueue() {
+    var items = [];
+
+    function QueueElement(element, priority) {
+        this.element = element;
+        this.priority = priority;
+    }
+
+    this.enqueue = function(element, priority) {
+        var queueElement = new QueueElement(element, priority);
+        if(this.isEmpty()) {
+            items.push(queueElement);
+        } else {
+            var added = false;
+            for(var i=0;i&lt;items.length;i++) {
+                if(queueElement.priority &lt; items[i].priority) {
+                    items.splice(i, 0, queueElement);
+                    added = true;
+                    break;
+                }
+            }
+            if(!added) {
+                items.push(queueElement);
+            }
+        }
+    }
+}
+</code></pre><h3 id="循环队列–击鼓传花"><a href="#循环队列–击鼓传花" class="headerlink" title="循环队列–击鼓传花"></a>循环队列–击鼓传花</h3><p>还有另一个修改版的队列实现，就是循环队列。循环队列的一个例子就是击鼓传花游戏。在这个游戏中，孩子们围成一个圆圈，把花尽快地传递给旁边的人。某一时刻传花停止，这个时候花在谁手里，谁就退出圆圈结束游戏。重复这个过程，直到只剩一个孩子（胜者）。</p>
+<pre><code>function hotPotato (nameList, num){
+    var queue = new Queue(); // {1}
+    for (var i=0; i&lt;nameList.length; i++){
+        queue.enqueue(nameList[i]); // {2}
+    }
+    var eliminated = &#39;&#39;;
+    while (queue.size() &gt; 1){
+        for (var i=0; i&lt;num; i++){
+            queue.enqueue(queue.dequeue()); // {3}
+        }
+        eliminated = queue.dequeue();// {4}
+    console.log(eliminated + &#39;在击鼓传花游戏中被淘汰。&#39;);
+    }
+    return queue.dequeue();// {5}
+}
+var names = [&#39;John&#39;,&#39;Jack&#39;,&#39;Camila&#39;,&#39;Ingrid&#39;,&#39;Carl&#39;];
+var winner = hotPotato(names, 7);
+console.log(&#39;胜利者：&#39; + winner);
+</code></pre><h2 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h2><p>链表存储有序的元素集合，但不同于数组，链表中的元素在内存中并不是连续放置的。每个元素由一个存储元素本身的节点和一个指向下一个元素的引用（也称指针或链接）组成。相对于传统的数组，链表的一个好处在于，添加或移除元素的时候不需要移动其他元素。然而，链表需要使用指针，因此实现链表时需要额外注意。数组的另一个细节是可以直接访问任何位置的任何元素，而要想访问链表中间的一个元素，需要从起点开始迭代列表直到找到所需的元素。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cj9h4eqo40003n8wz90n8es0m" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/07/28/JS数据结构学习（一）/" class="article-date">
+  Posted by Hexo on <time datetime="2017-07-28T13:45:44.000Z" itemprop="datePublished">2017-07-28</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/07/28/JS的真值和假值/" >
       <article id="post-JS的真值和假值" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -121,7 +284,7 @@ console.log( 0 == NaN ) // false
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj9e9c7ld000920wzbfwrojkw" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj9h4eqp1000bn8wzlokmeiid" class="article-share-link">Share</a>
       
       
     </footer>
@@ -221,7 +384,7 @@ console.log(target.child.name); // target child
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj9e9c7lb000820wzj36kr1ec" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj9h4eqor0007n8wzsfqi7gv3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -319,7 +482,7 @@ var a = null;
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cj9e9c7lm000f20wztgbnl9iy" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cj9h4eqpg000in8wzkozob5nh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -422,7 +585,7 @@ var arr = Array.prototype.slice.call(a); // arr === [1,2,3]
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cj9e9c7ls000j20wzsphgeda4" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cj9h4eqpj000kn8wz9epdpbzk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -565,7 +728,7 @@ console.log(numbers.some(isOutsideRange, range))
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" data-id="cj9e9c7kl000020wzm5m7wf2m" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" data-id="cj9h4eqn70001n8wzmpqe1gby" class="article-share-link">Share</a>
       
       
     </footer>
@@ -676,7 +839,7 @@ person1.hasOwnProperty(&#39;name&#39;) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/03/原型和原型链/" data-id="cj9e9c7lp000h20wzd0e9638h" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/03/原型和原型链/" data-id="cj9h4eqph000jn8wz5c2u41jz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -723,7 +886,7 @@ person1.hasOwnProperty(&#39;name&#39;) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/隐式类型转换的方式/" data-id="cj9e9c7lv000l20wzr7ege8k7" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/隐式类型转换的方式/" data-id="cj9h4eqp5000dn8wz8g125e4n" class="article-share-link">Share</a>
       
       
     </footer>
@@ -783,7 +946,7 @@ document.write(typeof(num)); // number
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/JS中的一元运算符/" data-id="cj9e9c7kr000120wz3hk81c8c" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/JS中的一元运算符/" data-id="cj9h4eqoh0005n8wz992mobhn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -949,7 +1112,7 @@ var vm = new Vue({
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/Object-defineProperty用法/" data-id="cj9e9c7li000d20wz2j8pz6z7" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/Object-defineProperty用法/" data-id="cj9h4eqpk000ln8wz59smexce" class="article-share-link">Share</a>
       
       
     </footer>
@@ -957,60 +1120,6 @@ var vm = new Vue({
   <div class="article-meta">
     <a href="/2017/06/27/Object-defineProperty用法/" class="article-date">
   Posted by Hexo on <time datetime="2017-06-27T13:17:54.000Z" itemprop="datePublished">2017-06-27</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/06/10/Array方法之slice和splice/" >
-      <article id="post-Array方法之slice和splice" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/10/Array方法之slice和splice/">Array方法之slice和splice</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h2><p>slice是指定在一个数组中的元素创建一个新的数组，即原数组不会变</p>
-<pre><code>var color = new Array(&#39;red&#39;, &#39;blue&#39;, &#39;yellow&#39;, &#39;black&#39;);
-var color2 = color.slice(1,2);
-alert(color); //输出 red,blue,yellow,black
-alert(color2); //输出 blue;注意：这里只有第二项一个值
-</code></pre><h2 id="splice"><a href="#splice" class="headerlink" title="splice"></a>splice</h2><p>splice是js中数组功能最强大的方法，它能够实现对数组元素的删除、插入、替换操作，返回值为被操作的值。</p>
-<p>splice删除：color.splice(1,2)(删除color中的1、2两项)；</p>
-<p>splice插入：color.splice(1,0,’brown’,’pink’)(在color键值为1的元素前插入两个值)</p>
-<p>splice替换：color.splice(1,2,’brown’,’pink’)(在color中替换1、2元素)</p>
-<pre><code>var color = new Array(&#39;red&#39;,&#39;blue&#39;,&#39;yellow&#39;,&#39;black&#39;);
-var color2 = color.splice(2,3,&#39;brown&#39;,&#39;pink&#39;);
-alert(color);     //  red,blue,brown,pink
-alert(color2);    //  yellow,black
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/" data-id="cj9e9c7ky000320wz94opx1l5" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/06/10/Array方法之slice和splice/" class="article-date">
-  Posted by Hexo on <time datetime="2017-06-10T14:28:48.000Z" itemprop="datePublished">2017-06-10</time>
 </a>
     
   </div>

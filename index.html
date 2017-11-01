@@ -73,6 +73,69 @@
     
   
     <div class="index-page">
+    <a href="/2017/11/01/ES7新特性/" >
+      <article id="post-ES7新特性" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/01/ES7新特性/">ES7新特性</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="Array-prototype-includes"><a href="#Array-prototype-includes" class="headerlink" title="Array.prototype.includes"></a>Array.prototype.includes</h2><p>该方法用来检测一个数组中是否包含某个元素，之前使用indexOf来实现，但是它只能返回元素在数组中的位置或者-1，而使用该方法可以返回Boolean值来进行判断。</p>
+<h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><p>在ES7中，可以使用includes新特性来直接判断数组中是否含有某个元素，includes()方法可以返回布尔值。</p>
+<pre><code>let arr = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;];
+
+arr.includes(&#39;b&#39;); // true
+arr.includes(&#39;d&#39;); // false
+</code></pre><h3 id="在字符串中使用"><a href="#在字符串中使用" class="headerlink" title="在字符串中使用"></a>在字符串中使用</h3><pre><code>let words = &#39;abc&#39;;
+
+words.includes(&#39;ab&#39;); // true
+words.includes(&#39;d&#39;); // false
+</code></pre><h2 id="幂运算"><a href="#幂运算" class="headerlink" title="幂运算"></a>幂运算</h2><p>是指乘方运算的结果。2的3次幂相当于2 <em> 2 </em> 2 = 8。幂运算大多数是为了开发一些数学计算，对于3D，VR，SVG还有数据可视化非常有用。之前的话可以自定义递归函数来实现，或者通过Math.pow()方法。在ES7中，幂运算已经被集成到了运算符中，该符号为：**。</p>
+<pre><code>let a = 7 ** 12
+let b = 2 ** 7
+console.log(a === Math.pow(7,12)) // true
+console.log(b === Math.pow(2,7)) // true
+
+let a = 7
+a **= 12
+let b = 2
+b **= 7
+console.log(a === Math.pow(7,12)) // true
+console.log(b === Math.pow(2,7)) // true
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/11/01/ES7新特性/" data-id="cj9h4eqll0000n8wzkceeyz6f" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/11/01/ES7新特性/" class="article-date">
+  Posted by Hexo on <time datetime="2017-11-01T14:10:51.000Z" itemprop="datePublished">2017-11-01</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/10/30/跨域详细梳理/" >
       <article id="post-跨域详细梳理" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -193,7 +256,7 @@ Access-Control-Allow-Origin: http://a.com   # 只允许所有域名访问
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/30/跨域详细梳理/" data-id="cj9e9c7lt000k20wzoelobr2n" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/30/跨域详细梳理/" data-id="cj9h4eqpb000fn8wz9q193yxp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -252,7 +315,7 @@ function CreateFragments(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/26/使用DocumentFragment加快DOM渲染速度/" data-id="cj9e9c7lq000i20wz2s6tio6d" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/26/使用DocumentFragment加快DOM渲染速度/" data-id="cj9h4eqp3000cn8wzczffqcyf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -308,7 +371,7 @@ function CreateFragments(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/23/web缓存机制/" data-id="cj9e9c7ln000g20wzva7cn64r" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/23/web缓存机制/" data-id="cj9h4eqp0000an8wzmhceicua" class="article-share-link">Share</a>
       
       
     </footer>
@@ -511,7 +574,7 @@ setTimeout(function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/23/IndexedDB存储机制/" data-id="cj9e9c7ku000220wz8j3aumas" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/23/IndexedDB存储机制/" data-id="cj9h4eqo50004n8wztfc15hpn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -927,7 +990,7 @@ b.m() // 2
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cj9e9c7lf000b20wz1qpprm15" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cj9h4eqp8000en8wzez14tva2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1166,7 +1229,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cj9e9c7lh000c20wzyidp793f" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cj9h4eqpm000mn8wz0ka4qx3f" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1240,7 +1303,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cj9e9c7le000a20wz4xkl36u0" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cj9h4eqpf000hn8wznboltt0p" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1294,7 +1357,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cj9e9c7l6000720wzd196uwpo" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cj9h4eqow0008n8wz15q4yti5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1480,7 +1543,7 @@ console.log(setA.subset(setC));
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cj9e9c7l5000620wzkm4pxjo8" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cj9h4eqoy0009n8wztjqsgwga" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1488,169 +1551,6 @@ console.log(setA.subset(setC));
   <div class="article-meta">
     <a href="/2017/07/28/JS数据结构学习（二）/" class="article-date">
   Posted by Hexo on <time datetime="2017-07-28T13:47:01.000Z" itemprop="datePublished">2017-07-28</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/07/28/JS数据结构学习（一）/" >
-      <article id="post-JS数据结构学习（一）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/28/JS数据结构学习（一）/">JS数据结构学习（一）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><p>是一种遵从后进先出（LIFO）原则的有序集合。新添加的或待删除的元素都保存在栈的末尾，称作栈顶，另一端就叫栈底。在栈里，新元素都靠近栈顶，旧元素都接近栈底。</p>
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>声明栈的方法：</p>
-<ol>
-<li>push():添加一个（或多个）新元素到栈顶。</li>
-<li>pop():移除栈顶的元素，同时返回被移除的元素。</li>
-<li>peek():返回栈顶的元素，不对栈做任何修改（这个方法不会移除栈顶的元素，仅仅返回它）。</li>
-<li>isEmpty():如果栈里没有任何元素就返回true，否则返回false。</li>
-<li>clear():移除栈里的所有元素。</li>
-<li>size():返回栈里的元素个数。这个方法和数组的length属性很类似。</li>
-</ol>
-<pre><code>function Stack() {
-    var items = [];
-
-    this.push = function(element) {
-        items.push(element);
-    };
-
-    this.pop() = function() {
-        return items.pop();
-    };
-
-    this.peek = function() {
-        return items[items.length-1];
-    };
-
-    this.isEmpty = function() {
-        return items.length === 0;
-    };
-
-    this.clear = function() {
-        items = [];
-    };
-
-    this.size = function() {
-        return items.length;
-    }
-}
-</code></pre><h2 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h2><p>队列是遵循先进先出（FIFO）原则的一组有序的项。队列在尾部添加新元素，并从顶部移除元素。最新添加的元素必须排在队列的末尾。</p>
-<h3 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h3><p>声明队列的方法：</p>
-<ol>
-<li>enqueue(element(s)):向队列尾部添加一个（或多个）新的项。</li>
-<li>dequeue():移除队列的第一（即排在队列最前面的）项，并返回被移除的元素。</li>
-<li>front():返回队列中第一个元素。队列不做任何变动。</li>
-<li>isEmpty():如果队列中不包含任何元素，返回true，否则返回false。</li>
-<li>clear():移除栈里的所有元素。</li>
-<li>size():返回队列包含的元素个数，与数组的length属性类似。</li>
-</ol>
-<pre><code>function Queue() {
-    var items = [];
-
-    this.enqueue = function(element) {
-        items.push(element);
-    };
-
-    this.dequeue = function() {
-        return items.shift();
-    };
-
-    this.front = function() {
-        return items[0];
-    };
-
-    this.isEmpty = function() {
-        return items.length === 0;
-    };
-
-    this.clear = function() {
-        items = [];
-    };
-
-    this.size = function() {
-        return items.length;
-    }
-}
-</code></pre><h3 id="优先队列"><a href="#优先队列" class="headerlink" title="优先队列"></a>优先队列</h3><p>队列实现的一个修改版，元素的添加和移除是基于优先级的。实现一个优先队列，有两种选项：设置优先级，然后在正确的位置添加元素；或者用入列操作添加元素，然后按照优先级移除它们。</p>
-<pre><code>function PriorityQueue() {
-    var items = [];
-
-    function QueueElement(element, priority) {
-        this.element = element;
-        this.priority = priority;
-    }
-
-    this.enqueue = function(element, priority) {
-        var queueElement = new QueueElement(element, priority);
-        if(this.isEmpty()) {
-            items.push(queueElement);
-        } else {
-            var added = false;
-            for(var i=0;i&lt;items.length;i++) {
-                if(queueElement.priority &lt; items[i].priority) {
-                    items.splice(i, 0, queueElement);
-                    added = true;
-                    break;
-                }
-            }
-            if(!added) {
-                items.push(queueElement);
-            }
-        }
-    }
-}
-</code></pre><h3 id="循环队列–击鼓传花"><a href="#循环队列–击鼓传花" class="headerlink" title="循环队列–击鼓传花"></a>循环队列–击鼓传花</h3><p>还有另一个修改版的队列实现，就是循环队列。循环队列的一个例子就是击鼓传花游戏。在这个游戏中，孩子们围成一个圆圈，把花尽快地传递给旁边的人。某一时刻传花停止，这个时候花在谁手里，谁就退出圆圈结束游戏。重复这个过程，直到只剩一个孩子（胜者）。</p>
-<pre><code>function hotPotato (nameList, num){
-    var queue = new Queue(); // {1}
-    for (var i=0; i&lt;nameList.length; i++){
-        queue.enqueue(nameList[i]); // {2}
-    }
-    var eliminated = &#39;&#39;;
-    while (queue.size() &gt; 1){
-        for (var i=0; i&lt;num; i++){
-            queue.enqueue(queue.dequeue()); // {3}
-        }
-        eliminated = queue.dequeue();// {4}
-    console.log(eliminated + &#39;在击鼓传花游戏中被淘汰。&#39;);
-    }
-    return queue.dequeue();// {5}
-}
-var names = [&#39;John&#39;,&#39;Jack&#39;,&#39;Camila&#39;,&#39;Ingrid&#39;,&#39;Carl&#39;];
-var winner = hotPotato(names, 7);
-console.log(&#39;胜利者：&#39; + winner);
-</code></pre><h2 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h2><p>链表存储有序的元素集合，但不同于数组，链表中的元素在内存中并不是连续放置的。每个元素由一个存储元素本身的节点和一个指向下一个元素的引用（也称指针或链接）组成。相对于传统的数组，链表的一个好处在于，添加或移除元素的时候不需要移动其他元素。然而，链表需要使用指针，因此实现链表时需要额外注意。数组的另一个细节是可以直接访问任何位置的任何元素，而要想访问链表中间的一个元素，需要从起点开始迭代列表直到找到所需的元素。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cj9e9c7l3000520wzx71sp28q" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/07/28/JS数据结构学习（一）/" class="article-date">
-  Posted by Hexo on <time datetime="2017-07-28T13:45:44.000Z" itemprop="datePublished">2017-07-28</time>
 </a>
     
   </div>
