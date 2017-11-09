@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>this详解 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="js中this的调用方式主要有以下几种。 普通函数调用在这种情况下，属于全局性的调用，this就代表全局对象window。 // this指向的就是全局window，该方式相当于定义一个全局变量 function a () {     this.x = 1     console.log(this.x) } a(); // 1  // 将变量移到外面，调用结果一样 var x = 1 funct">
+<meta property="og:type" content="article">
+<meta property="og:title" content="this详解">
+<meta property="og:url" content="https://totatolin.github.io/2017/11/09/this详解/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="js中this的调用方式主要有以下几种。 普通函数调用在这种情况下，属于全局性的调用，this就代表全局对象window。 // this指向的就是全局window，该方式相当于定义一个全局变量 function a () {     this.x = 1     console.log(this.x) } a(); // 1  // 将变量移到外面，调用结果一样 var x = 1 funct">
+<meta property="og:updated_time" content="2017-11-09T14:07:30.954Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="this详解">
+<meta name="twitter:description" content="js中this的调用方式主要有以下几种。 普通函数调用在这种情况下，属于全局性的调用，this就代表全局对象window。 // this指向的就是全局window，该方式相当于定义一个全局变量 function a () {     this.x = 1     console.log(this.x) } a(); // 1  // 将变量移到外面，调用结果一样 var x = 1 funct">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/icon.ico">
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  <link href="css/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/paraiso-light.min.css">
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      
+<header id="header" style="width: 1400px;height: 360px;margin: 0 auto;">
+  <div id="banner"  ></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SennaLyn's Blog</a>
+      </h1>
+      
+        
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a href="/" class="nav-icon">Hexo Blog</a>
+      </nav>
+      <nav id="sub-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">HOME</a>
+        
+          <a class="main-nav-link" href="/archives">ARCHIVES</a>
+        
+          <a class="main-nav-link" href="/about">ABOUT</a>
+        
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://totatolin.github.io"></form>
+      </div>
+    </div>
+  </div>
+
+</header>
+<div class="outer">
+  <section id="main"><article id="post-this详解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      this详解
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>js中this的调用方式主要有以下几种。</p>
+<h2 id="普通函数调用"><a href="#普通函数调用" class="headerlink" title="普通函数调用"></a>普通函数调用</h2><p>在这种情况下，属于全局性的调用，this就代表全局对象window。</p>
+<pre><code>// this指向的就是全局window，该方式相当于定义一个全局变量
+function a () {
+    this.x = 1
+    console.log(this.x)
+}
+a(); // 1
+
+// 将变量移到外面，调用结果一样
+var x = 1
+function a () {
+    console.log(this.x)
+}
+a(); // 1
+</code></pre><h2 id="作为方法调用"><a href="#作为方法调用" class="headerlink" title="作为方法调用"></a>作为方法调用</h2><p>该种方法通过对象方法调用，这时this指向这个对象的上级，且具体指向由调用时来决定。</p>
+<pre><code>// 这里的this指向该对象，所以输出2
+var x = 0;
+var a = {
+    x: 1;
+    showX: function () {
+        console.log(this.name);
+    }
+}
+a.showX(); // 1
+
+// 这里将a.showX赋值给全局变量，所以此时的this指向window
+var m = a.showX;
+m(); // 0
+
+//虽然showX方法在a中定义，但是调用时候却是在b中调用，因此this指向b
+var a = {
+    x: 1,
+    showX: function () {
+        console.log(this.x);
+    }
+}
+var b = {
+    x: 2,
+    showX: a.showX
+}
+b.showX(); // 2
+</code></pre><h2 id="作为构造函数调用"><a href="#作为构造函数调用" class="headerlink" title="作为构造函数调用"></a>作为构造函数调用</h2><pre><code>function A (x) {
+    this.x = x;
+}
+var a = new A();
+a.x(1); // 1
+</code></pre><h2 id="call-apply方法调用"><a href="#call-apply方法调用" class="headerlink" title="call/apply方法调用"></a>call/apply方法调用</h2><p>使用call/apply方法可以改变this的指向</p>
+<pre><code>var x = 0;
+var a = {
+    x: 1,
+    showX: function () {
+        console.log(this.name);
+    }
+}
+a.showX.call(); // 0
+</code></pre><h2 id="bind方法调用"><a href="#bind方法调用" class="headerlink" title="bind方法调用"></a>bind方法调用</h2><p>setTimeout/setInterval/匿名函数执行的时候，this默认指向window对象，除非手动改变this的指向。在《javascript高级程序设计》当中，写到：“超时调用的代码(setTimeout)都是在全局作用域中执行的，因此函数中的this的值，在非严格模式下是指向window对象，在严格模式下是指向undefined”</p>
+<pre><code>// 这里的setTimeout函数，相当于window.setTimeout(),此时this指向全局
+var x = 0;
+function A (x) {
+    this.x = x;
+    this.showX = function () {
+        setTimeout(function () {
+            console.log(this.x);
+        }, 50)
+    }
+}
+var a = new A(1);
+a.showX(); // 0
+
+// 通过bind()方法，绑定setTimeout里面的匿名函数this一直指向A
+var x = 0;
+function A (x) {
+    this.x = x;
+    this.showX = function () {
+        setTimeout(function () {
+            console.log(this.x);
+        }.bind(this), 50)
+    }
+}
+var a = new A(1);
+a.showX(); // 1
+</code></pre><h2 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h2><p>es6里面this指向固定化，始终指向外部对象，因为箭头函数没有this,因此它自身不能进行new实例化,同时也不能使用call, apply, bind等方法来改变this的指向</p>
+<pre><code>   function Timer() {
+        this.seconds = 0;
+        setInterval( () =&gt; this.seconds ++, 1000);
+    } 
+
+    var timer = new Timer();
+
+    setTimeout( () =&gt; console.log(timer.seconds), 3100);
+
+    // 3
+
+    在构造函数内部的setInterval()内的回调函数，this始终指向实例化的对象，并获取实例化对象的seconds的属性,每1s这个属性的值都会增加1。否则最后在3s后执行setTimeOut()函数执行后输出的是0
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/11/09/this详解/" data-id="cj9sjs1xg000cy0wzazp3sqvh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/11/09/this详解/" class="article-date">
+  Posted by Hexo on <time datetime="2017-11-09T14:06:55.000Z" itemprop="datePublished">2017-11-09</time>
+</a>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/11/01/ES7新特性/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">ES7新特性</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+</div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      Copyright &copy; 2017 Lin Sen<br>
+      <p>
+      Theme by <a href="http//:fiowind.top">Fio</a> | <iframe style="display: inline-block;margin-left: 2px;margin-bottom: -5px;"src="https://ghbtns.com/github-btn.html?user=fiowind&repo=hexo-theme-sunshine&type=star&count=true" frameborder="0" scrolling="0" width="88px" height="20px"></iframe>
+      </p>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">HOME</a>
+  
+    <a href="/archives" class="mobile-nav-link">ARCHIVES</a>
+  
+    <a href="/about" class="mobile-nav-link">ABOUT</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+  </div>
+</body>
+</html>

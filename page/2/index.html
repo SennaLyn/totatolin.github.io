@@ -73,6 +73,192 @@
     
   
     <div class="index-page">
+    <a href="/2017/07/28/JS数据结构学习（二）/" >
+      <article id="post-JS数据结构学习（二）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/28/JS数据结构学习（二）/">JS数据结构学习（二）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="集合（ES6-set）"><a href="#集合（ES6-set）" class="headerlink" title="集合（ES6 set）"></a>集合（ES6 set）</h2><p>集合是由一组无序且唯一（不能重复）的项组成的。这个数据结构使用了与有限集合相同的数学概念，但应用在计算机科学的数据结构中。<br>空集是不包含任何元素的集合。<br>可以把集合想象成一个既没有重复元素，也没有顺序概念的数组。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>声明集合的方法：</p>
+<ol>
+<li>add(value):向集合添加一个新的项。</li>
+<li>remove(value):从集合移除一个值。</li>
+<li>has(value):如果值在集合中，返回true，否则返回false。</li>
+<li>clear():移除集合中的所有项。</li>
+<li>size():返回集合所包含元素的数量。与数组的length属性类似。</li>
+<li>values():返回一个包含集合中所有值得数组。</li>
+</ol>
+<pre><code>function Set() {
+    var items = {};
+    this.add = function(value){
+        if (!this.has(value)){
+            items[value] = value;
+            return true;
+        }
+        return false;
+    };
+    this.remove = function(value){
+        if (this.has(value)){
+            delete items[value];
+            return true;
+        }
+        return false;
+    };
+    this.has = function(value){
+        return items.hasOwnProperty(value);
+    };
+    this.clear = function(){
+        items = {};
+    };
+    this.size = function(){
+        return Object.keys(items).length;
+    };
+    this.values = function(){
+        return Object.keys(items);
+    };
+}
+</code></pre><h4 id="并集"><a href="#并集" class="headerlink" title="并集"></a>并集</h4><pre><code>this.union = function(otherSet){
+    var unionSet = new Set(); //{1}
+    var values = this.values(); //{2}
+    for (var i=0; i&lt;values.length; i++){
+        unionSet.add(values[i]);
+    }
+    values = otherSet.values(); //{3}
+    for (var i=0; i&lt;values.length; i++){
+        unionSet.add(values[i]);
+    }
+    return unionSet;
+};
+</code></pre><p>测试上述代码：</p>
+<pre><code>var setA = new Set();
+setA.add(1);
+setA.add(2);
+setA.add(3);
+
+var setB = new Set();
+setB.add(3);
+setB.add(4);
+setB.add(5);
+setB.add(6);
+
+var unionAB = setA.union(setB);
+console.log(unionAB.values()); // [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;]
+</code></pre><h4 id="交集"><a href="#交集" class="headerlink" title="交集"></a>交集</h4><pre><code>this.intersection = function(otherSet){
+    var intersectionSet = new Set(); //{1}
+    var values = this.values();
+    for (var i=0; i&lt;values.length; i++){ //{2}
+        if (otherSet.has(values[i])){ //{3}
+            intersectionSet.add(values[i]); //{4}
+        }
+    }
+    return intersectionSet;
+}
+</code></pre><p>测试上述代码：</p>
+<pre><code>var setA = new Set();
+setA.add(1);
+setA.add(2);
+setA.add(3);
+
+var setB = new Set();
+setB.add(2);
+setB.add(3);
+setB.add(4);
+
+var intersectionAB = setA.intersection(setB);
+console.log(intersectionAB.values()); // [&#39;2&#39;, &#39;3&#39;]
+</code></pre><h4 id="差集"><a href="#差集" class="headerlink" title="差集"></a>差集</h4><pre><code>this.difference = function(otherSet){
+    var differenceSet = new Set();
+    var values = this.values();
+    for (var i=0; i&lt;values.length; i++){
+        if (!otherSet.has(values[i])){
+            differenceSet.add(values[i]);
+        }
+    }
+return differenceSet;
+};
+</code></pre><p>测试上述代码：</p>
+<pre><code>var setA = new Set();
+setA.add(1);
+setA.add(2);
+setA.add(3);
+
+var setB = new Set();
+setB.add(2);
+setB.add(3);
+setB.add(4);
+
+var differenceAB = setA.difference(setB);
+console.log(differenceAB.values()); // [&#39;1&#39;]
+</code></pre><h4 id="子集"><a href="#子集" class="headerlink" title="子集"></a>子集</h4><pre><code>this.subset = function(otherSet){
+    if (this.size() &gt; otherSet.size()){
+        return false;
+    } else {
+        var values = this.values();
+        for (var i=0; i&lt;values.length; i++){
+            if (!otherSet.has(values[i])){
+                return false;
+            }
+        }
+        return true; //{5}
+    }
+};
+</code></pre><p>测试上述代码：</p>
+<pre><code>var setA = new Set();
+setA.add(1);
+setA.add(2);
+
+var setB = new Set();
+setB.add(1);
+setB.add(2);
+setB.add(3);
+
+var setC = new Set();
+setC.add(2);
+setC.add(3);
+setC.add(4);
+
+console.log(setA.subset(setB));
+console.log(setA.subset(setC));
+// setA是setB的子集（因此输出为true），然而setA不是setC的子集（setC
+只包含了setA中的2，而不包含1），因此输出为false。
+</code></pre><h2 id="字典-ES6-map"><a href="#字典-ES6-map" class="headerlink" title="字典(ES6 map)"></a>字典(ES6 map)</h2><p>字典和集合很相似，集合以[值, 值]的形式存储元素，字典则是以[键, 值]的形式来存储元素，也称作映射。</p>
+<h2 id="散列表"><a href="#散列表" class="headerlink" title="散列表"></a>散列表</h2><p>散列算法的作用是尽可能快地在数据结构中找到一个值。如果要在数据结构中获得一个值，需要遍历整个数据结构来找到它。如果使用散列函数，就知道值得具体位置，因此能够快速检索到该值。散列函数的作用是给定一个键值，然后返回值在表中的地址。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cj9sjs1xh000dy0wzl2xa99ey" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/07/28/JS数据结构学习（二）/" class="article-date">
+  Posted by Hexo on <time datetime="2017-07-28T13:47:01.000Z" itemprop="datePublished">2017-07-28</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/07/28/JS数据结构学习（一）/" >
       <article id="post-JS数据结构学习（一）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -217,7 +403,7 @@ console.log(&#39;胜利者：&#39; + winner);
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cj9h4eqo40003n8wz90n8es0m" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cj9sjs1vx0005y0wz359zidh5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -284,7 +470,7 @@ console.log( 0 == NaN ) // false
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj9h4eqp1000bn8wzlokmeiid" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj9sjs1x40008y0wzvyaffzjc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -384,7 +570,7 @@ console.log(target.child.name); // target child
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj9h4eqor0007n8wzsfqi7gv3" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj9sjs1w00007y0wz6d150izc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -482,7 +668,7 @@ var a = null;
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cj9h4eqpg000in8wzkozob5nh" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cj9sjs1y3000my0wzbv8m55tx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -585,7 +771,7 @@ var arr = Array.prototype.slice.call(a); // arr === [1,2,3]
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cj9h4eqpj000kn8wz9epdpbzk" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cj9sjs1y4000ny0wzm24u50zd" class="article-share-link">Share</a>
       
       
     </footer>
@@ -728,7 +914,7 @@ console.log(numbers.some(isOutsideRange, range))
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" data-id="cj9h4eqn70001n8wzmpqe1gby" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" data-id="cj9sjs1un0002y0wzn4ts9cbg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -839,7 +1025,7 @@ person1.hasOwnProperty(&#39;name&#39;) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/03/原型和原型链/" data-id="cj9h4eqph000jn8wz5c2u41jz" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/03/原型和原型链/" data-id="cj9sjs1y0000ky0wzakr4cydu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -886,7 +1072,7 @@ person1.hasOwnProperty(&#39;name&#39;) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/隐式类型转换的方式/" data-id="cj9h4eqp5000dn8wz8g125e4n" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/隐式类型转换的方式/" data-id="cj9sjs1xz000jy0wznhw6akc7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -946,7 +1132,7 @@ document.write(typeof(num)); // number
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/JS中的一元运算符/" data-id="cj9h4eqoh0005n8wz992mobhn" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/JS中的一元运算符/" data-id="cj9sjs1ur0004y0wzlsqhesm4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -954,172 +1140,6 @@ document.write(typeof(num)); // number
   <div class="article-meta">
     <a href="/2017/06/27/JS中的一元运算符/" class="article-date">
   Posted by Hexo on <time datetime="2017-06-27T13:49:58.000Z" itemprop="datePublished">2017-06-27</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/06/27/Object-defineProperty用法/" >
-      <article id="post-Object-defineProperty用法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/27/Object-defineProperty用法/">Object.defineProperty用法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="三个参数（均为必填）"><a href="#三个参数（均为必填）" class="headerlink" title="三个参数（均为必填）"></a>三个参数（均为必填）</h2><ol>
-<li>obj:需要定义属性的对象（目标对象）</li>
-<li>prop:需要被定义或修改的属性名（对象上的属性或者方法）</li>
-<li>descriptor:需被定义或修改的属性的描述符</li>
-</ol>
-<pre><code>// Object.defineProperty(obj, prop, descriptor)
-var obj = {};
-Object.defineProperty(obj, &#39;a&#39;, {
-    value: 2,
-    writable: true,
-    configurable: true,
-    enumerable: true
-});
-obj.a; // 2
-</code></pre><h2 id="descriptor参数详解"><a href="#descriptor参数详解" class="headerlink" title="descriptor参数详解"></a>descriptor参数详解</h2><h3 id="value-属性的值"><a href="#value-属性的值" class="headerlink" title="value:属性的值"></a>value:属性的值</h3><pre><code>var obj = {};
-Object.defineProperty(obj, &#39;a&#39;, {
-    value: 2
-})
-console.log(obj.a); // 2
-</code></pre><h3 id="writable-属性的值是否能被修改"><a href="#writable-属性的值是否能被修改" class="headerlink" title="writable:属性的值是否能被修改"></a>writable:属性的值是否能被修改</h3><pre><code>var obj = {};
-Object.defineProperty(obj, &#39;a&#39;, {
-    value: 2,
-    writable: false, // 不可写！
-    configurable: true,
-    enumerable: true
-})
-console.log(obj.a); // 2
-obj.a = 3;
-console.log(obj.a); // 2
-</code></pre><h3 id="configurable-是否能够配置value-writable-enumerable"><a href="#configurable-是否能够配置value-writable-enumerable" class="headerlink" title="configurable:是否能够配置value, writable, enumerable"></a>configurable:是否能够配置value, writable, enumerable</h3><pre><code>var obj = {};
-Object.defineProperty(obj, &#39;a&#39;, {
-    value: 2,
-    writable: true,
-    configurable: false, // 不可配置！
-    enumerable: true
-})
-console.log(obj.a); // 2
-Object.defineProperty(obj, &#39;a&#39;, {
-    value: 3,
-    writable: true,
-    configurable: true,
-    enumerable: true
-})
-// TypeError: Cannot redefine property: a
-</code></pre><h3 id="enumerable-属性是否能在for…in或者Object-keys中被枚举出来"><a href="#enumerable-属性是否能在for…in或者Object-keys中被枚举出来" class="headerlink" title="enumerable:属性是否能在for…in或者Object.keys中被枚举出来"></a>enumerable:属性是否能在for…in或者Object.keys中被枚举出来</h3><pre><code>var obj = {};
-Object.defineProperty(obj, &#39;a&#39;, {
-    value: 2,
-    writable: true,
-    configurable: true,
-    enumerable: false // 不可枚举！
-})
-console.log(Object.keys(obj)); // []
-Object.defineProperty(obj, &#39;a&#39;, {
-    value: 2,
-    writable: true,
-    configurable: true,
-    enumerable: true
-})
-console.log(Object.keys(obj)); // [&#39;a&#39;]
-</code></pre><h3 id="get-set"><a href="#get-set" class="headerlink" title="get/set"></a>get/set</h3><p>对于set和get，我的理解是它们是一对勾子函数，当你对一个对象的某个属性赋值时，则会自动调用相应的set函数；而当获取属性时，则调用get函数。这也是实现双向数据绑定的关键。</p>
-<pre><code>var obj = {}
-var a
-
-Object.defineProperty(obj, &#39;a&#39;, {
-    get: function() {
-        console.log(&#39;get x&#39;)
-
-        // 我们可以在这里对返回的值做任何操作
-        return x + 1
-    },
-    set: function(newValue) {
-        console.log(&#39;set x to&#39;, newValue)
-        x = newValue
-    }
-})
-
-obj.a = 100
-
-console.log(obj.a);
-
-/*
-output:
-  set x to 100
-  get x
-  101
-*/
-</code></pre><h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>数据描述符和存取描述符不能混合使用</p>
-<pre><code>Object.defineProperty(o, &quot;conflict&quot;, {
-  // value是数据描述符
-  value: 1,
-  // get是存取描述符
-  get: function() {
-    return 2;
-  }
-});
-</code></pre><h2 id="视图和数据变化绑定"><a href="#视图和数据变化绑定" class="headerlink" title="视图和数据变化绑定"></a>视图和数据变化绑定</h2><pre><code>&lt;div&gt;
-    &lt;p&gt;你好，&lt;span id=&#39;nickName&#39;&gt;&lt;/span&gt;&lt;/p&gt;
-    &lt;div id=&quot;introduce&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-</code></pre><pre><code>//视图控制器
-var userInfo = {};
-Object.defineProperty(userInfo, &quot;nickName&quot;, {
-    get: function(){
-        return document.getElementById(&#39;nickName&#39;).innerHTML;
-    },
-    set: function(nick){
-        document.getElementById(&#39;nickName&#39;).innerHTML = nick;
-    }
-});
-Object.defineProperty(userInfo, &quot;introduce&quot;, {
-    get: function(){
-        return document.getElementById(&#39;introduce&#39;).innerHTML;
-    },
-    set: function(introduce){
-        document.getElementById(&#39;introduce&#39;).innerHTML = introduce;
-    }
-})
-</code></pre><pre><code>userInfo.nickName = &quot;xxx&quot;;
-userInfo.introduce = &quot;我是xxx，我来自云南，...&quot;
-</code></pre><h2 id="vue数据变动"><a href="#vue数据变动" class="headerlink" title="vue数据变动"></a>vue数据变动</h2><p>但是，这个例子只是数据和dom节点的绑定，而vue.js更为复杂一点，它在网页dom和accessor之间会有两层，一层是Wacher，一层是Directive，比如以下代码。</p>
-<pre><code>var a = { b: 1 }
-var vm = new Vue({ 
-  data: data
-})
-</code></pre><p>把一个普通对象（a={b:1}）传给 Vue 实例作为它的 data 选项，Vue.js 将遍历它的属性，用Object.defineProperty 将它们转为 getter/setter,如图绿色的部分所示。<br>每次用户更改data里的数据的时候，比如a.b =1，setter就会重新通知Watcher进行变动，Watcher再通知Directive对dom节点进行更改。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/Object-defineProperty用法/" data-id="cj9h4eqpk000ln8wz59smexce" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/06/27/Object-defineProperty用法/" class="article-date">
-  Posted by Hexo on <time datetime="2017-06-27T13:17:54.000Z" itemprop="datePublished">2017-06-27</time>
 </a>
     
   </div>

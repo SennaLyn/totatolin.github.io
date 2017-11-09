@@ -73,6 +73,142 @@
     
   
     <div class="index-page">
+    <a href="/2017/11/09/this详解/" >
+      <article id="post-this详解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/09/this详解/">this详解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>js中this的调用方式主要有以下几种。</p>
+<h2 id="普通函数调用"><a href="#普通函数调用" class="headerlink" title="普通函数调用"></a>普通函数调用</h2><p>在这种情况下，属于全局性的调用，this就代表全局对象window。</p>
+<pre><code>// this指向的就是全局window，该方式相当于定义一个全局变量
+function a () {
+    this.x = 1
+    console.log(this.x)
+}
+a(); // 1
+
+// 将变量移到外面，调用结果一样
+var x = 1
+function a () {
+    console.log(this.x)
+}
+a(); // 1
+</code></pre><h2 id="作为方法调用"><a href="#作为方法调用" class="headerlink" title="作为方法调用"></a>作为方法调用</h2><p>该种方法通过对象方法调用，这时this指向这个对象的上级，且具体指向由调用时来决定。</p>
+<pre><code>// 这里的this指向该对象，所以输出2
+var x = 0;
+var a = {
+    x: 1;
+    showX: function () {
+        console.log(this.name);
+    }
+}
+a.showX(); // 1
+
+// 这里将a.showX赋值给全局变量，所以此时的this指向window
+var m = a.showX;
+m(); // 0
+
+//虽然showX方法在a中定义，但是调用时候却是在b中调用，因此this指向b
+var a = {
+    x: 1,
+    showX: function () {
+        console.log(this.x);
+    }
+}
+var b = {
+    x: 2,
+    showX: a.showX
+}
+b.showX(); // 2
+</code></pre><h2 id="作为构造函数调用"><a href="#作为构造函数调用" class="headerlink" title="作为构造函数调用"></a>作为构造函数调用</h2><pre><code>function A (x) {
+    this.x = x;
+}
+var a = new A();
+a.x(1); // 1
+</code></pre><h2 id="call-apply方法调用"><a href="#call-apply方法调用" class="headerlink" title="call/apply方法调用"></a>call/apply方法调用</h2><p>使用call/apply方法可以改变this的指向</p>
+<pre><code>var x = 0;
+var a = {
+    x: 1,
+    showX: function () {
+        console.log(this.name);
+    }
+}
+a.showX.call(); // 0
+</code></pre><h2 id="bind方法调用"><a href="#bind方法调用" class="headerlink" title="bind方法调用"></a>bind方法调用</h2><p>setTimeout/setInterval/匿名函数执行的时候，this默认指向window对象，除非手动改变this的指向。在《javascript高级程序设计》当中，写到：“超时调用的代码(setTimeout)都是在全局作用域中执行的，因此函数中的this的值，在非严格模式下是指向window对象，在严格模式下是指向undefined”</p>
+<pre><code>// 这里的setTimeout函数，相当于window.setTimeout(),此时this指向全局
+var x = 0;
+function A (x) {
+    this.x = x;
+    this.showX = function () {
+        setTimeout(function () {
+            console.log(this.x);
+        }, 50)
+    }
+}
+var a = new A(1);
+a.showX(); // 0
+
+// 通过bind()方法，绑定setTimeout里面的匿名函数this一直指向A
+var x = 0;
+function A (x) {
+    this.x = x;
+    this.showX = function () {
+        setTimeout(function () {
+            console.log(this.x);
+        }.bind(this), 50)
+    }
+}
+var a = new A(1);
+a.showX(); // 1
+</code></pre><h2 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h2><p>es6里面this指向固定化，始终指向外部对象，因为箭头函数没有this,因此它自身不能进行new实例化,同时也不能使用call, apply, bind等方法来改变this的指向</p>
+<pre><code>   function Timer() {
+        this.seconds = 0;
+        setInterval( () =&gt; this.seconds ++, 1000);
+    } 
+
+    var timer = new Timer();
+
+    setTimeout( () =&gt; console.log(timer.seconds), 3100);
+
+    // 3
+
+    在构造函数内部的setInterval()内的回调函数，this始终指向实例化的对象，并获取实例化对象的seconds的属性,每1s这个属性的值都会增加1。否则最后在3s后执行setTimeOut()函数执行后输出的是0
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/11/09/this详解/" data-id="cj9sjs1xg000cy0wzazp3sqvh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/11/09/this详解/" class="article-date">
+  Posted by Hexo on <time datetime="2017-11-09T14:06:55.000Z" itemprop="datePublished">2017-11-09</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/11/01/ES7新特性/" >
       <article id="post-ES7新特性" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -117,7 +253,7 @@ console.log(b === Math.pow(2,7)) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/11/01/ES7新特性/" data-id="cj9h4eqll0000n8wzkceeyz6f" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/11/01/ES7新特性/" data-id="cj9sjs1tm0000y0wzb0xxy30x" class="article-share-link">Share</a>
       
       
     </footer>
@@ -256,7 +392,7 @@ Access-Control-Allow-Origin: http://a.com   # 只允许所有域名访问
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/30/跨域详细梳理/" data-id="cj9h4eqpb000fn8wz9q193yxp" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/30/跨域详细梳理/" data-id="cj9sjs1xt000hy0wz2fj6anuc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -315,7 +451,7 @@ function CreateFragments(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/26/使用DocumentFragment加快DOM渲染速度/" data-id="cj9h4eqp3000cn8wzczffqcyf" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/26/使用DocumentFragment加快DOM渲染速度/" data-id="cj9sjs1xm000fy0wzr3vih8o5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -371,7 +507,7 @@ function CreateFragments(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/23/web缓存机制/" data-id="cj9h4eqp0000an8wzmhceicua" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/23/web缓存机制/" data-id="cj9sjs1xe000by0wzavwybiq3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -574,7 +710,7 @@ setTimeout(function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/23/IndexedDB存储机制/" data-id="cj9h4eqo50004n8wztfc15hpn" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/23/IndexedDB存储机制/" data-id="cj9sjs1uq0003y0wzmbzl9lrn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -990,7 +1126,7 @@ b.m() // 2
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cj9h4eqp8000en8wzez14tva2" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cj9sjs1x70009y0wz4sejwru8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1229,7 +1365,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cj9h4eqpm000mn8wz0ka4qx3f" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cj9sjs1y2000ly0wzy9nitvq4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1303,7 +1439,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cj9h4eqpf000hn8wznboltt0p" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cj9sjs1xa000ay0wzjhawqsoj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1357,7 +1493,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cj9h4eqow0008n8wz15q4yti5" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cj9sjs1vy0006y0wz1sv68wt7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1365,192 +1501,6 @@ Foo.bar() // hello
   <div class="article-meta">
     <a href="/2017/07/28/JS数据结构学习（三）/" class="article-date">
   Posted by Hexo on <time datetime="2017-07-28T13:48:36.000Z" itemprop="datePublished">2017-07-28</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/07/28/JS数据结构学习（二）/" >
-      <article id="post-JS数据结构学习（二）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/28/JS数据结构学习（二）/">JS数据结构学习（二）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="集合（ES6-set）"><a href="#集合（ES6-set）" class="headerlink" title="集合（ES6 set）"></a>集合（ES6 set）</h2><p>集合是由一组无序且唯一（不能重复）的项组成的。这个数据结构使用了与有限集合相同的数学概念，但应用在计算机科学的数据结构中。<br>空集是不包含任何元素的集合。<br>可以把集合想象成一个既没有重复元素，也没有顺序概念的数组。</p>
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>声明集合的方法：</p>
-<ol>
-<li>add(value):向集合添加一个新的项。</li>
-<li>remove(value):从集合移除一个值。</li>
-<li>has(value):如果值在集合中，返回true，否则返回false。</li>
-<li>clear():移除集合中的所有项。</li>
-<li>size():返回集合所包含元素的数量。与数组的length属性类似。</li>
-<li>values():返回一个包含集合中所有值得数组。</li>
-</ol>
-<pre><code>function Set() {
-    var items = {};
-    this.add = function(value){
-        if (!this.has(value)){
-            items[value] = value;
-            return true;
-        }
-        return false;
-    };
-    this.remove = function(value){
-        if (this.has(value)){
-            delete items[value];
-            return true;
-        }
-        return false;
-    };
-    this.has = function(value){
-        return items.hasOwnProperty(value);
-    };
-    this.clear = function(){
-        items = {};
-    };
-    this.size = function(){
-        return Object.keys(items).length;
-    };
-    this.values = function(){
-        return Object.keys(items);
-    };
-}
-</code></pre><h4 id="并集"><a href="#并集" class="headerlink" title="并集"></a>并集</h4><pre><code>this.union = function(otherSet){
-    var unionSet = new Set(); //{1}
-    var values = this.values(); //{2}
-    for (var i=0; i&lt;values.length; i++){
-        unionSet.add(values[i]);
-    }
-    values = otherSet.values(); //{3}
-    for (var i=0; i&lt;values.length; i++){
-        unionSet.add(values[i]);
-    }
-    return unionSet;
-};
-</code></pre><p>测试上述代码：</p>
-<pre><code>var setA = new Set();
-setA.add(1);
-setA.add(2);
-setA.add(3);
-
-var setB = new Set();
-setB.add(3);
-setB.add(4);
-setB.add(5);
-setB.add(6);
-
-var unionAB = setA.union(setB);
-console.log(unionAB.values()); // [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;]
-</code></pre><h4 id="交集"><a href="#交集" class="headerlink" title="交集"></a>交集</h4><pre><code>this.intersection = function(otherSet){
-    var intersectionSet = new Set(); //{1}
-    var values = this.values();
-    for (var i=0; i&lt;values.length; i++){ //{2}
-        if (otherSet.has(values[i])){ //{3}
-            intersectionSet.add(values[i]); //{4}
-        }
-    }
-    return intersectionSet;
-}
-</code></pre><p>测试上述代码：</p>
-<pre><code>var setA = new Set();
-setA.add(1);
-setA.add(2);
-setA.add(3);
-
-var setB = new Set();
-setB.add(2);
-setB.add(3);
-setB.add(4);
-
-var intersectionAB = setA.intersection(setB);
-console.log(intersectionAB.values()); // [&#39;2&#39;, &#39;3&#39;]
-</code></pre><h4 id="差集"><a href="#差集" class="headerlink" title="差集"></a>差集</h4><pre><code>this.difference = function(otherSet){
-    var differenceSet = new Set();
-    var values = this.values();
-    for (var i=0; i&lt;values.length; i++){
-        if (!otherSet.has(values[i])){
-            differenceSet.add(values[i]);
-        }
-    }
-return differenceSet;
-};
-</code></pre><p>测试上述代码：</p>
-<pre><code>var setA = new Set();
-setA.add(1);
-setA.add(2);
-setA.add(3);
-
-var setB = new Set();
-setB.add(2);
-setB.add(3);
-setB.add(4);
-
-var differenceAB = setA.difference(setB);
-console.log(differenceAB.values()); // [&#39;1&#39;]
-</code></pre><h4 id="子集"><a href="#子集" class="headerlink" title="子集"></a>子集</h4><pre><code>this.subset = function(otherSet){
-    if (this.size() &gt; otherSet.size()){
-        return false;
-    } else {
-        var values = this.values();
-        for (var i=0; i&lt;values.length; i++){
-            if (!otherSet.has(values[i])){
-                return false;
-            }
-        }
-        return true; //{5}
-    }
-};
-</code></pre><p>测试上述代码：</p>
-<pre><code>var setA = new Set();
-setA.add(1);
-setA.add(2);
-
-var setB = new Set();
-setB.add(1);
-setB.add(2);
-setB.add(3);
-
-var setC = new Set();
-setC.add(2);
-setC.add(3);
-setC.add(4);
-
-console.log(setA.subset(setB));
-console.log(setA.subset(setC));
-// setA是setB的子集（因此输出为true），然而setA不是setC的子集（setC
-只包含了setA中的2，而不包含1），因此输出为false。
-</code></pre><h2 id="字典-ES6-map"><a href="#字典-ES6-map" class="headerlink" title="字典(ES6 map)"></a>字典(ES6 map)</h2><p>字典和集合很相似，集合以[值, 值]的形式存储元素，字典则是以[键, 值]的形式来存储元素，也称作映射。</p>
-<h2 id="散列表"><a href="#散列表" class="headerlink" title="散列表"></a>散列表</h2><p>散列算法的作用是尽可能快地在数据结构中找到一个值。如果要在数据结构中获得一个值，需要遍历整个数据结构来找到它。如果使用散列函数，就知道值得具体位置，因此能够快速检索到该值。散列函数的作用是给定一个键值，然后返回值在表中的地址。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cj9h4eqoy0009n8wztjqsgwga" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/07/28/JS数据结构学习（二）/" class="article-date">
-  Posted by Hexo on <time datetime="2017-07-28T13:47:01.000Z" itemprop="datePublished">2017-07-28</time>
 </a>
     
   </div>

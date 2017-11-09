@@ -73,6 +73,172 @@
     
   
     <div class="index-page">
+    <a href="/2017/06/27/Object-defineProperty用法/" >
+      <article id="post-Object-defineProperty用法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/27/Object-defineProperty用法/">Object.defineProperty用法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="三个参数（均为必填）"><a href="#三个参数（均为必填）" class="headerlink" title="三个参数（均为必填）"></a>三个参数（均为必填）</h2><ol>
+<li>obj:需要定义属性的对象（目标对象）</li>
+<li>prop:需要被定义或修改的属性名（对象上的属性或者方法）</li>
+<li>descriptor:需被定义或修改的属性的描述符</li>
+</ol>
+<pre><code>// Object.defineProperty(obj, prop, descriptor)
+var obj = {};
+Object.defineProperty(obj, &#39;a&#39;, {
+    value: 2,
+    writable: true,
+    configurable: true,
+    enumerable: true
+});
+obj.a; // 2
+</code></pre><h2 id="descriptor参数详解"><a href="#descriptor参数详解" class="headerlink" title="descriptor参数详解"></a>descriptor参数详解</h2><h3 id="value-属性的值"><a href="#value-属性的值" class="headerlink" title="value:属性的值"></a>value:属性的值</h3><pre><code>var obj = {};
+Object.defineProperty(obj, &#39;a&#39;, {
+    value: 2
+})
+console.log(obj.a); // 2
+</code></pre><h3 id="writable-属性的值是否能被修改"><a href="#writable-属性的值是否能被修改" class="headerlink" title="writable:属性的值是否能被修改"></a>writable:属性的值是否能被修改</h3><pre><code>var obj = {};
+Object.defineProperty(obj, &#39;a&#39;, {
+    value: 2,
+    writable: false, // 不可写！
+    configurable: true,
+    enumerable: true
+})
+console.log(obj.a); // 2
+obj.a = 3;
+console.log(obj.a); // 2
+</code></pre><h3 id="configurable-是否能够配置value-writable-enumerable"><a href="#configurable-是否能够配置value-writable-enumerable" class="headerlink" title="configurable:是否能够配置value, writable, enumerable"></a>configurable:是否能够配置value, writable, enumerable</h3><pre><code>var obj = {};
+Object.defineProperty(obj, &#39;a&#39;, {
+    value: 2,
+    writable: true,
+    configurable: false, // 不可配置！
+    enumerable: true
+})
+console.log(obj.a); // 2
+Object.defineProperty(obj, &#39;a&#39;, {
+    value: 3,
+    writable: true,
+    configurable: true,
+    enumerable: true
+})
+// TypeError: Cannot redefine property: a
+</code></pre><h3 id="enumerable-属性是否能在for…in或者Object-keys中被枚举出来"><a href="#enumerable-属性是否能在for…in或者Object-keys中被枚举出来" class="headerlink" title="enumerable:属性是否能在for…in或者Object.keys中被枚举出来"></a>enumerable:属性是否能在for…in或者Object.keys中被枚举出来</h3><pre><code>var obj = {};
+Object.defineProperty(obj, &#39;a&#39;, {
+    value: 2,
+    writable: true,
+    configurable: true,
+    enumerable: false // 不可枚举！
+})
+console.log(Object.keys(obj)); // []
+Object.defineProperty(obj, &#39;a&#39;, {
+    value: 2,
+    writable: true,
+    configurable: true,
+    enumerable: true
+})
+console.log(Object.keys(obj)); // [&#39;a&#39;]
+</code></pre><h3 id="get-set"><a href="#get-set" class="headerlink" title="get/set"></a>get/set</h3><p>对于set和get，我的理解是它们是一对勾子函数，当你对一个对象的某个属性赋值时，则会自动调用相应的set函数；而当获取属性时，则调用get函数。这也是实现双向数据绑定的关键。</p>
+<pre><code>var obj = {}
+var a
+
+Object.defineProperty(obj, &#39;a&#39;, {
+    get: function() {
+        console.log(&#39;get x&#39;)
+
+        // 我们可以在这里对返回的值做任何操作
+        return x + 1
+    },
+    set: function(newValue) {
+        console.log(&#39;set x to&#39;, newValue)
+        x = newValue
+    }
+})
+
+obj.a = 100
+
+console.log(obj.a);
+
+/*
+output:
+  set x to 100
+  get x
+  101
+*/
+</code></pre><h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>数据描述符和存取描述符不能混合使用</p>
+<pre><code>Object.defineProperty(o, &quot;conflict&quot;, {
+  // value是数据描述符
+  value: 1,
+  // get是存取描述符
+  get: function() {
+    return 2;
+  }
+});
+</code></pre><h2 id="视图和数据变化绑定"><a href="#视图和数据变化绑定" class="headerlink" title="视图和数据变化绑定"></a>视图和数据变化绑定</h2><pre><code>&lt;div&gt;
+    &lt;p&gt;你好，&lt;span id=&#39;nickName&#39;&gt;&lt;/span&gt;&lt;/p&gt;
+    &lt;div id=&quot;introduce&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre><pre><code>//视图控制器
+var userInfo = {};
+Object.defineProperty(userInfo, &quot;nickName&quot;, {
+    get: function(){
+        return document.getElementById(&#39;nickName&#39;).innerHTML;
+    },
+    set: function(nick){
+        document.getElementById(&#39;nickName&#39;).innerHTML = nick;
+    }
+});
+Object.defineProperty(userInfo, &quot;introduce&quot;, {
+    get: function(){
+        return document.getElementById(&#39;introduce&#39;).innerHTML;
+    },
+    set: function(introduce){
+        document.getElementById(&#39;introduce&#39;).innerHTML = introduce;
+    }
+})
+</code></pre><pre><code>userInfo.nickName = &quot;xxx&quot;;
+userInfo.introduce = &quot;我是xxx，我来自云南，...&quot;
+</code></pre><h2 id="vue数据变动"><a href="#vue数据变动" class="headerlink" title="vue数据变动"></a>vue数据变动</h2><p>但是，这个例子只是数据和dom节点的绑定，而vue.js更为复杂一点，它在网页dom和accessor之间会有两层，一层是Wacher，一层是Directive，比如以下代码。</p>
+<pre><code>var a = { b: 1 }
+var vm = new Vue({ 
+  data: data
+})
+</code></pre><p>把一个普通对象（a={b:1}）传给 Vue 实例作为它的 data 选项，Vue.js 将遍历它的属性，用Object.defineProperty 将它们转为 getter/setter,如图绿色的部分所示。<br>每次用户更改data里的数据的时候，比如a.b =1，setter就会重新通知Watcher进行变动，Watcher再通知Directive对dom节点进行更改。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/06/27/Object-defineProperty用法/" data-id="cj9sjs1xo000gy0wz1nankumy" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/06/27/Object-defineProperty用法/" class="article-date">
+  Posted by Hexo on <time datetime="2017-06-27T13:17:54.000Z" itemprop="datePublished">2017-06-27</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/06/10/Array方法之slice和splice/" >
       <article id="post-Array方法之slice和splice" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -108,7 +274,7 @@ alert(color2);    //  yellow,black
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/" data-id="cj9h4eqna0002n8wzlod1cxrd" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/" data-id="cj9sjs1ul0001y0wznw444tim" class="article-share-link">Share</a>
       
       
     </footer>
@@ -210,7 +376,7 @@ for (v of k) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" data-id="cj9h4eqop0006n8wz1lkbpjcf" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" data-id="cj9sjs1xj000ey0wzdnixgr8r" class="article-share-link">Share</a>
       
       
     </footer>
@@ -263,7 +429,7 @@ for (v of k) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/08/hello-world/" data-id="cj9h4eqpc000gn8wz232v5qpu" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/08/hello-world/" data-id="cj9sjs1xw000iy0wzpsvex8dk" class="article-share-link">Share</a>
       
       
     </footer>
