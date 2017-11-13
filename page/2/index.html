@@ -73,6 +73,80 @@
     
   
     <div class="index-page">
+    <a href="/2017/07/31/JS的算法-排序算法/" >
+      <article id="post-JS的算法-排序算法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/31/JS的算法-排序算法/">JS的算法--排序算法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>最简单的排序方式，但是运行性能是最差的。<br>冒泡排序比较任何两个相邻的项，如果第一个比第二个大，则交换它们。元素项向上移动至正确的顺序，就好像气泡升至表面一样，因此得名。<br>首先，声明一个名为length的变量，用来存储数组的长度。接着，外循环会从数组的第一位迭代至最后一位，它控制了在数组中经过多少轮排序。然后，内循环从第一位开始，每一轮减少（i+1）位，内循环实际上进行当前项和下一项的比较。如果这两项顺序不对（当前项比下一项大），则交换它们，意思是位置为j+1的值将会被换置到位置j处，反之亦然。</p>
+<pre><code>this.bubbleSort = function(array){
+    var length = array.length;
+    var swap = function(index1, index2){
+        var aux = array[index1];
+        array[index1] = array[index2];
+        array[index2] = aux;
+    };
+    for (var i=0; i&lt;length; i++){
+        for (var j=0; j&lt;length-i-1; j++ ){
+            if (array[j] &gt; array[j+1]){
+                swap(j, j+1);
+            }
+        }
+    }
+    console.log(array);
+};
+</code></pre><h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p>选择排序算法是一种原址比较排序算法。选择排序大致的思路是找到数据结构中的最小值并将其放置在第一位，接着找到第二小的值并将其放在第二位，以此类推。<br>首先声明一些将在算法内使用的变量。接着，外循环迭代数组，并控制迭代轮次（数组的第n个值–下一个最小值）。我们假设本迭代轮次的第一个值为数组最小值；如果是，则改变最小值至新最小值。当内循环结束，将得出数组第n小的值。最后，如果该最小值和原最小值不同，则交换其值。</p>
+<pre><code>this.selectionSort = function(){
+    var length = array.length,
+        indexMin;
+    for (var i=0; i&lt;length-1; i++){
+        indexMin = i;
+        for (var j=i; j&lt;length; j++){
+            if(array[indexMin]&gt;array[j]){
+                indexMin = j;
+            }
+        }
+        if (i !== indexMin){
+            swap(i, indexMin);
+        }
+    }
+};
+</code></pre><h3 id="未完待续。。。"><a href="#未完待续。。。" class="headerlink" title="未完待续。。。"></a>未完待续。。。</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cj9yaujz4000bvgwzx6g3lzd1" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/07/31/JS的算法-排序算法/" class="article-date">
+  Posted by Hexo on <time datetime="2017-07-31T14:15:19.000Z" itemprop="datePublished">2017-07-31</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/07/28/JS数据结构学习（三）/" >
       <article id="post-JS数据结构学习（三）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -108,7 +182,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cj9wl7zmn00063cwz2kd5ot1s" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cj9yaujyw0007vgwzfb2op06a" class="article-share-link">Share</a>
       
       
     </footer>
@@ -294,7 +368,7 @@ console.log(setA.subset(setC));
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cj9wl7zmp00073cwz3cb6zd3q" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cj9yaujz00008vgwz63sgzrco" class="article-share-link">Share</a>
       
       
     </footer>
@@ -457,7 +531,7 @@ console.log(&#39;胜利者：&#39; + winner);
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cj9wl7zn8000e3cwzcsda1i96" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cj9yaujyv0006vgwzabb3vsks" class="article-share-link">Share</a>
       
       
     </footer>
@@ -524,7 +598,7 @@ console.log( 0 == NaN ) // false
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj9wl7zmz00093cwzhsrii56y" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cj9yaujz3000avgwzu115eenf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -624,7 +698,7 @@ console.log(target.child.name); // target child
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj9wl7zmx00083cwzsunu25uw" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cj9yaujz20009vgwzhn2dwdi8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -722,7 +796,7 @@ var a = null;
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cj9wl7znb000g3cwzm7wb12a9" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cj9yaujzf000hvgwzlbaab1vs" class="article-share-link">Share</a>
       
       
     </footer>
@@ -825,7 +899,7 @@ var arr = Array.prototype.slice.call(a); // arr === [1,2,3]
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cj9wl7znj000l3cwz09zxoemw" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cj9yaujzn000mvgwzh2a78el0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -968,7 +1042,7 @@ console.log(numbers.some(isOutsideRange, range))
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" data-id="cj9wl7zm400003cwzzasip6nb" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" data-id="cj9yaujyu0005vgwzbwyqu0w4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1079,7 +1153,7 @@ person1.hasOwnProperty(&#39;name&#39;) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/03/原型和原型链/" data-id="cj9wl7znl000n3cwzczkr1q97" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/03/原型和原型链/" data-id="cj9yaujzj000kvgwzl0ei2fu0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1087,53 +1161,6 @@ person1.hasOwnProperty(&#39;name&#39;) // true
   <div class="article-meta">
     <a href="/2017/07/03/原型和原型链/" class="article-date">
   Posted by Hexo on <time datetime="2017-07-03T14:15:57.000Z" itemprop="datePublished">2017-07-03</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/06/27/隐式类型转换的方式/" >
-      <article id="post-隐式类型转换的方式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/27/隐式类型转换的方式/">隐式类型转换的方式</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="数字运算符"><a href="#数字运算符" class="headerlink" title="数字运算符"></a>数字运算符</h2><p>使用数字运算符“+”或“-”：</p>
-<pre><code>10 + &#39;5&#39; = &#39;105&#39;  +转换为字符串
-10 - &#39;5&#39; = 5  -转换为数字
-</code></pre><h2 id="调用方法"><a href="#调用方法" class="headerlink" title=".调用方法"></a>.调用方法</h2><p>‘aaa’为直接类型，不含方法；new String(‘aaa’)为对象类型，含原型方法。’aaa’.split(‘’)时实际将直接类型转换为对象类型来操作，也是一种隐式类型转换。</p>
-<h2 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h2><p>略</p>
-<h2 id="或"><a href="#或" class="headerlink" title="== 或 ==="></a>== 或 ===</h2><p>略</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/隐式类型转换的方式/" data-id="cj9wl7znk000m3cwz12h8zvlo" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/06/27/隐式类型转换的方式/" class="article-date">
-  Posted by Hexo on <time datetime="2017-06-27T13:53:58.000Z" itemprop="datePublished">2017-06-27</time>
 </a>
     
   </div>

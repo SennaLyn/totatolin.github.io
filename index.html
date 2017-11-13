@@ -73,6 +73,106 @@
     
   
     <div class="index-page">
+    <a href="/2017/11/13/水平居中和垂直居中方法总结/" >
+      <article id="post-水平居中和垂直居中方法总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/13/水平居中和垂直居中方法总结/">水平居中和垂直居中方法总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="基本方法"><a href="#基本方法" class="headerlink" title="基本方法"></a>基本方法</h2><p>1.已知宽度块元素宽度</p>
+<pre><code>.child{width:1000px;margin:0 auto;}
+</code></pre><p>2.文本内容居中</p>
+<pre><code>.parent{text-align:center;}
+</code></pre><p>3.文本垂直居中 </p>
+<pre><code>.child{height:20px;line-height:20px}
+</code></pre><h2 id="综合使用"><a href="#综合使用" class="headerlink" title="综合使用"></a>综合使用</h2><p>1.已知尺寸，设置position: absolute方法</p>
+<pre><code>.parent {position:relative;}
+.child {
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:150px;
+    height:150px;
+    margin-left:-75px;
+    margin-top:-75px;
+}
+</code></pre><p>2.未知尺寸，设置position: absolute方法</p>
+<pre><code>.parent{position:relative;}
+.child{
+    position:absolute;
+    top:50%;
+    left:50%;
+    -webkit-transform:translateX(-50%);
+    transform:translateX(-50%);
+    -webkit-transform:translateY(-50%);
+    transform:translateY(-50%);
+}
+</code></pre><p>3.设置position: absolute方法，各方向均设置为0</p>
+<pre><code>content { 
+    position:absolute; 
+    top:0; 
+    bottom:0;
+    left:0; 
+    right:0; 
+    margin:auto; 
+    height:240px; 
+    width:70%; 
+}
+</code></pre><p>4.display: table-cell属性</p>
+<pre><code>.parent {
+  height: 100px;
+  width: 100px;
+  background: #eee;
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+.child {
+  color: red;
+  background: red;
+  display: inline-block;
+}
+</code></pre><p>5.display: flex属性</p>
+<pre><code>.parent{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/11/13/水平居中和垂直居中方法总结/" data-id="cj9yaujzo000nvgwzq7ythzqf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/11/13/水平居中和垂直居中方法总结/" class="article-date">
+  Posted by Hexo on <time datetime="2017-11-13T14:36:03.000Z" itemprop="datePublished">2017-11-13</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/11/12/new操作符/" >
       <article id="post-new操作符" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -110,7 +210,7 @@ console.log(a.x); // 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/11/12/new操作符/" data-id="cj9wl7znf000i3cwzr4z1zafs" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/11/12/new操作符/" data-id="cj9yaujze000gvgwzc5kaaybt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -246,7 +346,7 @@ a.showX(); // 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/11/09/this详解/" data-id="cj9wl7zne000h3cwz38fcl3iz" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/11/09/this详解/" data-id="cj9yaujzg000ivgwzslgb17qx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -309,7 +409,7 @@ console.log(b === Math.pow(2,7)) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/11/01/ES7新特性/" data-id="cj9wl7zma00013cwz405mwn6j" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/11/01/ES7新特性/" data-id="cj9yaujym0002vgwzgoas2ovg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -448,7 +548,7 @@ Access-Control-Allow-Origin: http://a.com   # 只允许所有域名访问
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/30/跨域详细梳理/" data-id="cj9wl7znm000o3cwzmximwug6" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/30/跨域详细梳理/" data-id="cj9yaujzp000ovgwz5eln62lf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -507,7 +607,7 @@ function CreateFragments(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/26/使用DocumentFragment加快DOM渲染速度/" data-id="cj9wl7zni000k3cwzpbphjtfl" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/26/使用DocumentFragment加快DOM渲染速度/" data-id="cj9yaujzl000lvgwziitln2ck" class="article-share-link">Share</a>
       
       
     </footer>
@@ -563,7 +663,7 @@ function CreateFragments(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/23/web缓存机制/" data-id="cj9wl7znh000j3cwzo3lqsu3a" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/23/web缓存机制/" data-id="cj9yaujzi000jvgwzfyh5g7wl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -766,7 +866,7 @@ setTimeout(function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/23/IndexedDB存储机制/" data-id="cj9wl7zmd00023cwzfrtbsoui" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/23/IndexedDB存储机制/" data-id="cj9yaujyk0001vgwz6e191nut" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1182,7 +1282,7 @@ b.m() // 2
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cj9wl7zn4000c3cwz5l05gxe5" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cj9yaujz7000dvgwzu7jppo8s" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1421,7 +1521,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cj9wl7zn2000b3cwz2vokiug2" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cj9yaujz6000cvgwz6lnglgxt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1429,80 +1529,6 @@ Foo.bar() // hello
   <div class="article-meta">
     <a href="/2017/10/16/JS类/" class="article-date">
   Posted by Hexo on <time datetime="2017-10-16T14:10:28.000Z" itemprop="datePublished">2017-10-16</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/07/31/JS的算法-排序算法/" >
-      <article id="post-JS的算法-排序算法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/31/JS的算法-排序算法/">JS的算法--排序算法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>最简单的排序方式，但是运行性能是最差的。<br>冒泡排序比较任何两个相邻的项，如果第一个比第二个大，则交换它们。元素项向上移动至正确的顺序，就好像气泡升至表面一样，因此得名。<br>首先，声明一个名为length的变量，用来存储数组的长度。接着，外循环会从数组的第一位迭代至最后一位，它控制了在数组中经过多少轮排序。然后，内循环从第一位开始，每一轮减少（i+1）位，内循环实际上进行当前项和下一项的比较。如果这两项顺序不对（当前项比下一项大），则交换它们，意思是位置为j+1的值将会被换置到位置j处，反之亦然。</p>
-<pre><code>this.bubbleSort = function(array){
-    var length = array.length;
-    var swap = function(index1, index2){
-        var aux = array[index1];
-        array[index1] = array[index2];
-        array[index2] = aux;
-    };
-    for (var i=0; i&lt;length; i++){
-        for (var j=0; j&lt;length-i-1; j++ ){
-            if (array[j] &gt; array[j+1]){
-                swap(j, j+1);
-            }
-        }
-    }
-    console.log(array);
-};
-</code></pre><h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p>选择排序算法是一种原址比较排序算法。选择排序大致的思路是找到数据结构中的最小值并将其放置在第一位，接着找到第二小的值并将其放在第二位，以此类推。<br>首先声明一些将在算法内使用的变量。接着，外循环迭代数组，并控制迭代轮次（数组的第n个值–下一个最小值）。我们假设本迭代轮次的第一个值为数组最小值；如果是，则改变最小值至新最小值。当内循环结束，将得出数组第n小的值。最后，如果该最小值和原最小值不同，则交换其值。</p>
-<pre><code>this.selectionSort = function(){
-    var length = array.length,
-        indexMin;
-    for (var i=0; i&lt;length-1; i++){
-        indexMin = i;
-        for (var j=i; j&lt;length; j++){
-            if(array[indexMin]&gt;array[j]){
-                indexMin = j;
-            }
-        }
-        if (i !== indexMin){
-            swap(i, indexMin);
-        }
-    }
-};
-</code></pre><h3 id="未完待续。。。"><a href="#未完待续。。。" class="headerlink" title="未完待续。。。"></a>未完待续。。。</h3>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cj9wl7zn1000a3cwz1npgqimg" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/07/31/JS的算法-排序算法/" class="article-date">
-  Posted by Hexo on <time datetime="2017-07-31T14:15:19.000Z" itemprop="datePublished">2017-07-31</time>
 </a>
     
   </div>
