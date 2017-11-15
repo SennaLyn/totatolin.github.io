@@ -73,6 +73,162 @@
     
   
     <div class="index-page">
+    <a href="/2017/11/15/字符串常用方法总结/" >
+      <article id="post-字符串常用方法总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/15/字符串常用方法总结/">字符串常用方法总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="length属性"><a href="#length属性" class="headerlink" title="length属性"></a>length属性</h2><p>length算是字符串中非常常用的一个属性了，它的功能是获取字符串的长度。当然需要注意的是js中的中文每个汉字也只代表一个字符，这里可能跟其他语言有些不一样。</p>
+<pre><code>var str = &#39;abc&#39;;
+console.log(str.length);
+</code></pre><h2 id="prototype属性"><a href="#prototype属性" class="headerlink" title="prototype属性"></a>prototype属性</h2><p>prototype在面向对象编程中会经常用到，用来给对象添加属性或方法，并且添加的方法或属性在所有的实例上共享。因此也常用来扩展js内置对象，如下面的代码给字符串添加了一个去除两边空格的方法：</p>
+<pre><code>String.prototype.trim = function(){
+    return this.replace(/^\s*|\s*$/g, &#39;&#39;);
+}
+</code></pre><h2 id="charAt"><a href="#charAt" class="headerlink" title="charAt()"></a>charAt()</h2><p>charAt()方法可用来获取指定位置的字符串，index为字符串索引值，从0开始到string.leng - 1，若不在这个范围将返回一个空字符串。如：</p>
+<pre><code>var str = &#39;abcde&#39;;
+console.log(str.charAt(2)); 
+//返回c
+console.log(str.charAt(8)); 
+//返回空字符串
+</code></pre><h2 id="charCodeAt"><a href="#charCodeAt" class="headerlink" title="charCodeAt()"></a>charCodeAt()</h2><p>charCodeAt()方法可返回指定位置的字符的Unicode编码。charCodeAt()方法与charAt()方法类似，都需要传入一个索引值作为参数，区别是前者返回指定位置的字符的编码，而后者返回的是字符子串。</p>
+<pre><code>var str = &#39;abcde&#39;;
+console.log(str.charCodeAt(0)); 
+//返回97
+</code></pre><h2 id="fromCharCode"><a href="#fromCharCode" class="headerlink" title="fromCharCode()"></a>fromCharCode()</h2><p>fromCharCode()可接受一个或多个Unicode值，然后返回一个字符串。另外该方法是String 的静态方法，字符串中的每个字符都由单独的数字Unicode编码指定。</p>
+<pre><code>String.fromCharCode(97, 98, 99, 100, 101) 
+//返回abcde
+</code></pre><h2 id="indexOf"><a href="#indexOf" class="headerlink" title="indexOf()"></a>indexOf()</h2><p>indexOf()用来检索指定的字符串值在字符串中首次出现的位置。它可以接收两个参数，searchvalue表示要查找的子字符串，fromindex表示查找的开始位置，省略的话则从开始位置进行检索。</p>
+<pre><code>var str = &#39;abcdeabcde&#39;;
+console.log(str.indexOf(&#39;a&#39;));    
+// 返回0
+console.log(str.indexOf(&#39;a&#39;, 3));    
+// 返回5
+console.log(str.indexOf(&#39;bc&#39;));    
+// 返回1
+</code></pre><h2 id="lastIndexOf"><a href="#lastIndexOf" class="headerlink" title="lastIndexOf()"></a>lastIndexOf()</h2><p>lastIndexOf()语法与indexOf()类似，它返回的是一个指定的子字符串值最后出现的位置，其检索顺序是从后向前。</p>
+<pre><code>var str = &#39;abcdeabcde&#39;;
+console.log(str.lastIndexOf(&#39;a&#39;));    
+// 返回5
+console.log(str.lastIndexOf(&#39;a&#39;, 3));    
+// 返回0
+从第索引3的位置往前检索
+console.log(str.lastIndexOf(&#39;bc&#39;));    
+// 返回6
+</code></pre><h2 id="search"><a href="#search" class="headerlink" title="search()"></a>search()</h2><p>search()方法用于检索字符串中指定的子字符串，或检索与正则表达式相匹配的子字符串。它会返回第一个匹配的子字符串的起始位置，如果没有匹配的，则返回-1。</p>
+<pre><code>var str = &#39;abcDEF&#39;;
+console.log(str.search(&#39;c&#39;));    
+//返回2
+console.log(str.search(&#39;d&#39;));    
+//返回-1
+console.log(str.search(/d/i));    
+//返回3
+</code></pre><h2 id="match"><a href="#match" class="headerlink" title="match()"></a>match()</h2><p>match()方法可在字符串内检索指定的值，或找到一个或多个正则表达式的匹配。</p>
+<p>如果参数中传入的是子字符串或是没有进行全局匹配的正则表达式，那么match()方法会从开始位置执行一次匹配，如果没有匹配到结果，则返回null。否则则会返回一个数组，该数组的第0个元素存放的是匹配文本，除此之外，返回的数组还含有两个对象属性index和input，分别表示匹配文本的起始字符索引和stringObject 的引用(即原字符串)。</p>
+<pre><code>var str = &#39;1a2b3c4d5e&#39;;
+console.log(str.match(&#39;h&#39;));    
+//返回null
+console.log(str.match(&#39;b&#39;));    
+//返回[&quot;b&quot;, index: 3, input: &quot;1a2b3c4d5e&quot;]
+console.log(str.match(/b/));    
+//返回[&quot;b&quot;, index: 3, input: &quot;1a2b3c4d5e&quot;]
+</code></pre><p>如果参数传入的是具有全局匹配的正则表达式，那么match()从开始位置进行多次匹配，直到最后。如果没有匹配到结果，则返回null。否则则会返回一个数组，数组中存放所有符合要求的子字符串，并且没有index和input属性。</p>
+<pre><code>var str = &#39;1a2b3c4d5e&#39;;
+console.log(str.match(/h/g));    
+//返回null
+console.log(str.match(/\d/g));    
+//返回[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;]
+</code></pre><h2 id="substring"><a href="#substring" class="headerlink" title="substring()"></a>substring()</h2><p>substring()是最常用到的字符串截取方法，它可以接收两个参数(参数不能为负值)，分别是要截取的开始位置和结束位置，它将返回一个新的字符串，其内容是从start处到end-1处的所有字符。若结束参数(end)省略，则表示从start位置一直截取到最后。</p>
+<pre><code>var str = &#39;abcdefg&#39;;
+console.log(str.substring(1, 4));    
+//返回bcd
+console.log(str.substring(1));    
+//返回bcdefg
+console.log(str.substring(-1));    
+//返回abcdefg，传入负值时会视为0
+</code></pre><h2 id="slice"><a href="#slice" class="headerlink" title="slice()"></a>slice()</h2><p>slice()方法与substring()方法非常类似，它传入的两个参数也分别对应着开始位置和结束位置。而区别在于，slice()中的参数可以为负值，如果参数是负数，则该参数规定的是从字符串的尾部开始算起的位置。也就是说，-1 指字符串的最后一个字符。</p>
+<pre><code>var str = &#39;abcdefg&#39;;
+console.log(str.slice(1, 4));    
+//返回bcd
+console.log(str.slice(-3, -1));    
+//返回ef
+console.log(str.slice(1, -1));    
+//返回bcdef
+console.log(str.slice(-1, -3));    
+//返回空字符串，若传入的参数有问题，则返回空
+</code></pre><h2 id="substr"><a href="#substr" class="headerlink" title="substr()"></a>substr()</h2><p>substr()方法可在字符串中抽取从start下标开始的指定数目的字符。其返回值为一个字符串，包含从 stringObject的start（包括start所指的字符）处开始的length个字符。如果没有指定 length，那么返回的字符串包含从start到stringObject的结尾的字符。另外如果start为负数，则表示从字符串尾部开始算起。</p>
+<pre><code>var str = &#39;abcdefg&#39;;
+console.log(str.substr(1, 3))    
+//返回bcd
+console.log(str.substr(2))    
+//返回cdefg
+console.log(str.substr(-2, 4))    
+//返回fg，目标长度较大的话，以实际截取的长度为准
+</code></pre><h2 id="replace"><a href="#replace" class="headerlink" title="replace()"></a>replace()</h2><p>replace()方法用来进行字符串替换操作，它可以接收两个参数，前者为被替换的子字符串（可以是正则），后者为用来替换的文本。</p>
+<p>如果第一个参数传入的是子字符串或是没有进行全局匹配的正则表达式，那么replace()方法将只进行一次替换（即替换最前面的），返回经过一次替换后的结果字符串。</p>
+<pre><code>var str = &#39;abcdeabcde&#39;;
+console.log(str.replace(&#39;a&#39;, &#39;A&#39;));
+console.log(str.replace(/a/, &#39;A&#39;));
+</code></pre><p>如果第一个参数传入的全局匹配的正则表达式，那么replace()将会对符合条件的子字符串进行多次替换，最后返回经过多次替换的结果字符串。</p>
+<pre><code>var str = &#39;abcdeabcdeABCDE&#39;;
+console.log(str.replace(/a/g, &#39;A&#39;));    
+//返回AbcdeAbcdeABCDE
+console.log(str.replace(/a/gi, &#39;$&#39;));    
+//返回$bcde$bcde$BCDE
+</code></pre><h2 id="split"><a href="#split" class="headerlink" title="split()"></a>split()</h2><p>split()方法用于把一个字符串分割成字符串数组。第一个参数separator表示分割位置(参考符)，第二个参数howmany表示返回数组的允许最大长度(一般情况下不设置)。</p>
+<pre><code>var str = &#39;a|b|c|d|e&#39;;
+console.log(str.split(&#39;|&#39;));    
+//返回[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;]
+console.log(str.split(&#39;|&#39;, 3));    
+//返回[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
+console.log(str.split(&#39;&#39;));    
+//返回[&quot;a&quot;, &quot;|&quot;, &quot;b&quot;, &quot;|&quot;, &quot;c&quot;, &quot;|&quot;, &quot;d&quot;, &quot;|&quot;, &quot;e&quot;]
+</code></pre><p>也可以用正则来进行分割</p>
+<pre><code>var str = &#39;a1b2c3d4e&#39;;
+console.log(str.split(/\d/)); 
+//返回[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;]
+</code></pre><h2 id="toLowerCase-和toUpperCase"><a href="#toLowerCase-和toUpperCase" class="headerlink" title="toLowerCase()和toUpperCase()"></a>toLowerCase()和toUpperCase()</h2><p>toLowerCase()方法可以把字符串中的大写字母转换为小写，toUpperCase()方法可以把字符串中的小写字母转换为大写。</p>
+<pre><code>var str = &#39;JavaScript&#39;;
+console.log(str.toLowerCase());    
+//返回javascript
+console.log(str.toUpperCase());    
+//返回JAVASCRIPT
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/11/15/字符串常用方法总结/" data-id="cja14v686000l2cwzdp8tcicl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/11/15/字符串常用方法总结/" class="article-date">
+  Posted by Hexo on <time datetime="2017-11-15T14:16:57.000Z" itemprop="datePublished">2017-11-15</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/11/13/水平居中和垂直居中方法总结/" >
       <article id="post-水平居中和垂直居中方法总结" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -154,7 +310,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/11/13/水平居中和垂直居中方法总结/" data-id="cj9yaujzo000nvgwzq7ythzqf" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/11/13/水平居中和垂直居中方法总结/" data-id="cja14v68a000p2cwzfabt6ohr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -210,7 +366,7 @@ console.log(a.x); // 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/11/12/new操作符/" data-id="cj9yaujze000gvgwzc5kaaybt" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/11/12/new操作符/" data-id="cja14v67r000d2cwz0xb324h6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -346,7 +502,7 @@ a.showX(); // 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/11/09/this详解/" data-id="cj9yaujzg000ivgwzslgb17qx" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/11/09/this详解/" data-id="cja14v67z000h2cwztpybc3bj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -409,7 +565,7 @@ console.log(b === Math.pow(2,7)) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/11/01/ES7新特性/" data-id="cj9yaujym0002vgwzgoas2ovg" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/11/01/ES7新特性/" data-id="cja14v66w00022cwzpfnlm851" class="article-share-link">Share</a>
       
       
     </footer>
@@ -548,7 +704,7 @@ Access-Control-Allow-Origin: http://a.com   # 只允许所有域名访问
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/30/跨域详细梳理/" data-id="cj9yaujzp000ovgwz5eln62lf" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/30/跨域详细梳理/" data-id="cja14v688000n2cwzya42qza4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -607,7 +763,7 @@ function CreateFragments(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/26/使用DocumentFragment加快DOM渲染速度/" data-id="cj9yaujzl000lvgwziitln2ck" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/26/使用DocumentFragment加快DOM渲染速度/" data-id="cja14v683000j2cwznsj8jl5i" class="article-share-link">Share</a>
       
       
     </footer>
@@ -663,7 +819,7 @@ function CreateFragments(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/23/web缓存机制/" data-id="cj9yaujzi000jvgwzfyh5g7wl" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/23/web缓存机制/" data-id="cja14v680000i2cwz901qvnwl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -866,7 +1022,7 @@ setTimeout(function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/23/IndexedDB存储机制/" data-id="cj9yaujyk0001vgwz6e191nut" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/23/IndexedDB存储机制/" data-id="cja14v67000032cwza0myz0t4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1282,7 +1438,7 @@ b.m() // 2
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cj9yaujz7000dvgwzu7jppo8s" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cja14v67v000e2cwz8rckj44v" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1290,245 +1446,6 @@ b.m() // 2
   <div class="article-meta">
     <a href="/2017/10/18/JS类的继承/" class="article-date">
   Posted by Hexo on <time datetime="2017-10-18T14:04:54.000Z" itemprop="datePublished">2017-10-18</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/10/16/JS类/" >
-      <article id="post-JS类" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/16/JS类/">JS类</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="ES5"><a href="#ES5" class="headerlink" title="ES5"></a>ES5</h2><h3 id="构造函数方法"><a href="#构造函数方法" class="headerlink" title="构造函数方法"></a>构造函数方法</h3><pre><code>var Book = function (id, name, price) {
-    var num = 1; // 私有属性（外界访问不到）
-    function checkId () {} // 私有方法（外界访问不到）
-    this.id = id; // 公有属性（外界可以访问）
-    this.copy = function () {} // 公有方法（外界可以访问）
-    this.getNum = function () {} // 特权方法（可以通过该方法访问私有属性）
-}
-Book.prototype = {
-    isJSBook: false, // 共有属性
-    display: function () {} // 共有方法
-}
-Book.isChinese = true; // 类的静态共有属性（对象不能访问）
-Book.resetTime = function () {} // 类的静态共有方法（对象不能访问）
-
-var b = new Book(11, &#39;js&#39;, 50);
-console.log(b.num); // undefined
-console.log(b.isJSBook); // false
-console.log(b.id); // 11
-console.log(b.isChinese); // undefined
-</code></pre><h3 id="Object-create-方法"><a href="#Object-create-方法" class="headerlink" title="Object.create()方法"></a>Object.create()方法</h3><p>用这个方法，“类”就是一个对象，不是函数。</p>
-<pre><code>var Book = {
-    id: 1,
-    checkId: function () {}
-}
-var b = Object.create(Book);
-</code></pre><h3 id="极简主义方法"><a href="#极简主义方法" class="headerlink" title="极简主义方法"></a>极简主义方法</h3><pre><code>
-</code></pre><h2 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h2><pre><code>class Book {
-    #id; // 私有属性
-    #getId() {return #id}; // 私有方法
-    constructor(id, name) {
-        #id = id;
-        this.name = name;
-    }
-}
-</code></pre><h3 id="私有方法的实现"><a href="#私有方法的实现" class="headerlink" title="私有方法的实现"></a>私有方法的实现</h3><p>私有方法是常见需求，但 ES6 不提供，只能通过变通方法模拟实现。<br>一种做法是在命名上加以区别。_bar方法前面的下划线，表示这是一个只限于内部使用的私有方法。但是，这种命名是不保险的，在类的外部，还是可以调用到这个方法。</p>
-<pre><code>class Widget {
-
-  // 公有方法
-  foo (baz) {
-    this._bar(baz);
-  }
-
-  // 私有方法
-  _bar(baz) {
-    return this.snaf = baz;
-  }
-
-  // ...
-}
-</code></pre><p>另一种方法就是索性将私有方法移出模块，因为模块内部的所有方法都是对外可见的。foo是公有方法，内部调用了bar.call(this, baz)。这使得bar实际上成为了当前模块的私有方法。</p>
-<pre><code>class Widget {
-  foo (baz) {
-    bar.call(this, baz);
-  }
-
-  // ...
-}
-
-function bar(baz) {
-  return this.snaf = baz;
-}
-</code></pre><p>还有一种方法是利用Symbol值的唯一性，将私有方法的名字命名为一个Symbol值。bar和snaf都是Symbol值，导致第三方无法获取到它们，因此达到了私有方法和私有属性的效果。</p>
-<pre><code>const bar = Symbol(&#39;bar&#39;);
-const snaf = Symbol(&#39;snaf&#39;);
-
-export default class myClass{
-
-  // 公有方法
-  foo(baz) {
-    this[bar](baz);
-  }
-
-  // 私有方法
-  [bar](baz) {
-    return this[snaf] = baz;
-  }
-
-  // ...
-};
-</code></pre><h3 id="this的指向"><a href="#this的指向" class="headerlink" title="this的指向"></a>this的指向</h3><p>类的方法内部如果含有this，它默认指向类的实例。但是，必须非常小心，一旦单独使用该方法，很可能报错。printName方法中的this，默认指向Logger类的实例。但是，如果将这个方法提取出来单独使用，this会指向该方法运行时所在的环境，因为找不到print方法而导致报错。</p>
-<pre><code>class Logger {
-  printName(name = &#39;there&#39;) {
-    this.print(`Hello ${name}`);
-  }
-
-  print(text) {
-    console.log(text);
-  }
-}
-
-const logger = new Logger();
-const { printName } = logger;
-printName(); // TypeError: Cannot read property &#39;print&#39; of undefined
-</code></pre><p>一个比较简单的解决方法是，在构造方法中绑定this，这样就不会找不到print方法了。</p>
-<pre><code>class Logger {
-  constructor() {
-    this.printName = this.printName.bind(this);
-  }
-
-  // ...
-}
-</code></pre><p>另一种解决方法是使用箭头函数。</p>
-<pre><code>class Logger {
-  constructor() {
-    this.printName = (name = &#39;there&#39;) =&gt; {
-      this.print(`Hello ${name}`);
-    };
-  }
-
-  // ...
-}
-</code></pre><p>还有一种解决方法是使用Proxy，获取方法的时候，自动绑定this。</p>
-<pre><code>function selfish (target) {
-  const cache = new WeakMap();
-  const handler = {
-    get (target, key) {
-      const value = Reflect.get(target, key);
-      if (typeof value !== &#39;function&#39;) {
-        return value;
-      }
-      if (!cache.has(value)) {
-        cache.set(value, value.bind(target));
-      }
-      return cache.get(value);
-    }
-  };
-  const proxy = new Proxy(target, handler);
-  return proxy;
-}
-
-const logger = selfish(new Logger());
-</code></pre><h3 id="Class的取值函数（getter）和存值函数（setter）"><a href="#Class的取值函数（getter）和存值函数（setter）" class="headerlink" title="Class的取值函数（getter）和存值函数（setter）"></a>Class的取值函数（getter）和存值函数（setter）</h3><p>与 ES5 一样，在“类”的内部可以使用get和set关键字，对某个属性设置存值函数和取值函数，拦截该属性的存取行为。prop属性有对应的存值函数和取值函数，因此赋值和读取行为都被自定义了。</p>
-<pre><code>class MyClass {
-  constructor() {
-    // ...
-  }
-  get prop() {
-    return &#39;getter&#39;;
-  }
-  set prop(value) {
-    console.log(&#39;setter: &#39;+value);
-  }
-}
-
-let inst = new MyClass();
-
-inst.prop = 123;
-// setter: 123
-
-inst.prop
-// &#39;getter&#39;
-</code></pre><p>存值函数和取值函数是设置在属性的 Descriptor 对象上的。存值函数和取值函数是定义在html属性的描述对象上面，这与 ES5 完全一致。</p>
-<pre><code>class CustomHTMLElement {
-  constructor(element) {
-    this.element = element;
-  }
-
-  get html() {
-    return this.element.innerHTML;
-  }
-
-  set html(value) {
-    this.element.innerHTML = value;
-  }
-}
-
-var descriptor = Object.getOwnPropertyDescriptor(
-  CustomHTMLElement.prototype, &quot;html&quot;
-);
-
-&quot;get&quot; in descriptor  // true
-&quot;set&quot; in descriptor  // true
-</code></pre><h3 id="Class的静态方法"><a href="#Class的静态方法" class="headerlink" title="Class的静态方法"></a>Class的静态方法</h3><p>类相当于实例的原型，所有在类中定义的方法，都会被实例继承。如果在一个方法前，加上static关键字，就表示该方法不会被实例继承，而是直接通过类来调用，这就称为“静态方法”。Foo类的classMethod方法前有static关键字，表明该方法是一个静态方法，可以直接在Foo类上调用（Foo.classMethod()），而不是在Foo类的实例上调用。如果在实例上调用静态方法，会抛出一个错误，表示不存在该方法。</p>
-<pre><code>class Foo {
-  static classMethod() {
-    return &#39;hello&#39;;
-  }
-}
-
-Foo.classMethod() // &#39;hello&#39;
-
-var foo = new Foo();
-foo.classMethod()
-// TypeError: foo.classMethod is not a function
-</code></pre><p>注意，如果静态方法包含this关键字，这个this指的是类，而不是实例。静态方法bar调用了this.baz，这里的this指的是Foo类，而不是Foo的实例，等同于调用Foo.baz。另外，从这个例子还可以看出，静态方法可以与非静态方法重名。</p>
-<pre><code>class Foo {
-  static bar () {
-    this.baz();
-  }
-  static baz () {
-    console.log(&#39;hello&#39;);
-  }
-  baz () {
-    console.log(&#39;world&#39;);
-  }
-}
-
-Foo.bar() // hello
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cj9yaujz6000cvgwz6lnglgxt" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/10/16/JS类/" class="article-date">
-  Posted by Hexo on <time datetime="2017-10-16T14:10:28.000Z" itemprop="datePublished">2017-10-16</time>
 </a>
     
   </div>

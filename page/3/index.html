@@ -73,6 +73,117 @@
     
   
     <div class="index-page">
+    <a href="/2017/07/03/原型和原型链/" >
+      <article id="post-原型和原型链" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/03/原型和原型链/">原型和原型链</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><p>使用构造函数来创建对象</p>
+<pre><code>function Person() {
+
+}
+var person1 = new Person()
+</code></pre><p>Person就是一个构造函数，通过new创建了person1对象实例。其实构造函数就和普通函数没有多大区别，首字母大写只是约定俗成，不大写照样可以。关键是调用它的方式——通过new，那么这里又会牵扯到另一个问题，使用new调用后会内部会执行哪些操作。</p>
+<h2 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h2><pre><code>function Person() {
+
+}
+Person.prototype.name = &#39;lin&#39;
+var person1 = new Person()
+console.log(person1.name) // lin
+</code></pre><p>这个并不是构造函数专有，每个函数都会有一个prototype属性，这个属性是一个指针，指向一个对象，记住只有函数才有，并且通过bind()绑定的也没有。prototype指向Person.prototype，Person.prototype就是原型对象，也就是person1的原型。原型对象的好处是可以让所有对象实例共享它所包含的属性和方法。</p>
+<h2 id="proto"><a href="#proto" class="headerlink" title="proto"></a><strong>proto</strong></h2><pre><code>function Person() {
+
+}
+Person.prototype.name = &#39;lin&#39;
+var person1 = new Person()
+console.log(person1.__proto__ === Person.prototype) // true
+</code></pre><p>所以总结可得proto就是用来将对象与该对象的原型相连。</p>
+<pre><code>// instanceof这个操作符只能处理对象(person1)和函数(带.prototype引用的Person)之间的关系
+person1 instanceof Person // true
+
+// isPrototypeOf如果[[prototype]]指向调用此方法的对象，那么这个方法就会返回true
+Person.prototype.isPrototypeOf(person1) // true
+
+// Object.getPrototypeOf这个方法返回[[prototype]]的值，可以获取到一个对象的原型
+Object.getPrototypeOf(person1) === Person.prototype // true
+</code></pre><h2 id="constuctor"><a href="#constuctor" class="headerlink" title="constuctor"></a>constuctor</h2><pre><code>function Person() {
+
+}
+var person1 = new Person()
+Person.prototype.constructor === Person // true
+person1.constructor === Person // true
+</code></pre><h2 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h2><p>我们既然探索完了他们的关系，那我们来继续探索一下原型和原型链的奥秘所在，其实原型链就是依托proto和prototype连接起来的。<br>下面代码中在实例属性和原型属性都有一个名为name的属性，但是最后输出来的是实例属性上的值。当我们读取一个属性的时候，如果在实例属性上找到了，就读取它，不会管原型属性上是否还有相同的属性，这其实就是属性屏蔽。即当实例属性和原型属性拥有相同名字的时候，实例属性会屏蔽原型属性，记住只是屏蔽，不会修改，原型属性那个值还在。</p>
+<pre><code>function Person() {
+
+}
+// 原型属性
+Person.prototype.name = &#39;lin&#39;
+
+var person1 = new Person()
+
+// 实例属性
+person1.name = &#39;L&#39;
+
+console.log(person1.name) // L
+</code></pre><p>下面代码中person1实例并没有name属性，但仍然可以输出值，就是在原型上找到的。</p>
+<pre><code>function Person() {
+
+}
+// 原型属性
+Person.prototype.name = &#39;lin&#39;
+
+var person1 = new Person()
+
+console.log(person1.name) // lin
+</code></pre><p>使用方法hasOwnProperty，属性只有存在于实例中才会返回true</p>
+<pre><code>function Person() {
+
+}
+var person1 = new Person()
+
+// 实例属性
+person1.name = &#39;L&#39;
+person1.hasOwnProperty(&#39;name&#39;) // true
+</code></pre><p>in操作符则会遍历所有属性，不管是实例上的，还是原型上的。</p>
+<pre><code>&#39;name&#39; in person1 // true
+</code></pre><p>Object.prototype没有原型，为null，它就是尽头。</p>
+<pre><code>Object.prototype.__proto__ // null
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/07/03/原型和原型链/" data-id="cja14v684000k2cwzfnx4xnxb" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/07/03/原型和原型链/" class="article-date">
+  Posted by Hexo on <time datetime="2017-07-03T14:15:57.000Z" itemprop="datePublished">2017-07-03</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/06/27/隐式类型转换的方式/" >
       <article id="post-隐式类型转换的方式" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -101,7 +212,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/隐式类型转换的方式/" data-id="cj9yaujzq000pvgwzs12knhmj" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/隐式类型转换的方式/" data-id="cja14v689000o2cwz3q08hpw1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -161,7 +272,7 @@ document.write(typeof(num)); // number
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/JS中的一元运算符/" data-id="cj9yaujyq0003vgwzcvvqx45e" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/JS中的一元运算符/" data-id="cja14v68b000q2cwzoyko8ahd" class="article-share-link">Share</a>
       
       
     </footer>
@@ -327,7 +438,7 @@ var vm = new Vue({
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/Object-defineProperty用法/" data-id="cj9yaujz9000evgwzzn72cxhn" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/Object-defineProperty用法/" data-id="cja14v67q000c2cwz2kqdts6u" class="article-share-link">Share</a>
       
       
     </footer>
@@ -381,7 +492,7 @@ alert(color2);    //  yellow,black
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/" data-id="cj9yaujye0000vgwz6vrv7rtl" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/" data-id="cja14v66t00012cwzmc0eqdw1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -483,7 +594,7 @@ for (v of k) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" data-id="cj9yaujys0004vgwzxhvmysrd" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" data-id="cja14v67100042cwzswrrnrqm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -536,7 +647,7 @@ for (v of k) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/08/hello-world/" data-id="cj9yaujzb000fvgwzjw1hup8k" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/08/hello-world/" data-id="cja14v67w000f2cwzxharj8zk" class="article-share-link">Share</a>
       
       
     </footer>

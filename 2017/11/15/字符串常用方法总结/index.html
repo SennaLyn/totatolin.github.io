@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>字符串常用方法总结 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="length属性length算是字符串中非常常用的一个属性了，它的功能是获取字符串的长度。当然需要注意的是js中的中文每个汉字也只代表一个字符，这里可能跟其他语言有些不一样。 var str = &amp;#39;abc&amp;#39;; console.log(str.length); prototype属性prototype在面向对象编程中会经常用到，用来给对象添加属性或方法，并且添加的方法或属性在所有的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="字符串常用方法总结">
+<meta property="og:url" content="https://totatolin.github.io/2017/11/15/字符串常用方法总结/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="length属性length算是字符串中非常常用的一个属性了，它的功能是获取字符串的长度。当然需要注意的是js中的中文每个汉字也只代表一个字符，这里可能跟其他语言有些不一样。 var str = &amp;#39;abc&amp;#39;; console.log(str.length); prototype属性prototype在面向对象编程中会经常用到，用来给对象添加属性或方法，并且添加的方法或属性在所有的">
+<meta property="og:updated_time" content="2017-11-15T14:19:29.274Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="字符串常用方法总结">
+<meta name="twitter:description" content="length属性length算是字符串中非常常用的一个属性了，它的功能是获取字符串的长度。当然需要注意的是js中的中文每个汉字也只代表一个字符，这里可能跟其他语言有些不一样。 var str = &amp;#39;abc&amp;#39;; console.log(str.length); prototype属性prototype在面向对象编程中会经常用到，用来给对象添加属性或方法，并且添加的方法或属性在所有的">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/icon.ico">
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  <link href="css/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/paraiso-light.min.css">
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      
+<header id="header" style="width: 1400px;height: 360px;margin: 0 auto;">
+  <div id="banner"  ></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SennaLyn's Blog</a>
+      </h1>
+      
+        
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a href="/" class="nav-icon">Hexo Blog</a>
+      </nav>
+      <nav id="sub-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">HOME</a>
+        
+          <a class="main-nav-link" href="/archives">ARCHIVES</a>
+        
+          <a class="main-nav-link" href="/about">ABOUT</a>
+        
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://totatolin.github.io"></form>
+      </div>
+    </div>
+  </div>
+
+</header>
+<div class="outer">
+  <section id="main"><article id="post-字符串常用方法总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      字符串常用方法总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="length属性"><a href="#length属性" class="headerlink" title="length属性"></a>length属性</h2><p>length算是字符串中非常常用的一个属性了，它的功能是获取字符串的长度。当然需要注意的是js中的中文每个汉字也只代表一个字符，这里可能跟其他语言有些不一样。</p>
+<pre><code>var str = &#39;abc&#39;;
+console.log(str.length);
+</code></pre><h2 id="prototype属性"><a href="#prototype属性" class="headerlink" title="prototype属性"></a>prototype属性</h2><p>prototype在面向对象编程中会经常用到，用来给对象添加属性或方法，并且添加的方法或属性在所有的实例上共享。因此也常用来扩展js内置对象，如下面的代码给字符串添加了一个去除两边空格的方法：</p>
+<pre><code>String.prototype.trim = function(){
+    return this.replace(/^\s*|\s*$/g, &#39;&#39;);
+}
+</code></pre><h2 id="charAt"><a href="#charAt" class="headerlink" title="charAt()"></a>charAt()</h2><p>charAt()方法可用来获取指定位置的字符串，index为字符串索引值，从0开始到string.leng - 1，若不在这个范围将返回一个空字符串。如：</p>
+<pre><code>var str = &#39;abcde&#39;;
+console.log(str.charAt(2)); 
+//返回c
+console.log(str.charAt(8)); 
+//返回空字符串
+</code></pre><h2 id="charCodeAt"><a href="#charCodeAt" class="headerlink" title="charCodeAt()"></a>charCodeAt()</h2><p>charCodeAt()方法可返回指定位置的字符的Unicode编码。charCodeAt()方法与charAt()方法类似，都需要传入一个索引值作为参数，区别是前者返回指定位置的字符的编码，而后者返回的是字符子串。</p>
+<pre><code>var str = &#39;abcde&#39;;
+console.log(str.charCodeAt(0)); 
+//返回97
+</code></pre><h2 id="fromCharCode"><a href="#fromCharCode" class="headerlink" title="fromCharCode()"></a>fromCharCode()</h2><p>fromCharCode()可接受一个或多个Unicode值，然后返回一个字符串。另外该方法是String 的静态方法，字符串中的每个字符都由单独的数字Unicode编码指定。</p>
+<pre><code>String.fromCharCode(97, 98, 99, 100, 101) 
+//返回abcde
+</code></pre><h2 id="indexOf"><a href="#indexOf" class="headerlink" title="indexOf()"></a>indexOf()</h2><p>indexOf()用来检索指定的字符串值在字符串中首次出现的位置。它可以接收两个参数，searchvalue表示要查找的子字符串，fromindex表示查找的开始位置，省略的话则从开始位置进行检索。</p>
+<pre><code>var str = &#39;abcdeabcde&#39;;
+console.log(str.indexOf(&#39;a&#39;));    
+// 返回0
+console.log(str.indexOf(&#39;a&#39;, 3));    
+// 返回5
+console.log(str.indexOf(&#39;bc&#39;));    
+// 返回1
+</code></pre><h2 id="lastIndexOf"><a href="#lastIndexOf" class="headerlink" title="lastIndexOf()"></a>lastIndexOf()</h2><p>lastIndexOf()语法与indexOf()类似，它返回的是一个指定的子字符串值最后出现的位置，其检索顺序是从后向前。</p>
+<pre><code>var str = &#39;abcdeabcde&#39;;
+console.log(str.lastIndexOf(&#39;a&#39;));    
+// 返回5
+console.log(str.lastIndexOf(&#39;a&#39;, 3));    
+// 返回0
+从第索引3的位置往前检索
+console.log(str.lastIndexOf(&#39;bc&#39;));    
+// 返回6
+</code></pre><h2 id="search"><a href="#search" class="headerlink" title="search()"></a>search()</h2><p>search()方法用于检索字符串中指定的子字符串，或检索与正则表达式相匹配的子字符串。它会返回第一个匹配的子字符串的起始位置，如果没有匹配的，则返回-1。</p>
+<pre><code>var str = &#39;abcDEF&#39;;
+console.log(str.search(&#39;c&#39;));    
+//返回2
+console.log(str.search(&#39;d&#39;));    
+//返回-1
+console.log(str.search(/d/i));    
+//返回3
+</code></pre><h2 id="match"><a href="#match" class="headerlink" title="match()"></a>match()</h2><p>match()方法可在字符串内检索指定的值，或找到一个或多个正则表达式的匹配。</p>
+<p>如果参数中传入的是子字符串或是没有进行全局匹配的正则表达式，那么match()方法会从开始位置执行一次匹配，如果没有匹配到结果，则返回null。否则则会返回一个数组，该数组的第0个元素存放的是匹配文本，除此之外，返回的数组还含有两个对象属性index和input，分别表示匹配文本的起始字符索引和stringObject 的引用(即原字符串)。</p>
+<pre><code>var str = &#39;1a2b3c4d5e&#39;;
+console.log(str.match(&#39;h&#39;));    
+//返回null
+console.log(str.match(&#39;b&#39;));    
+//返回[&quot;b&quot;, index: 3, input: &quot;1a2b3c4d5e&quot;]
+console.log(str.match(/b/));    
+//返回[&quot;b&quot;, index: 3, input: &quot;1a2b3c4d5e&quot;]
+</code></pre><p>如果参数传入的是具有全局匹配的正则表达式，那么match()从开始位置进行多次匹配，直到最后。如果没有匹配到结果，则返回null。否则则会返回一个数组，数组中存放所有符合要求的子字符串，并且没有index和input属性。</p>
+<pre><code>var str = &#39;1a2b3c4d5e&#39;;
+console.log(str.match(/h/g));    
+//返回null
+console.log(str.match(/\d/g));    
+//返回[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;]
+</code></pre><h2 id="substring"><a href="#substring" class="headerlink" title="substring()"></a>substring()</h2><p>substring()是最常用到的字符串截取方法，它可以接收两个参数(参数不能为负值)，分别是要截取的开始位置和结束位置，它将返回一个新的字符串，其内容是从start处到end-1处的所有字符。若结束参数(end)省略，则表示从start位置一直截取到最后。</p>
+<pre><code>var str = &#39;abcdefg&#39;;
+console.log(str.substring(1, 4));    
+//返回bcd
+console.log(str.substring(1));    
+//返回bcdefg
+console.log(str.substring(-1));    
+//返回abcdefg，传入负值时会视为0
+</code></pre><h2 id="slice"><a href="#slice" class="headerlink" title="slice()"></a>slice()</h2><p>slice()方法与substring()方法非常类似，它传入的两个参数也分别对应着开始位置和结束位置。而区别在于，slice()中的参数可以为负值，如果参数是负数，则该参数规定的是从字符串的尾部开始算起的位置。也就是说，-1 指字符串的最后一个字符。</p>
+<pre><code>var str = &#39;abcdefg&#39;;
+console.log(str.slice(1, 4));    
+//返回bcd
+console.log(str.slice(-3, -1));    
+//返回ef
+console.log(str.slice(1, -1));    
+//返回bcdef
+console.log(str.slice(-1, -3));    
+//返回空字符串，若传入的参数有问题，则返回空
+</code></pre><h2 id="substr"><a href="#substr" class="headerlink" title="substr()"></a>substr()</h2><p>substr()方法可在字符串中抽取从start下标开始的指定数目的字符。其返回值为一个字符串，包含从 stringObject的start（包括start所指的字符）处开始的length个字符。如果没有指定 length，那么返回的字符串包含从start到stringObject的结尾的字符。另外如果start为负数，则表示从字符串尾部开始算起。</p>
+<pre><code>var str = &#39;abcdefg&#39;;
+console.log(str.substr(1, 3))    
+//返回bcd
+console.log(str.substr(2))    
+//返回cdefg
+console.log(str.substr(-2, 4))    
+//返回fg，目标长度较大的话，以实际截取的长度为准
+</code></pre><h2 id="replace"><a href="#replace" class="headerlink" title="replace()"></a>replace()</h2><p>replace()方法用来进行字符串替换操作，它可以接收两个参数，前者为被替换的子字符串（可以是正则），后者为用来替换的文本。</p>
+<p>如果第一个参数传入的是子字符串或是没有进行全局匹配的正则表达式，那么replace()方法将只进行一次替换（即替换最前面的），返回经过一次替换后的结果字符串。</p>
+<pre><code>var str = &#39;abcdeabcde&#39;;
+console.log(str.replace(&#39;a&#39;, &#39;A&#39;));
+console.log(str.replace(/a/, &#39;A&#39;));
+</code></pre><p>如果第一个参数传入的全局匹配的正则表达式，那么replace()将会对符合条件的子字符串进行多次替换，最后返回经过多次替换的结果字符串。</p>
+<pre><code>var str = &#39;abcdeabcdeABCDE&#39;;
+console.log(str.replace(/a/g, &#39;A&#39;));    
+//返回AbcdeAbcdeABCDE
+console.log(str.replace(/a/gi, &#39;$&#39;));    
+//返回$bcde$bcde$BCDE
+</code></pre><h2 id="split"><a href="#split" class="headerlink" title="split()"></a>split()</h2><p>split()方法用于把一个字符串分割成字符串数组。第一个参数separator表示分割位置(参考符)，第二个参数howmany表示返回数组的允许最大长度(一般情况下不设置)。</p>
+<pre><code>var str = &#39;a|b|c|d|e&#39;;
+console.log(str.split(&#39;|&#39;));    
+//返回[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;]
+console.log(str.split(&#39;|&#39;, 3));    
+//返回[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]
+console.log(str.split(&#39;&#39;));    
+//返回[&quot;a&quot;, &quot;|&quot;, &quot;b&quot;, &quot;|&quot;, &quot;c&quot;, &quot;|&quot;, &quot;d&quot;, &quot;|&quot;, &quot;e&quot;]
+</code></pre><p>也可以用正则来进行分割</p>
+<pre><code>var str = &#39;a1b2c3d4e&#39;;
+console.log(str.split(/\d/)); 
+//返回[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;]
+</code></pre><h2 id="toLowerCase-和toUpperCase"><a href="#toLowerCase-和toUpperCase" class="headerlink" title="toLowerCase()和toUpperCase()"></a>toLowerCase()和toUpperCase()</h2><p>toLowerCase()方法可以把字符串中的大写字母转换为小写，toUpperCase()方法可以把字符串中的小写字母转换为大写。</p>
+<pre><code>var str = &#39;JavaScript&#39;;
+console.log(str.toLowerCase());    
+//返回javascript
+console.log(str.toUpperCase());    
+//返回JAVASCRIPT
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/11/15/字符串常用方法总结/" data-id="cja14v686000l2cwzdp8tcicl" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/11/15/字符串常用方法总结/" class="article-date">
+  Posted by Hexo on <time datetime="2017-11-15T14:16:57.000Z" itemprop="datePublished">2017-11-15</time>
+</a>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/11/13/水平居中和垂直居中方法总结/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">水平居中和垂直居中方法总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+</div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      Copyright &copy; 2017 Lin Sen<br>
+      <p>
+      Theme by <a href="http//:fiowind.top">Fio</a> | <iframe style="display: inline-block;margin-left: 2px;margin-bottom: -5px;"src="https://ghbtns.com/github-btn.html?user=fiowind&repo=hexo-theme-sunshine&type=star&count=true" frameborder="0" scrolling="0" width="88px" height="20px"></iframe>
+      </p>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">HOME</a>
+  
+    <a href="/archives" class="mobile-nav-link">ARCHIVES</a>
+  
+    <a href="/about" class="mobile-nav-link">ABOUT</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+  </div>
+</body>
+</html>
