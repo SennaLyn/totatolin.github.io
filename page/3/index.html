@@ -73,6 +73,149 @@
     
   
     <div class="index-page">
+    <a href="/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" >
+      <article id="post-Array方法之fill、filter、every、some、map、reduce" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/04/Array方法之fill、filter、every、some、map、reduce/">Array方法之fill、filter、every、some、map、reduce</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="fill方法"><a href="#fill方法" class="headerlink" title="fill方法"></a>fill方法</h2><p>使用指定值填充数组。</p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><pre><code>array.fill(value [ , start [ , end]])
+</code></pre><h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p>array：必需。数组对象。<br>value：必需。用于填充数组的值。<br>start：可选。用于填充数组值的起始索引。默认值为0。<br>end：可选。用于填充数组值的结束索引。默认值是this对象的length属性。</p>
+<h3 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h3><p>如果start为负，则start被视为length+start，其中，length是数组的长度。如果end为负，则end被视为length+end。</p>
+<h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><pre><code>[0, 0, 0].fill(7, 1) // [0, 7, 7]
+[0, 0, 0].fill(7) // [7, 7, 7]
+</code></pre><h2 id="filter方法"><a href="#filter方法" class="headerlink" title="filter方法"></a>filter方法</h2><p>返回数组中的满足回调函数中指定的条件的元素。</p>
+<h3 id="语法-1"><a href="#语法-1" class="headerlink" title="语法"></a>语法</h3><pre><code>array.filter(callback[, thisArg])
+</code></pre><h3 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h3><p>array：必需。一个数组对象。<br>callback：必需。一个接受最多三个参数的函数。对于数组中的每个元素，filter方法都会调用callback函数一次。<br>thisArg：可选。可在callback函数中为其引用this关键字的对象。如果省略thisArg，则undefined将用作this值。</p>
+<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><p>一个包含回调函数为其返回true的所有值得新数组。如果回调函数为array的所有元素返回false，则新数组的长度为0。</p>
+<h3 id="备注-1"><a href="#备注-1" class="headerlink" title="备注"></a>备注</h3><p>对于数组中的每个元素，filter方法都会调用callback函数一次（采用升序索引顺序）。不为数组中缺少的元素调用该回调函数。除了数组对象外，filter方法可由具有length属性且具有已按数字编制索引的属性名的任何对象使用。</p>
+<h3 id="实例-1"><a href="#实例-1" class="headerlink" title="实例"></a>实例</h3><p>不带第三个参数</p>
+<pre><code>var arr = [5, &#39;element&#39;, 10, &#39;the&#39;, true]
+
+var result = arr.filter(
+    function (value) {
+        return (typeof value === &#39;string&#39;)
+    }
+)
+
+console.log(result) // element, the
+</code></pre><p>带第三个参数</p>
+<pre><code>var numbers = [6, 12, &#39;15&#39;, 16, &#39;the&#39;, -12]
+
+var checkNumericRange = function (value) {
+    if (typeof value !== &#39;number&#39;)
+        return false
+    else
+        return value &gt;= this.mininum &amp;&amp; value &lt;= this.maxinum
+}
+
+var obj = { mininum: 10, maxinum: 20 }
+
+var result = numbers.filter(checkNumericRange, obj)
+
+console.log(result) // 12, 16
+</code></pre><h2 id="every方法"><a href="#every方法" class="headerlink" title="every方法"></a>every方法</h2><h3 id="语法-2"><a href="#语法-2" class="headerlink" title="语法"></a>语法</h3><pre><code>array.every(callback[, thisArg])
+</code></pre><h3 id="参数-2"><a href="#参数-2" class="headerlink" title="参数"></a>参数</h3><p>array：必需。一个数组对象。<br>callback：必需。一个接受最多三个参数的函数。every方法会为array中的每个元素调用callback函数，直到callback返回false，或直到到达数组的结尾。<br>thisArg：可选。可在callback函数中为其引用this关键字的对象。如果省略thisArg，则undefined将用作this值。</p>
+<h3 id="返回值-1"><a href="#返回值-1" class="headerlink" title="返回值"></a>返回值</h3><p>如果callback函数为所有数组元素返回true，则为true；否则为false。如果数组没有元素，则every方法将返回true。</p>
+<h3 id="备注-2"><a href="#备注-2" class="headerlink" title="备注"></a>备注</h3><p>every方法会按升序顺序对每个数组元素调用一次callback函数，直到callback函数返回false。如果找到导致callback返回false的元素，则every方法会立即返回false。否则，every方法返回true。</p>
+<h3 id="实例-2"><a href="#实例-2" class="headerlink" title="实例"></a>实例</h3><p>不带第三个参数</p>
+<pre><code>var numbers = [2, 4, 5, 6, 8]
+
+function CheckIfEven(value, index, ar) {
+    console.log(value + &#39;&#39;)
+    if (value % 2 === 0)
+        return true
+    else
+        return false
+}
+
+if (numbers.every(CheckIfEven))
+    console.log(&#39;All are even&#39;)
+else
+    console.log(&#39;Some are not even&#39;)
+
+// 2 4 5 Some are not even
+</code></pre><p>带第三个参数</p>
+<pre><code>var numbers = [10, 15, 19]
+
+var checkNumericRange = function(value) {
+    if (typeof value !== &#39;number&#39;)
+        return false
+    else
+        return value &gt;= this.mininum &amp;&amp; value &lt;= this.maxinum
+}
+
+var obj = { mininum: 10, maxinum: 20 }
+
+if (numbers.every(checkNumericRange, obj))
+    console.log(&#39;All are within range&#39;)
+else 
+    console.log(&#39;Some are not within range&#39;)
+
+// All are within range
+</code></pre><h2 id="some方法"><a href="#some方法" class="headerlink" title="some方法"></a>some方法</h2><h3 id="语法-3"><a href="#语法-3" class="headerlink" title="语法"></a>语法</h3><pre><code>array.some(callback[, thisArg])
+</code></pre><h3 id="参数-3"><a href="#参数-3" class="headerlink" title="参数"></a>参数</h3><p>array：必需。一个数组对象。<br>callback：必需。一个接受最多三个参数的函数。some方法会为array中的每个元素调用callback函数，直到callback返回true，或直到到达数组的结尾<br>thisArg：可选。可在callback函数中为其引用this关键字的对象。如果省略thisArg，则undefined将用作this值。</p>
+<h3 id="返回值-2"><a href="#返回值-2" class="headerlink" title="返回值"></a>返回值</h3><p>如果callback函数为任何数组元素均返回true，则为true；否则为false</p>
+<h3 id="备注-3"><a href="#备注-3" class="headerlink" title="备注"></a>备注</h3><p>some方法会按升序索引顺序对每个数组元素调用callback函数，直到callback函数返回true。如果找到导致callback返回true的元素，则some方法会立即返回true。如果回调不对任何元素返回true，则some方法会返回false。</p>
+<h3 id="实例-3"><a href="#实例-3" class="headerlink" title="实例"></a>实例</h3><p>不带第三个参数</p>
+<pre><code>var numbers = [1, 15, 4, 10, 11, 22]
+
+function CheckIfEven(value, index, ar) {
+    if (value % 2 === 0)
+        return true
+}
+
+var evens = numbers.some(CheckIfEven)
+
+console.log(evens)
+// true
+</code></pre><p>带第三个参数</p>
+<pre><code>var numbers = [6, 12, 16, 22, -12]
+
+var isOutsideRange = function (value) {
+    return value &lt; this.mininum || value &gt; this.maxinum
+}
+
+var range = { mininum: 10, maxinum: 20 }
+
+console.log(numbers.some(isOutsideRange, range))
+// true
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" data-id="cjc3d61ev000278wzfy746hcm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" class="article-date">
+  Posted by Hexo on <time datetime="2017-07-04T14:20:20.000Z" itemprop="datePublished">2017-07-04</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/07/03/原型和原型链/" >
       <article id="post-原型和原型链" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -165,7 +308,7 @@ person1.hasOwnProperty(&#39;name&#39;) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/03/原型和原型链/" data-id="cja14v684000k2cwzfnx4xnxb" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/03/原型和原型链/" data-id="cjc3d61h4000r78wzf486428l" class="article-share-link">Share</a>
       
       
     </footer>
@@ -212,7 +355,7 @@ person1.hasOwnProperty(&#39;name&#39;) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/隐式类型转换的方式/" data-id="cja14v689000o2cwz3q08hpw1" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/隐式类型转换的方式/" data-id="cjc3d61gx000n78wz4c2q5qcn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -272,7 +415,7 @@ document.write(typeof(num)); // number
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/JS中的一元运算符/" data-id="cja14v68b000q2cwzoyko8ahd" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/JS中的一元运算符/" data-id="cjc3d61ey000478wztp7nzgua" class="article-share-link">Share</a>
       
       
     </footer>
@@ -438,7 +581,7 @@ var vm = new Vue({
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/Object-defineProperty用法/" data-id="cja14v67q000c2cwz2kqdts6u" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/Object-defineProperty用法/" data-id="cjc3d61g5000c78wzik7y8kfr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -492,7 +635,7 @@ alert(color2);    //  yellow,black
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/" data-id="cja14v66t00012cwzmc0eqdw1" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/" data-id="cjc3d61e9000178wz81uzhinl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -594,7 +737,7 @@ for (v of k) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" data-id="cja14v67100042cwzswrrnrqm" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" data-id="cjc3d61fy000878wzus9xrcdb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -647,7 +790,7 @@ for (v of k) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/08/hello-world/" data-id="cja14v67w000f2cwzxharj8zk" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/08/hello-world/" data-id="cjc3d61gd000f78wz3qgt9qwh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -709,7 +852,7 @@ for (v of k) {
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      Copyright &copy; 2017 Lin Sen<br>
+      Copyright &copy; 2018 Lin Sen<br>
       <p>
       Theme by <a href="http//:fiowind.top">Fio</a> | <iframe style="display: inline-block;margin-left: 2px;margin-bottom: -5px;"src="https://ghbtns.com/github-btn.html?user=fiowind&repo=hexo-theme-sunshine&type=star&count=true" frameborder="0" scrolling="0" width="88px" height="20px"></iframe>
       </p>

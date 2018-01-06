@@ -73,6 +73,63 @@
     
   
     <div class="index-page">
+    <a href="/2018/01/06/File对象/" >
+      <article id="post-File对象" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/06/File对象/">File对象</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="Blob"><a href="#Blob" class="headerlink" title="Blob"></a>Blob</h2><p>Blob（Binary Large Object）对象代表了一段二进制数据，提供了一系列操作接口。其他操作二进制数据的API（比如File对象），都是建立在Blob对象基础上的，继承了它的属性和方法。</p>
+<p>生成Blob对象有两种方法：一种是使用Blob构造函数，另一种是对现有的Blob对象使用slice方法切出一部分</p>
+<h2 id="FileList"><a href="#FileList" class="headerlink" title="FileList"></a>FileList</h2><p>FileList对象针对表单的file控件。当用户通过file控件选取文件后，这个控件的files属性值就是FileList对象。它在结构上类似于数组，包含用户选取的多个文件。</p>
+<pre><code>&lt;input type=&quot;file&quot; id=&quot;input&quot; onchange=&quot;console.log(this.files.length)&quot; multiple /&gt;
+</code></pre><p>采用拖放方式，也可以得到FileList对象。</p>
+<pre><code>var dropZone = document.getElementById(&#39;drop_zone&#39;);
+dropZone.addEventListener(&#39;drop&#39;, handleFileSelect, false);
+
+function handleFileSelect(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+
+    var files = evt.dataTransfer.files; // FileList object.
+
+    // ...
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2018/01/06/File对象/" data-id="cjc3d61be000078wz7wb1e0rv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2018/01/06/File对象/" class="article-date">
+  Posted by Hexo on <time datetime="2018-01-06T13:06:27.000Z" itemprop="datePublished">2018-01-06</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/11/15/字符串常用方法总结/" >
       <article id="post-字符串常用方法总结" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -210,7 +267,7 @@ console.log(str.toUpperCase());
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/11/15/字符串常用方法总结/" data-id="cja14v686000l2cwzdp8tcicl" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/11/15/字符串常用方法总结/" data-id="cjc3d61g7000d78wzhkzwmn8l" class="article-share-link">Share</a>
       
       
     </footer>
@@ -310,7 +367,7 @@ console.log(str.toUpperCase());
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/11/13/水平居中和垂直居中方法总结/" data-id="cja14v68a000p2cwzfabt6ohr" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/11/13/水平居中和垂直居中方法总结/" data-id="cjc3d61gy000o78wzzmcxncot" class="article-share-link">Share</a>
       
       
     </footer>
@@ -366,7 +423,7 @@ console.log(a.x); // 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/11/12/new操作符/" data-id="cja14v67r000d2cwz0xb324h6" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/11/12/new操作符/" data-id="cjc3d61gs000l78wz7fpxkhk8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -502,7 +559,7 @@ a.showX(); // 1
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/11/09/this详解/" data-id="cja14v67z000h2cwztpybc3bj" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/11/09/this详解/" data-id="cjc3d61gm000j78wzjeqmu8vp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -565,7 +622,7 @@ console.log(b === Math.pow(2,7)) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/11/01/ES7新特性/" data-id="cja14v66w00022cwzpfnlm851" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/11/01/ES7新特性/" data-id="cjc3d61ew000378wz9fwrtqlr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -704,7 +761,7 @@ Access-Control-Allow-Origin: http://a.com   # 只允许所有域名访问
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/30/跨域详细梳理/" data-id="cja14v688000n2cwzya42qza4" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/30/跨域详细梳理/" data-id="cjc3d61go000k78wz4nm9q2k1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -763,7 +820,7 @@ function CreateFragments(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/26/使用DocumentFragment加快DOM渲染速度/" data-id="cja14v683000j2cwznsj8jl5i" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/26/使用DocumentFragment加快DOM渲染速度/" data-id="cjc3d61gz000p78wzrsg79ivk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -819,7 +876,7 @@ function CreateFragments(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/23/web缓存机制/" data-id="cja14v680000i2cwz901qvnwl" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/23/web缓存机制/" data-id="cjc3d61gh000g78wzsj8ybzn2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1022,7 +1079,7 @@ setTimeout(function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/23/IndexedDB存储机制/" data-id="cja14v67000032cwza0myz0t4" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/23/IndexedDB存储机制/" data-id="cjc3d61gv000m78wz9tve9n58" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1030,422 +1087,6 @@ setTimeout(function(){
   <div class="article-meta">
     <a href="/2017/10/23/IndexedDB存储机制/" class="article-date">
   Posted by Hexo on <time datetime="2017-10-23T13:38:36.000Z" itemprop="datePublished">2017-10-23</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/10/18/JS类的继承/" >
-      <article id="post-JS类的继承" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/10/18/JS类的继承/">JS类的继承</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="ES5"><a href="#ES5" class="headerlink" title="ES5"></a>ES5</h2><h3 id="原型继承"><a href="#原型继承" class="headerlink" title="原型继承"></a>原型继承</h3><pre><code>// 声明父类
-function SuperClass () {
-    this.superValue = true;
-}
-// 为父类添加共有方法
-SuperClass.prototype.getSuperValue = function () {
-    return this.superValue;
-}
-// 声明子类
-function SubClass () {
-    this.subValue = false;
-}
-// 继承父类
-SubClass.prototype = new SuperClass();
-// 为子类添加共有方法
-SubClass.prototype.getSubValue = function () {
-    return this.subValue;
-}
-
-var instance = new SubClass();
-console.log(instance.getSuperValue()); // true
-console.log(instance.getSubValue()); // false
-
-console.log(instance instanceof SuperClass); // true
-console.log(instance instanceof SubClass); // true
-console.log(SubClass instanceof SuperClass); // false instanceof只是判断前面的对象是否是后面类（对象）的实例，并不表示两者的继承。
-</code></pre><p>原型继承有两个缺点。其一，由于子类通过其原型prototype对父类实例化，继承了父类。所以说父类中的共有属性要是引用类型，就会在子类中被所有实例共用，因此一个子类的实例更改子类原型从父类构造函数中继承来的共有属性就会直接影响到其他子类。其二，由于子类实现的继承是靠其原型prototype对父类的实例化实现的，因此在创建父类的时候，是无法向父类传递参数的，因而在实例化父类的时候也无法对父类构造函数内的属性进行初始化。</p>
-<pre><code>function SuperClass () {
-    this.books = [&#39;js&#39;, &#39;html&#39;, &#39;css&#39;]
-}
-function SubClass () {}
-SubClass.prototype = new SuperClass();
-var instance1 = new SubClass();
-var instance2 = new SubClass();
-console.log(instance2.books); // [&#39;js&#39;, &#39;html&#39;, &#39;css&#39;]
-instance1.books.push(&#39;blog&#39;);
-console.log(instance2.books); // [&#39;js&#39;, &#39;html&#39;, &#39;css&#39;, &#39;blog&#39;]
-</code></pre><h3 id="构造函数继承"><a href="#构造函数继承" class="headerlink" title="构造函数继承"></a>构造函数继承</h3><pre><code>// 声明父类
-function SuperClass (id) {
-    // 引用类型共有属性
-    this.books = [&#39;js&#39;, &#39;html&#39;, &#39;css&#39;];
-    this.id = id;
-}
-// 父类声明原型方法
-SuperClass.prototype.showBooks = function () {
-    console.log(this.books);
-}
-// 声明子类
-function SubClass (id) {
-    // 继承父类
-    SuperClass.call(this, id);
-}
-// 创建第一个子类的实例
-var instance1 = new SubClass(10);
-// 创建第二个子类的实例
-var instance2 = new SubClass(11);
-
-instance1.books.push(&#39;blog&#39;);
-console.log(instance1.books); // [&#39;js&#39;, &#39;html&#39;, &#39;css&#39;, &#39;blog&#39;]
-console.log(instance1.id); // 10
-console.log(instance2.books); // [&#39;js&#39;, &#39;html&#39;, &#39;css&#39;]
-console.log(instance2.id); // 11
-
-instance1.showBooks); // TypeError
-</code></pre><p>SuperClass.call(this, id);这条语句是构造函数式继承的精华，由于call这个方法可以更改函数的作用环境。因此在子类中，对superClass调用这个方法就是将子类中的变量在父类中执行一遍，由于父类中是给this绑定属性的，因此子类自然也就继承了父类的共有属性。由于这种类型的继承没有涉及原型prototype，所以父类的原型方法自然不会被子类继承，而如果要想被子类继承就必须要放在构造函数中，这样创建出来的每个实例都会单独拥有一份而不能共用，这样就违背了代码复用的原则。为了综合这两种模式的优点，后来有了组合式继承。</p>
-<h3 id="组合继承"><a href="#组合继承" class="headerlink" title="组合继承"></a>组合继承</h3><pre><code>// 声明父类
-function SuperClass (name) {
-    // 值类型共有属性
-    this.name = name;
-    // 引用类型共有属性
-    this.books = [&#39;html&#39;, &#39;css&#39;, &#39;js&#39;];
-}
-// 父类原型共有方法
-SuperClass.prototype.getName = function () {
-    console.log(this.name);
-}
-// 声明子类
-function SubClass (name, time) {
-    // 构造函数式继承父类name属性
-    SuperClass.call(this, name);
-    // 子类中新增共有属性
-    this.time = time;
-}
-// 类式继承 子类型原型继承父类
-SubClass.prototype = new SuperClass();
-// 子类原型方法
-SubClass.prototype.getTime = function () {
-    console.log(this.time);
-}
-</code></pre><p>子类的实例中更改父类继承下来的引用类型属性如books，不会影响到其他实例，并且子类实例化过程中又能将参数传递到父类的构造函数中，如name。</p>
-<pre><code>var instance1 = new SubClass(&#39;js book&#39;, 2017);
-instance1.books.push(&#39;blog&#39;);
-console.log(instance1.books); // [&#39;html&#39;, &#39;css&#39;, &#39;js&#39;, &#39;blog&#39;]
-instance1.getName(); // js book
-instance1.getTime(); // 2017
-
-var instance2 = new SubClass(&#39;css book&#39;, 2016);
-console.log(instance2.books); // [&#39;html&#39;, &#39;css&#39;, &#39;js&#39;]
-instance2.getName(); // css book
-instance2.getTime(); // 2016
-</code></pre><h3 id="原型式继承"><a href="#原型式继承" class="headerlink" title="原型式继承"></a>原型式继承</h3><h3 id="寄生式继承"><a href="#寄生式继承" class="headerlink" title="寄生式继承"></a>寄生式继承</h3><h3 id="寄生组合式继承"><a href="#寄生组合式继承" class="headerlink" title="寄生组合式继承"></a>寄生组合式继承</h3><h3 id="多继承"><a href="#多继承" class="headerlink" title="多继承"></a>多继承</h3><p>在js中继承是依赖于原型prototype链实现的，只有一条原型链，所以理论上是不能继承多个父类的。然后js是灵活的，通过一些方式可以实现多继承，比如extend方法。</p>
-<pre><code>// 单继承 属性复制
-var extend = function (target, source) {
-    // 遍历源对象中的属性
-    for (var property in source) {
-        // 将源对象中的属性复制到目标对象中
-        target[property] = source[property];
-    }
-    // 返回目标对象
-    return target;
-}
-</code></pre><pre><code>var book = {
-    name: &#39;JavaScript&#39;,
-    alike: [&#39;css&#39;, &#39;html&#39;, &#39;js&#39;]
-}
-var anotherBook = {
-    color: &#39;blue&#39;
-}
-extend(anotherBook, book);
-console.log(anotherBook, name); // JavaScript
-console.log(anotherBook.alike); // [&#39;css&#39;, &#39;html&#39;, &#39;js&#39;]
-
-anotherBook.alike.push(&#39;ajax&#39;);
-anotherBook.name = &#39;blog&#39;;
-console.log(anotherBook.name); // blog
-console.log(anotherBook.alike); // [&#39;css&#39;, &#39;html&#39;, &#39;js&#39;, &#39;ajax&#39;]
-console.log(book.name); // JavaScript
-console.log(book.alike); // [&#39;css&#39;, &#39;html&#39;, &#39;js&#39;, &#39;ajax&#39;]
-</code></pre><p>实现多继承的方式在上面方法上多传递几个对象</p>
-<pre><code>// 多继承 属性复制
-var mix = function () {
-    var i = 1, // 从第二个参数起为被继承的对象
-        len = arguments.length, // 获取参数长度
-        target = arguments[0], // 从第一个对象为目标对象
-        arg; // 缓存参数对象
-    // 遍历被继承的对象
-    for (; i &lt; len; i++) {
-        // 缓存当前对象
-        arg = arguments[i];
-        // 遍历被继承对象中的属性
-        for (var property in arg) {
-            // 将被继承对象中的属性复制到目标对象中
-            target[property] = arg[property];
-        }
-    }
-    // 返回目标对象
-    return target;
-}
-</code></pre><p>但是在使用的时候需要传入目标对象（第一个参数–需要继承的对象）。可以将它绑定到原生对象Object上，这样所有的对象就可以拥有这个方法。</p>
-<pre><code>Object.prototype.mix = function () {
-    var i = 0, // 从第一个参数起为被继承的对象
-        len = arguments.length, // 获取参数长度
-        arg; // 缓存参数对象
-    // 遍历被继承的对象
-    for (; i &lt; len; i++) {
-        // 缓存当前对象
-        arg = arguments[i];
-        // 遍历被继承对象中的属性
-        for (var property in arg) {
-            // 将被继承对象中的属性复制到目标对象中
-            this[property] = arg[property];
-        }
-    }
-}
-
-otherBook.mix(book1, book2);
-console.log(otherBook); // Object {color: &#39;blue&#39;, name: &#39;JavaScript&#39;, mix: function}
-</code></pre><h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><p>多态，就是同一个方法多种调用方法。</p>
-<pre><code>function add () {
-    // 获取参数
-    var arg = arguments,
-        // 获取参数长度
-        len = arg.length;
-    switch (len) {
-        // 如果没有参数
-        case 0:
-            return 10;
-        // 如果只有一个参数
-        case 1:
-            return 10 + arg[0];
-        // 如果有两个参数
-        case 2:
-            return arg[0] + arg[1];
-    }
-}
-
-console.log(add()); // 10
-console.log(add(5)); // 15
-console.log(add(6, 7)); // 13
-</code></pre><p>或者转化成类形式，将不同运算方法封装在类内，这样代码更易懂</p>
-<pre><code>function Add () {
-    // 无参数算法
-    function zero () {
-        return 10;
-    }
-    // 一个参数算法
-    function one (num) {
-        return 10 + num;
-    }
-    // 两个参数算法
-    function two (num1, num2) {
-        return num1 + num2;
-    }
-    // 相加共有方法
-    this.add = function () {
-        var arg = arguments,
-        // 获取参数长度
-        len = arg.length;
-        switch (len) {
-            // 如果没有参数
-            case 0:
-                return zero();
-            // 如果只有一个参数
-            case 1:
-                return one(arg[0]);
-            //如果有两个参数
-            case 2:
-                return two(arg[0], arg[1]);
-        }
-    }
-}
-
-var A = new Add();
-console.log(A.add()); // 10
-console.log(A.add(5)); // 15
-console.log(A.add(6, 7)); // 13
-</code></pre><h2 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>Class可以通过extends关键字实现继承，这比ES5的通过修改原型链实现继承，要清晰方便的多。下面代码定义了一个ColorPoint类，该类通过extends关键字，继承了Point类的所有属性和方法。但是由于没有部署任何代码，所以这两个类完全一样，等于复制了一个Point类。</p>
-<pre><code>class Point {
-}
-
-class ColorPoint extends Point {
-}
-</code></pre><p>下面代码中，constructor方法和toString方法之中，都出现了super关键字，它在这里表示父类的构造函数，用来新建父类的this对象。</p>
-<pre><code>class ColorPoint extends Point {
-  constructor(x, y, color) {
-    super(x, y); // 调用父类的constructor(x, y)
-    this.color = color;
-  }
-
-  toString() {
-    return this.color + &#39; &#39; + super.toString(); // 调用父类的toString()
-  }
-}
-</code></pre><p>子类必须在constructor方法中调用super方法，否则新建实例时会报错。这是因为子类没有自己的this对象，而是继承父类的this对象，然后对其进行加工。如果不调用super方法，子类就得不到this对象。下面代码中，ColorPoint继承了父类Point，但是它的构造函数没有调用super方法，导致新建实例时报错。</p>
-<pre><code>class Point { /* ... */ }
-
-class ColorPoint extends Point {
-  constructor() {
-  }
-}
-
-let cp = new ColorPoint(); // ReferenceError
-</code></pre><p>在子类的构造函数中，只有调用super之后，才可以使用this关键字，否则会报错。这是因为子类实例的构建，是基于对父类实例加工，只有super方法才能返回父类实例。下面代码中，子类的constructor方法没有调用super之前，就使用this关键字，结果报错，而放在super方法之后就是正确的。</p>
-<pre><code>class Point {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
-}
-
-class ColorPoint extends Point {
-  constructor(x, y, color) {
-    this.color = color; // ReferenceError
-    super(x, y);
-    this.color = color; // 正确
-  }
-}
-</code></pre><p>父类的静态方法，也会被子类继承。</p>
-<pre><code>class A {
-  static hello() {
-    console.log(&#39;hello world&#39;);
-  }
-}
-
-class B extends A {
-}
-
-B.hello()  // hello world
-</code></pre><h3 id="Object-getPrototypeOf"><a href="#Object-getPrototypeOf" class="headerlink" title="Object.getPrototypeOf()"></a>Object.getPrototypeOf()</h3><p>Object.getPrototypeOf方法可以用来从子类上获取父类。可以使用这个方法判断，一个类是否继承了另一个类。</p>
-<pre><code>Object.getPrototypeOf(ColorPoint) === Point
-// true
-</code></pre><h3 id="super关键字"><a href="#super关键字" class="headerlink" title="super关键字"></a>super关键字</h3><p>super这个关键字，既可以当作函数使用，也可以当作对象使用。在这两种情况下，它的用法完全不同。</p>
-<p>第一种情况，super作为函数调用时，代表父类的构造函数。ES6 要求，子类的构造函数必须执行一次super函数。子类B的构造函数之中的super()，代表调用父类的构造函数。这是必须的，否则 JavaScript 引擎会报错。</p>
-<pre><code>class A {}
-
-class B extends A {
-  constructor() {
-    super();
-  }
-}
-</code></pre><p>super虽然代表了父类A的构造函数，但是返回的是子类B的实例，即super内部的this指的是B，因此super()在这里相当于A.prototype.constructor.call(this)。下面代码中，new.target指向当前正在执行的函数。可以看到，在super()执行时，它指向的是子类B的构造函数，而不是父类A的构造函数。也就是说，super()内部的this指向的是B。</p>
-<pre><code>class A {
-  constructor() {
-    console.log(new.target.name);
-  }
-}
-class B extends A {
-  constructor() {
-    super();
-  }
-}
-new A() // A
-new B() // B
-</code></pre><p>作为函数时，super()只能用在子类的构造函数之中，用在其他地方就会报错。</p>
-<pre><code>class A {}
-
-class B extends A {
-  m() {
-    super(); // 报错
-  }
-}
-</code></pre><p>第二种情况，super作为对象时，在普通方法中，指向父类的原型对象；在静态方法中，指向父类。下面代码中，子类B当中的super.p()，就是将super当作一个对象使用。这时，super在普通方法之中，指向A.prototype，所以super.p()就相当于A.prototype.p()。</p>
-<pre><code>class A {
-  p() {
-    return 2;
-  }
-}
-
-class B extends A {
-  constructor() {
-    super();
-    console.log(super.p()); // 2
-  }
-}
-
-let b = new B();
-</code></pre><p>由于super指向父类的原型对象，所以定义在父类实例上的方法或属性，是无法通过super调用的。p是父类A实例的属性，super.p就引用不到它。</p>
-<pre><code>class A {
-  constructor() {
-    this.p = 2;
-  }
-}
-
-class B extends A {
-  get m() {
-    return super.p;
-  }
-}
-
-let b = new B();
-b.m // undefined
-</code></pre><p>如果属性定义在父类的原型对象上，super就可以取到。</p>
-<pre><code>class A {}
-A.prototype.x = 2;
-
-class B extends A {
-  constructor() {
-    super();
-    console.log(super.x) // 2
-  }
-}
-
-let b = new B();
-</code></pre><p>ES6 规定，通过super调用父类的方法时，super会绑定子类的this。下面代码中，super.print()虽然调用的是A.prototype.print()，但是A.prototype.print()会绑定子类B的this，导致输出的是2，而不是1。也就是说，实际上执行的是super.print.call(this)。</p>
-<pre><code>class A {
-  constructor() {
-    this.x = 1;
-  }
-  print() {
-    console.log(this.x);
-  }
-}
-
-class B extends A {
-  constructor() {
-    super();
-    this.x = 2;
-  }
-  m() {
-    super.print();
-  }
-}
-
-let b = new B();
-b.m() // 2
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cja14v67v000e2cwz8rckj44v" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/10/18/JS类的继承/" class="article-date">
-  Posted by Hexo on <time datetime="2017-10-18T14:04:54.000Z" itemprop="datePublished">2017-10-18</time>
 </a>
     
   </div>
@@ -1500,7 +1141,7 @@ b.m() // 2
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      Copyright &copy; 2017 Lin Sen<br>
+      Copyright &copy; 2018 Lin Sen<br>
       <p>
       Theme by <a href="http//:fiowind.top">Fio</a> | <iframe style="display: inline-block;margin-left: 2px;margin-bottom: -5px;"src="https://ghbtns.com/github-btn.html?user=fiowind&repo=hexo-theme-sunshine&type=star&count=true" frameborder="0" scrolling="0" width="88px" height="20px"></iframe>
       </p>
