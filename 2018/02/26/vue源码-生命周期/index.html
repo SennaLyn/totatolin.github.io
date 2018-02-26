@@ -3,18 +3,15 @@
 <head>
   <meta charset="utf-8">
   
-  <title>new操作符 | Hexo</title>
+  <title>vue源码--生命周期 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="实现new操作符的原理function A (x) {     this.x = x; }  function newA (x) {     var o = {};     o.__proto__ = A.prototype; // 原型继承     A.call(o, x);     return o; } var a = newA(1); // 该方法与var a = new A(1)相同">
-<meta property="og:type" content="article">
-<meta property="og:title" content="new操作符">
-<meta property="og:url" content="https://totatolin.github.io/2017/11/12/new操作符/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="vue源码--生命周期">
+<meta property="og:url" content="https://totatolin.github.io/2018/02/26/vue源码-生命周期/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="实现new操作符的原理function A (x) {     this.x = x; }  function newA (x) {     var o = {};     o.__proto__ = A.prototype; // 原型继承     A.call(o, x);     return o; } var a = newA(1); // 该方法与var a = new A(1)相同">
-<meta property="og:updated_time" content="2017-11-12T09:57:53.521Z">
+<meta property="og:updated_time" content="2018-02-26T14:15:27.137Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="new操作符">
-<meta name="twitter:description" content="实现new操作符的原理function A (x) {     this.x = x; }  function newA (x) {     var o = {};     o.__proto__ = A.prototype; // 原型继承     A.call(o, x);     return o; } var a = newA(1); // 该方法与var a = new A(1)相同">
+<meta name="twitter:title" content="vue源码--生命周期">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -71,7 +68,7 @@
 
 </header>
 <div class="outer">
-  <section id="main"><article id="post-new操作符" class="article article-type-post" itemscope itemprop="blogPost">
+  <section id="main"><article id="post-vue源码-生命周期" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -79,7 +76,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      new操作符
+      vue源码--生命周期
     </h1>
   
 
@@ -87,34 +84,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
-<h2 id="实现new操作符的原理"><a href="#实现new操作符的原理" class="headerlink" title="实现new操作符的原理"></a>实现new操作符的原理</h2><pre><code>function A (x) {
-    this.x = x;
-}
-
-function newA (x) {
-    var o = {};
-    o.__proto__ = A.prototype; // 原型继承
-    A.call(o, x);
-    return o;
-}
-var a = newA(1); // 该方法与var a = new A(1)相同
-console.log(a.x); // 1
-</code></pre><h2 id="理解proto和prototype"><a href="#理解proto和prototype" class="headerlink" title="理解proto和prototype"></a>理解<strong>proto</strong>和prototype</h2><p>在js中每个对象一定对应一个原型对象（<strong>proto</strong>），并从原型对象继承属性和方法。</p>
-<pre><code>a.__proto__ === A.prototype
-</code></pre><p>不像每个对象都有<strong>proto</strong>属性来标识自己所继承的原型，只有函数才有prototype属性。当你创建函数时，JS会为这个函数自动添加prototype属性，值是空对象。而一旦你把这个函数当作构造函数（constructor）调用（即通过new关键字调用），那么JS就会帮你创建该构造函数的实例，实例继承构造函数prototype的所有属性和方法（实例通过设置自己的<strong>proto</strong>指向承构造函数的prototype来实现这种继承）。</p>
-
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/11/12/new操作符/" data-id="cje4b2s9m000f00wz2pga2t52" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2018/02/26/vue源码-生命周期/" data-id="cje4b2s97000d00wz6fq63kwj" class="article-share-link">Share</a>
       
       
     </footer>
   </div>
   <div class="article-meta">
-    <a href="/2017/11/12/new操作符/" class="article-date">
-  Posted by Hexo on <time datetime="2017-11-12T09:57:42.000Z" itemprop="datePublished">2017-11-12</time>
+    <a href="/2018/02/26/vue源码-生命周期/" class="article-date">
+  Posted by Hexo on <time datetime="2018-02-26T14:15:27.000Z" itemprop="datePublished">2018-02-26</time>
 </a>
     
   </div>
@@ -122,19 +103,10 @@ console.log(a.x); // 1
     
 <nav id="article-nav">
   
-    <a href="/2017/11/13/水平居中和垂直居中方法总结/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          水平居中和垂直居中方法总结
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/11/09/this详解/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/01/06/File对象/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">this详解</div>
+      <div class="article-nav-title">File对象</div>
     </a>
   
 </nav>

@@ -73,6 +73,109 @@
     
   
     <div class="index-page">
+    <a href="/2017/07/18/数组和类数组/" >
+      <article id="post-数组和类数组" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/18/数组和类数组/">数组和类数组</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>在js中，数组可以容纳任何类型的值，可以是字符串、数字、对象，甚至是其他数组（多维数组就是通过这种方式来实现的）：</p>
+<pre><code>var a = [1, &#39;2&#39;, [3]];
+a.length; // 3
+</code></pre><p>对数组声明后即可向其中加入值，不需要预先设定大小：</p>
+<pre><code>var a = [];
+a.length; // 0
+
+a[0] = 1;
+a[1] = &#39;2&#39;;
+a[2] = [3];
+a.length; // 3
+</code></pre><p>使用delete运算符可以将单元从数组中删除，但是删除后，数组的length属性并不会发生变化。</p>
+<p>创建稀疏数组，空白单元为undefined，但仍占有length；字符串键值不占有length;字符串键值能够被强制转换为十进制数字的话，会被当作数字索引来处理：</p>
+<pre><code>var a = [];
+a[0] = 1;
+a[&#39;2&#39;] = 2; // 稀疏数组，仍存在a[1]；该字符串键值可以转换为数字，当作a[2]处理
+a[&#39;foo&#39;] = 3; // 该字符串键值不能转为数字，不占有length
+
+a.length; // 3
+a[0] === 1 
+a[1] === undefined 
+a[2] === 2
+</code></pre><h2 id="类数组"><a href="#类数组" class="headerlink" title="类数组"></a>类数组</h2><p>有时需要将类数组（一组通过数字索引的值）转换为真正的数组，这一般通过数组工具函数（如indexof(..)、concat(..)、forEach(..)等）实现。</p>
+<p>一些DOM查询操作会返回DOM元素列表，它们并非真正意义上的数组，但十分类似；通过arguments对象（类数组）将函数的参数当作列表来访问（从ES6开始已废止）。工具函数slice(..)经常被用于这类转换：</p>
+<pre><code>function foo() {
+    var arr = Array.prototype.slice.call(arguments);
+    arr.push(&#39;bam&#39;);
+    console.log(arr);
+}
+foo(&#39;bar&#39;, &#39;baz&#39;); // [&#39;bar&#39;, &#39;baz&#39;, &#39;bam&#39;]
+</code></pre><p>ES6中的内置工具函数Array.from(..)也能实现同样的功能：</p>
+<pre><code>var arr = Array.from(arguments);
+</code></pre><h2 id="类数组详解"><a href="#类数组详解" class="headerlink" title="类数组详解"></a>类数组详解</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>拥有length属性，其他属性（索引）为非负整数（对象中的索引会被当做字符串来处理，这里你可以当做是个非负整数串来理解）；不具有数组所具有的方法。实际上，只要有length属性，且它的属性值为number类型就行。</p>
+<p>类数组示例：</p>
+<pre><code>var a = {&#39;1&#39;:&#39;gg&#39;,&#39;2&#39;:&#39;love&#39;,&#39;4&#39;:&#39;meimei&#39;,length:5};
+Array.prototype.join.call(a,&#39;+&#39;); // &#39;+gg+love+meimei&#39;
+</code></pre><p>非类数组示例（没有length属性，所以不是类数组）：</p>
+<pre><code>var c = {&#39;1&#39;:2};
+</code></pre><p>js中常见的类数组有arguments对象和DOM方法的返回结果。</p>
+<h3 id="类数组判断"><a href="#类数组判断" class="headerlink" title="类数组判断"></a>类数组判断</h3><pre><code>function isArrayLike(o) {
+    if (o &amp;&amp;                                // o is not null, undefined, etc.
+        typeof o === &#39;object&#39; &amp;&amp;            // o is an object
+        isFinite(o.length) &amp;&amp;               // o.length is a finite number
+        o.length &gt;= 0 &amp;&amp;                    // o.length is non-negative
+        o.length===Math.floor(o.length) &amp;&amp;  // o.length is an integer
+        o.length &lt; 4294967296)              // o.length &lt; 2^32
+        return true;                        // Then o is array-like
+    else
+        return false;                       // Otherwise it is not
+}
+</code></pre><h3 id="类数组表现"><a href="#类数组表现" class="headerlink" title="类数组表现"></a>类数组表现</h3><p>之所以称为‘类数组’，就是因为和‘数组’类似。不能直接使用数组方法，但你可以像使用数组那样，使用类数组。</p>
+<pre><code>var a = {&#39;0&#39;:&#39;a&#39;, &#39;1&#39;:&#39;b&#39;, &#39;2&#39;:&#39;c&#39;, length:3};  // An array-like object
+Array.prototype.join.call(a, &#39;+&#39;&#39;);  // =&gt; &#39;a+b+c&#39;
+Array.prototype.slice.call(a, 0);   // =&gt; [&#39;a&#39;,&#39;b&#39;,&#39;c&#39;]
+Array.prototype.map.call(a, function(x) { 
+    return x.toUpperCase();
+});                                 // =&gt; [&#39;A&#39;,&#39;B&#39;,&#39;C&#39;]
+</code></pre><h3 id="类数组对象转化为数组"><a href="#类数组对象转化为数组" class="headerlink" title="类数组对象转化为数组"></a>类数组对象转化为数组</h3><p>有时候处理类数组对象的最好方法是将其转化为数组，然后就可以直接使用数组方法啦。</p>
+<pre><code>Array.prototype.slice.call(arguments)
+
+var a = {&#39;0&#39;:1,&#39;1&#39;:2,&#39;2&#39;:3,length:3};
+var arr = Array.prototype.slice.call(a); // arr === [1,2,3]
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cje4b2sa2000p00wzvyv4453p" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/07/18/数组和类数组/" class="article-date">
+  Posted by Hexo on <time datetime="2017-07-18T14:44:30.000Z" itemprop="datePublished">2017-07-18</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" >
       <article id="post-Array方法之fill、filter、every、some、map、reduce" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -197,7 +300,7 @@ console.log(numbers.some(isOutsideRange, range))
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" data-id="cjc3d61ev000278wzfy746hcm" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" data-id="cje4b2s5l000100wzzm3lczij" class="article-share-link">Share</a>
       
       
     </footer>
@@ -308,7 +411,7 @@ person1.hasOwnProperty(&#39;name&#39;) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/03/原型和原型链/" data-id="cjc3d61h4000r78wzf486428l" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/03/原型和原型链/" data-id="cje4b2sa2000r00wzd2icpn5e" class="article-share-link">Share</a>
       
       
     </footer>
@@ -355,7 +458,7 @@ person1.hasOwnProperty(&#39;name&#39;) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/隐式类型转换的方式/" data-id="cjc3d61gx000n78wz4c2q5qcn" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/隐式类型转换的方式/" data-id="cje4b2sa2000n00wzlzdwzg2a" class="article-share-link">Share</a>
       
       
     </footer>
@@ -415,7 +518,7 @@ document.write(typeof(num)); // number
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/JS中的一元运算符/" data-id="cjc3d61ey000478wztp7nzgua" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/JS中的一元运算符/" data-id="cje4b2s8w000800wz2lts3or9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -581,7 +684,7 @@ var vm = new Vue({
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/Object-defineProperty用法/" data-id="cjc3d61g5000c78wzik7y8kfr" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/Object-defineProperty用法/" data-id="cje4b2s97000c00wzswx88z9g" class="article-share-link">Share</a>
       
       
     </footer>
@@ -635,7 +738,7 @@ alert(color2);    //  yellow,black
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/" data-id="cjc3d61e9000178wz81uzhinl" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/" data-id="cje4b2s5s000300wzdf5qg1jc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -737,7 +840,7 @@ for (v of k) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" data-id="cjc3d61fy000878wzus9xrcdb" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" data-id="cje4b2s5t000400wz8x0mw3da" class="article-share-link">Share</a>
       
       
     </footer>
@@ -790,7 +893,7 @@ for (v of k) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/08/hello-world/" data-id="cjc3d61gd000f78wz3qgt9qwh" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/08/hello-world/" data-id="cje4b2s9m000e00wz2nftsj13" class="article-share-link">Share</a>
       
       
     </footer>

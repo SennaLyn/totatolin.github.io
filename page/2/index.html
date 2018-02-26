@@ -73,6 +73,209 @@
     
   
     <div class="index-page">
+    <a href="/2017/10/23/IndexedDB存储机制/" >
+      <article id="post-IndexedDB存储机制" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/23/IndexedDB存储机制/">IndexedDB存储机制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="IndexedDB存储与WebSQL存储的比较及选择"><a href="#IndexedDB存储与WebSQL存储的比较及选择" class="headerlink" title="IndexedDB存储与WebSQL存储的比较及选择"></a>IndexedDB存储与WebSQL存储的比较及选择</h2><h3 id="IndexedDB"><a href="#IndexedDB" class="headerlink" title="IndexedDB"></a>IndexedDB</h3><p>IndexedDB 是一种可以让你在用户的浏览器内持久化存储数据的方法。IndexedDB 为生成 Web Application 提供了丰富的查询能力，使我们的应用在在线和离线时都可以正常工作。IndexedDB里数据以对象的形式存储，每个对象都有一个key值索引。IndexedDB里的操作都是事务性的。一种对象存储在一个objectStore里，objectStore就相当于关系数据库里的表。IndexedDB可以有很多objectStore，objectStore里可以有很多对象。每个对象可以用key值获取。</p>
+<p>特点：</p>
+<ol>
+<li>使用NoSQL数据库</li>
+<li>支持事务、游标、索引等数据库操作</li>
+<li>一般浏览器会分配50M-250M不等的内存</li>
+<li>持久化存储，清除浏览器缓存不会被删除（localStorage是会被删除的）</li>
+<li>支持多种数据格式：arrayBuffer、String、Object、Array、File、Blob、ImageData都ok</li>
+<li>不支持跨域，一个域可以有多个数据库</li>
+<li>开发中需要谨记的一个特性：异步操作，换句话说，所有操作都需要在回调函数中完成</li>
+<li>存储空间大，IndexedDB的存储空间比localStorage大得多，一般来说不少于250MB。IE的储存上限是250MB，Chrome和Opera是硬盘剩余空间的某个百分比，Firefox则没有上限。</li>
+</ol>
+<p>浏览器支持：</p>
+<ol>
+<li>IE10+</li>
+<li>Firefox 10+、Chrome 23+、Opera 15+</li>
+<li>iPhone ios8-ios10 safari支持(X5内核不支持)</li>
+<li>Android X5内核支持</li>
+</ol>
+<h3 id="WebSQL"><a href="#WebSQL" class="headerlink" title="WebSQL"></a>WebSQL</h3><p>Web SQL Database API 实际上并不包含在 HTML5 规范之中。它是一个独立的规范，它引入了一套使用 SQL 操作客户端数据库的 API。最新版本的 Chrome，Safari 和 Opera 浏览器都支持 Web SQL Database。</p>
+<p>特点：</p>
+<ol>
+<li>使用MySQL数据库</li>
+<li>相比传统存储，能方便的进行对象存储，能进行大量的数据的处理</li>
+<li>w3c规范已经不再支持</li>
+<li>浏览器支持较差，Web Sql API的主要实现者是Chrome、Safari、Opera、Android、IOS、BB。IE和FF都不支持Web Sql API。</li>
+</ol>
+<h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><ol>
+<li>IndexedDB对浏览器的兼容性比WebSQL更好</li>
+<li>WebSQL已经被w3c规范摒弃</li>
+</ol>
+<h2 id="创建IndexedDB数据库"><a href="#创建IndexedDB数据库" class="headerlink" title="创建IndexedDB数据库"></a>创建IndexedDB数据库</h2><p>调用indexedDB.open方法就可以创建或者打开一个indexedDB。代码中定义了一个myDB对象，在创建indexedDB request的成功毁掉函数中，把request获取的DB对象赋值给了myDB的db属性，这样就可以使用myDB.db来访问创建的indexedDB了。</p>
+<pre><code>function openDB (name) {
+    var request=window.indexedDB.open(name);
+    request.onerror=function(e){
+        console.log(&#39;OPen Error!&#39;);
+    };
+    request.onsuccess=function(e){
+        myDB.db=e.target.result;
+    };
+}
+
+var myDB={
+    name:&#39;test&#39;,
+    version:1,
+    db:null
+};
+openDB(myDB.name);
+</code></pre><p>我们注意到除了onerror和onsuccess，IDBOpenDBRequest还有一个类似回调函数句柄——onupgradeneeded。这个句柄在我们请求打开的数据库的版本号和已经存在的数据库版本号不一致的时候调用。<br>indexedDB.open()方法还有第二个可选参数，数据库版本号，数据库创建的时候默认版本号为1，当我们传入的版本号和数据库当前版本号不一致的时候onupgradeneeded就会被调用，当然我们不能试图打开比当前数据库版本低的version，否则调用的就是onerror了，修改一下刚才例子</p>
+<pre><code>function openDB (name,version) {
+    var version=version || 1;
+    var request=window.indexedDB.open(name,version);
+    request.onerror=function(e){
+        console.log(e.currentTarget.error.message);
+    };
+    request.onsuccess=function(e){
+        myDB.db=e.target.result;
+    };
+    request.onupgradeneeded=function(e){
+        console.log(&#39;DB version changed to &#39;+version);
+    };
+}
+
+var myDB={
+    name:&#39;test&#39;,
+    version:3,
+    db:null
+};
+openDB(myDB.name,myDB.version);
+</code></pre><h2 id="关闭与删除数据库"><a href="#关闭与删除数据库" class="headerlink" title="关闭与删除数据库"></a>关闭与删除数据库</h2><p>关闭数据库可以直接调用数据库对象的close方法</p>
+<pre><code>function closeDB(db){
+    db.close();
+}
+</code></pre><p>删除数据库使用indexedDB对象的deleteDatabase方法</p>
+<pre><code>function deleteDB(name){
+    indexedDB.deleteDatabase(name);
+}
+</code></pre><h2 id="object-store"><a href="#object-store" class="headerlink" title="object store"></a>object store</h2><p>有了数据库后我们自然希望创建一个表用来存储数据，但indexedDB中没有表的概念，而是objectStore，一个数据库中可以包含多个objectStore，objectStore是一个灵活的数据结构，可以存放多种类型数据。也就是说一个objectStore相当于一张表，里面存储的每条数据和一个键相关联。我们可以使用每条记录中的某个指定字段作为键值（keyPath），也可以使用自动生成的递增数字作为键值（keyGenerator），也可以不指定。选择键的类型不同，objectStore可以存储的数据结构也有差异。</p>
+<h3 id="给object-store添加数据"><a href="#给object-store添加数据" class="headerlink" title="给object store添加数据"></a>给object store添加数据</h3><p>因为对新数据的操作都需要在transaction中进行，而transaction又要求指定object store，所以我们只能在创建数据库的时候初始化object store以供后面使用，这正是onupgradeneeded的一个重要作用。这样在创建数据库的时候我们就为其添加了一个名为students的object store，准备一些数据以供添加。</p>
+<pre><code>function openDB (name,version) {
+    var version=version || 1;
+    var request=window.indexedDB.open(name,version);
+    request.onerror=function(e){
+        console.log(e.currentTarget.error.message);
+    };
+    request.onsuccess=function(e){
+        myDB.db=e.target.result;
+    };
+    request.onupgradeneeded=function(e){
+        var db=e.target.result;
+        if(!db.objectStoreNames.contains(&#39;students&#39;)){
+            db.createObjectStore(&#39;students&#39;,{keyPath:&quot;id&quot;});
+        }
+        console.log(&#39;DB version changed to &#39;+version);
+    };
+}
+
+var students=[{ 
+    id:1001, 
+    name:&quot;Byron&quot;, 
+    age:24 
+},{ 
+    id:1002, 
+    name:&quot;Frank&quot;, 
+    age:30 
+},{ 
+    id:1003, 
+    name:&quot;Aaron&quot;, 
+    age:26 
+}];
+
+function addData(db,storeName){
+    var transaction=db.transaction(storeName,&#39;readwrite&#39;); 
+    var store=transaction.objectStore(storeName); 
+
+    for(var i=0;i&lt;students.length;i++){
+        store.add(students[i]);
+    }
+}
+
+
+openDB(myDB.name,myDB.version);
+setTimeout(function(){
+    addData(myDB.db,&#39;students&#39;);
+},1000);
+</code></pre><h3 id="查找数据"><a href="#查找数据" class="headerlink" title="查找数据"></a>查找数据</h3><p>可以调用object store的get方法通过键获取数据，以使用keyPath做键为例</p>
+<pre><code>function getDataByKey(db,storeName,value){
+    var transaction=db.transaction(storeName,&#39;readwrite&#39;); 
+    var store=transaction.objectStore(storeName); 
+    var request=store.get(value); 
+    request.onsuccess=function(e){ 
+        var student=e.target.result; 
+        console.log(student.name); 
+    };
+}
+</code></pre><h3 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h3><p>可以调用object store的put方法更新数据，会自动替换键值相同的记录，达到更新目的，没有相同的则添加，以使用keyPath做键为例</p>
+<pre><code>function updateDataByKey(db,storeName,value){
+    var transaction=db.transaction(storeName,&#39;readwrite&#39;); 
+    var store=transaction.objectStore(storeName); 
+    var request=store.get(value); 
+    request.onsuccess=function(e){ 
+        var student=e.target.result; 
+        student.age=35;
+        store.put(student); 
+    };
+}
+</code></pre><h3 id="删除数据及object-store"><a href="#删除数据及object-store" class="headerlink" title="删除数据及object store"></a>删除数据及object store</h3><p>调用object store的delete方法根据键值删除记录</p>
+<pre><code>function deleteDataByKey(db,storeName,value){
+    var transaction=db.transaction(storeName,&#39;readwrite&#39;); 
+    var store=transaction.objectStore(storeName); 
+    store.delete(value); 
+}
+</code></pre><p>调用object store的clear方法可以清空object store</p>
+<pre><code>function clearObjectStore(db,storeName){
+    var transaction=db.transaction(storeName,&#39;readwrite&#39;); 
+    var store=transaction.objectStore(storeName); 
+    store.clear();
+}
+</code></pre><p>调用数据库实例的deleteObjectStore方法可以删除一个object store，这个就得在onupgradeneeded里面调用了</p>
+<pre><code>if(db.objectStoreNames.contains(&#39;students&#39;)){ 
+    db.deleteObjectStore(&#39;students&#39;); 
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/10/23/IndexedDB存储机制/" data-id="cje4b2s8e000500wzdus7bq1j" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/10/23/IndexedDB存储机制/" class="article-date">
+  Posted by Hexo on <time datetime="2017-10-23T13:38:36.000Z" itemprop="datePublished">2017-10-23</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/10/18/JS类的继承/" >
       <article id="post-JS类的继承" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -470,7 +673,7 @@ b.m() // 2
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cjc3d61gl000i78wzfw71e2y0" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cje4b2s9m000h00wzxsqlwxto" class="article-share-link">Share</a>
       
       
     </footer>
@@ -709,7 +912,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cjc3d61g0000978wz8wnsozy8" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cje4b2s9m000i00wzh3i44j8i" class="article-share-link">Share</a>
       
       
     </footer>
@@ -783,7 +986,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cjc3d61g1000a78wzwh40aoip" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cje4b2s9m000k00wzbh084jm4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -837,7 +1040,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cjc3d61fr000678wzz4csoj8p" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cje4b2s8q000700wzyshd0gnm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1023,7 +1226,7 @@ console.log(setA.subset(setC));
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cjc3d61g3000b78wzi3bumtul" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cje4b2s94000a00wztff2i0gu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1186,7 +1389,7 @@ console.log(&#39;胜利者：&#39; + winner);
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cjc3d61fq000578wzhzyexfpi" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cje4b2s8i000600wzrbmvhmbi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1253,7 +1456,7 @@ console.log( 0 == NaN ) // false
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cjc3d61gk000h78wzb1wfe3is" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cje4b2s8z000900wzyqpagql6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1353,7 +1556,7 @@ console.log(target.child.name); // target child
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cjc3d61ft000778wzplfs0lw3" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cje4b2s97000b00wz74qy42cu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1451,7 +1654,7 @@ var a = null;
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cjc3d61ga000e78wzlcb0v77q" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cje4b2s9m000g00wzadxpuze1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1459,109 +1662,6 @@ var a = null;
   <div class="article-meta">
     <a href="/2017/07/18/null和undefined详解/" class="article-date">
   Posted by Hexo on <time datetime="2017-07-18T14:46:43.000Z" itemprop="datePublished">2017-07-18</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/07/18/数组和类数组/" >
-      <article id="post-数组和类数组" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/18/数组和类数组/">数组和类数组</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>在js中，数组可以容纳任何类型的值，可以是字符串、数字、对象，甚至是其他数组（多维数组就是通过这种方式来实现的）：</p>
-<pre><code>var a = [1, &#39;2&#39;, [3]];
-a.length; // 3
-</code></pre><p>对数组声明后即可向其中加入值，不需要预先设定大小：</p>
-<pre><code>var a = [];
-a.length; // 0
-
-a[0] = 1;
-a[1] = &#39;2&#39;;
-a[2] = [3];
-a.length; // 3
-</code></pre><p>使用delete运算符可以将单元从数组中删除，但是删除后，数组的length属性并不会发生变化。</p>
-<p>创建稀疏数组，空白单元为undefined，但仍占有length；字符串键值不占有length;字符串键值能够被强制转换为十进制数字的话，会被当作数字索引来处理：</p>
-<pre><code>var a = [];
-a[0] = 1;
-a[&#39;2&#39;] = 2; // 稀疏数组，仍存在a[1]；该字符串键值可以转换为数字，当作a[2]处理
-a[&#39;foo&#39;] = 3; // 该字符串键值不能转为数字，不占有length
-
-a.length; // 3
-a[0] === 1 
-a[1] === undefined 
-a[2] === 2
-</code></pre><h2 id="类数组"><a href="#类数组" class="headerlink" title="类数组"></a>类数组</h2><p>有时需要将类数组（一组通过数字索引的值）转换为真正的数组，这一般通过数组工具函数（如indexof(..)、concat(..)、forEach(..)等）实现。</p>
-<p>一些DOM查询操作会返回DOM元素列表，它们并非真正意义上的数组，但十分类似；通过arguments对象（类数组）将函数的参数当作列表来访问（从ES6开始已废止）。工具函数slice(..)经常被用于这类转换：</p>
-<pre><code>function foo() {
-    var arr = Array.prototype.slice.call(arguments);
-    arr.push(&#39;bam&#39;);
-    console.log(arr);
-}
-foo(&#39;bar&#39;, &#39;baz&#39;); // [&#39;bar&#39;, &#39;baz&#39;, &#39;bam&#39;]
-</code></pre><p>ES6中的内置工具函数Array.from(..)也能实现同样的功能：</p>
-<pre><code>var arr = Array.from(arguments);
-</code></pre><h2 id="类数组详解"><a href="#类数组详解" class="headerlink" title="类数组详解"></a>类数组详解</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>拥有length属性，其他属性（索引）为非负整数（对象中的索引会被当做字符串来处理，这里你可以当做是个非负整数串来理解）；不具有数组所具有的方法。实际上，只要有length属性，且它的属性值为number类型就行。</p>
-<p>类数组示例：</p>
-<pre><code>var a = {&#39;1&#39;:&#39;gg&#39;,&#39;2&#39;:&#39;love&#39;,&#39;4&#39;:&#39;meimei&#39;,length:5};
-Array.prototype.join.call(a,&#39;+&#39;); // &#39;+gg+love+meimei&#39;
-</code></pre><p>非类数组示例（没有length属性，所以不是类数组）：</p>
-<pre><code>var c = {&#39;1&#39;:2};
-</code></pre><p>js中常见的类数组有arguments对象和DOM方法的返回结果。</p>
-<h3 id="类数组判断"><a href="#类数组判断" class="headerlink" title="类数组判断"></a>类数组判断</h3><pre><code>function isArrayLike(o) {
-    if (o &amp;&amp;                                // o is not null, undefined, etc.
-        typeof o === &#39;object&#39; &amp;&amp;            // o is an object
-        isFinite(o.length) &amp;&amp;               // o.length is a finite number
-        o.length &gt;= 0 &amp;&amp;                    // o.length is non-negative
-        o.length===Math.floor(o.length) &amp;&amp;  // o.length is an integer
-        o.length &lt; 4294967296)              // o.length &lt; 2^32
-        return true;                        // Then o is array-like
-    else
-        return false;                       // Otherwise it is not
-}
-</code></pre><h3 id="类数组表现"><a href="#类数组表现" class="headerlink" title="类数组表现"></a>类数组表现</h3><p>之所以称为‘类数组’，就是因为和‘数组’类似。不能直接使用数组方法，但你可以像使用数组那样，使用类数组。</p>
-<pre><code>var a = {&#39;0&#39;:&#39;a&#39;, &#39;1&#39;:&#39;b&#39;, &#39;2&#39;:&#39;c&#39;, length:3};  // An array-like object
-Array.prototype.join.call(a, &#39;+&#39;&#39;);  // =&gt; &#39;a+b+c&#39;
-Array.prototype.slice.call(a, 0);   // =&gt; [&#39;a&#39;,&#39;b&#39;,&#39;c&#39;]
-Array.prototype.map.call(a, function(x) { 
-    return x.toUpperCase();
-});                                 // =&gt; [&#39;A&#39;,&#39;B&#39;,&#39;C&#39;]
-</code></pre><h3 id="类数组对象转化为数组"><a href="#类数组对象转化为数组" class="headerlink" title="类数组对象转化为数组"></a>类数组对象转化为数组</h3><p>有时候处理类数组对象的最好方法是将其转化为数组，然后就可以直接使用数组方法啦。</p>
-<pre><code>Array.prototype.slice.call(arguments)
-
-var a = {&#39;0&#39;:1,&#39;1&#39;:2,&#39;2&#39;:3,length:3};
-var arr = Array.prototype.slice.call(a); // arr === [1,2,3]
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cjc3d61h1000q78wzxnxydhqs" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/07/18/数组和类数组/" class="article-date">
-  Posted by Hexo on <time datetime="2017-07-18T14:44:30.000Z" itemprop="datePublished">2017-07-18</time>
 </a>
     
   </div>
