@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>深度理解var、let、const及块级作用域 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在ES5中变量作用域的基本单元是function，如果要创建一个块级作用域，则需要创建一个函数，或者使用立即调用函数表达式(IIFE)。而对于var定义的变量的作用域，作用在一个函数块中，或者存在于整个全局中(全局变量)。在ES6中出现了let和const两个变量定义方法： let声明与使用var声明的变量总是在函数作用域中不同，使用let声明时可以只用{…}就能创建一个作用域。 var a =">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度理解var、let、const及块级作用域">
+<meta property="og:url" content="https://totatolin.github.io/2018/04/21/深度理解var、let、const及块级作用域/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在ES5中变量作用域的基本单元是function，如果要创建一个块级作用域，则需要创建一个函数，或者使用立即调用函数表达式(IIFE)。而对于var定义的变量的作用域，作用在一个函数块中，或者存在于整个全局中(全局变量)。在ES6中出现了let和const两个变量定义方法： let声明与使用var声明的变量总是在函数作用域中不同，使用let声明时可以只用{…}就能创建一个作用域。 var a =">
+<meta property="og:updated_time" content="2018-04-21T12:13:47.342Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深度理解var、let、const及块级作用域">
+<meta name="twitter:description" content="在ES5中变量作用域的基本单元是function，如果要创建一个块级作用域，则需要创建一个函数，或者使用立即调用函数表达式(IIFE)。而对于var定义的变量的作用域，作用在一个函数块中，或者存在于整个全局中(全局变量)。在ES6中出现了let和const两个变量定义方法： let声明与使用var声明的变量总是在函数作用域中不同，使用let声明时可以只用{…}就能创建一个作用域。 var a =">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/icon.ico">
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  <link href="css/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/paraiso-light.min.css">
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      
+<header id="header" style="width: 1400px;height: 360px;margin: 0 auto;">
+  <div id="banner"  ></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SennaLyn's Blog</a>
+      </h1>
+      
+        
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a href="/" class="nav-icon">Hexo Blog</a>
+      </nav>
+      <nav id="sub-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">HOME</a>
+        
+          <a class="main-nav-link" href="/archives">ARCHIVES</a>
+        
+          <a class="main-nav-link" href="/about">ABOUT</a>
+        
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://totatolin.github.io"></form>
+      </div>
+    </div>
+  </div>
+
+</header>
+<div class="outer">
+  <section id="main"><article id="post-深度理解var、let、const及块级作用域" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      深度理解var、let、const及块级作用域
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>在ES5中变量作用域的基本单元是function，如果要创建一个块级作用域，则需要创建一个函数，或者使用立即调用函数表达式(IIFE)。而对于var定义的变量的作用域，作用在一个函数块中，或者存在于整个全局中(全局变量)。在ES6中出现了let和const两个变量定义方法：</p>
+<h2 id="let声明"><a href="#let声明" class="headerlink" title="let声明"></a>let声明</h2><p>与使用var声明的变量总是在函数作用域中不同，使用let声明时可以只用{…}就能创建一个作用域。</p>
+<pre><code>var a = 2;
+{
+    let a = 3;
+    console.log(a);  // 3
+}
+console.log(a);      // 2
+</code></pre><p>在let声明之前访问该变量会导致报错，这称为临时死亡区(Temporal Dead Zone, TDZ)错误。而使用var的话这个顺序是无关紧要的。</p>
+<pre><code>console.log(a); // undefined
+console.log(b); // ReferenceError!
+
+var a;
+let b;
+</code></pre><p>在for循环中使用let，不只是声明了一个变量，而是循环的每一次迭代都重新声明了一个新的变量，这点是与var不同的。</p>
+<pre><code>var funcs = [];
+for (let i = 0;i &lt; 5;i++) {
+    funcs.push(function({
+        console.log(i);
+    })
+}
+funcs[3](); // 3
+而如果把let换成var的话，打印出来的值为5
+</code></pre><h2 id="const声明"><a href="#const声明" class="headerlink" title="const声明"></a>const声明</h2><p>const声明用于定义常量，常量是一个设定了初始值之后就只读的变量。但是常量不是对这个值的本身进行限制，而是对赋值的那个变量限制。如果这个值时复杂值，比如对象或者数组，这个内容是可以修改的。</p>
+<pre><code>const a = [1,2,3];
+a.push(4);
+console.log(a);     // [1,2,3,4]
+a = 42;             // TypeError!
+</code></pre><h2 id="块作用域函数"><a href="#块作用域函数" class="headerlink" title="块作用域函数"></a>块作用域函数</h2><p>在ES6之前，函数调用没有块的概念，在内部定义的函数在外部也可以直接调用，而在ES6之后，块内定义的函数，其作用域就在这个块内，外部调用时会报错。函数调用支持‘提升’，即不存在TDZ错误。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2018/04/21/深度理解var、let、const及块级作用域/" data-id="cjg9ck0m1000skcwz7rih96zy" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2018/04/21/深度理解var、let、const及块级作用域/" class="article-date">
+  Posted by Hexo on <time datetime="2018-04-21T12:12:54.000Z" itemprop="datePublished">2018-04-21</time>
+</a>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/04/21/标签模板字面量/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          标签模板字面量
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/26/vue源码-生命周期/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">vue源码--生命周期</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+</div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      Copyright &copy; 2018 Lin Sen<br>
+      <p>
+      Theme by <a href="http//:fiowind.top">Fio</a> | <iframe style="display: inline-block;margin-left: 2px;margin-bottom: -5px;"src="https://ghbtns.com/github-btn.html?user=fiowind&repo=hexo-theme-sunshine&type=star&count=true" frameborder="0" scrolling="0" width="88px" height="20px"></iframe>
+      </p>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">HOME</a>
+  
+    <a href="/archives" class="mobile-nav-link">ARCHIVES</a>
+  
+    <a href="/about" class="mobile-nav-link">ABOUT</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+  </div>
+</body>
+</html>

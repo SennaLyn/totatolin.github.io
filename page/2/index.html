@@ -73,6 +73,121 @@
     
   
     <div class="index-page">
+    <a href="/2017/10/26/使用DocumentFragment加快DOM渲染速度/" >
+      <article id="post-使用DocumentFragment加快DOM渲染速度" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/26/使用DocumentFragment加快DOM渲染速度/">使用DocumentFragment加快DOM渲染速度</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>js中提供了一个DocumentFragment机制，可以提供一个缓冲机制，将DOM节点先放在内存中，当节点都构造完成后，再将DocumentFragment对象添加到页面中，这时所有的节点都会一次渲染出来，这样就能减少浏览器很多的负担，明显的提高页面渲染速度。下面的代码给出了两个函数，分别是用普通DOM方法和DocumentFragment两种方式向页面添加一万个div节点，使用第二种方式比第一种快很多。</p>
+<pre><code>function CreateNodes(){ 
+    for(var i = 0;i &lt; 10000;i++){
+        var tmpNode = document.createElement(&quot;div&quot;);
+        tmpNode.innerHTML = &quot;test&quot; + i + &quot; &lt;br /&gt;&quot;;
+        document.body.appendChild(tmpNode);      
+    }
+}
+
+function CreateFragments(){
+    var fragment = document.createDocumentFragment();
+    for(var i = 0;i &lt; 10000;i++){
+        var tmpNode = document.createElement(&quot;div&quot;);
+        tmpNode.innerHTML = &quot;test&quot; + i + &quot;&lt;br /&gt;&quot;;
+        fragment.appendChild(tmpNode);
+    }
+    document.body.appendChild(fragment);
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/10/26/使用DocumentFragment加快DOM渲染速度/" data-id="cjg9ck0lq000mkcwzmmdrvo54" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/10/26/使用DocumentFragment加快DOM渲染速度/" class="article-date">
+  Posted by Hexo on <time datetime="2017-10-26T14:37:19.000Z" itemprop="datePublished">2017-10-26</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
+    <a href="/2017/10/23/web缓存机制/" >
+      <article id="post-web缓存机制" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/23/web缓存机制/">web缓存机制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h2><h3 id="max-age"><a href="#max-age" class="headerlink" title="max-age"></a>max-age</h3><p>max-age（单位为s）指定设置缓存最大的有效时间，定义的是时间长短。当浏览器向服务器发送请求后，在max-age这段时间里浏览器就不会再向服务器发送请求了。<br>我们来找个资源看下。比如shang.qq.com上的css资源，max-age=2592000，也就是说缓存有效期为2592000秒（也就是30天）。于是在30天内都会使用这个版本的资源，即使服务器上的资源发生了变化，浏览器也不会得到通知。max-age会覆盖掉Expires，后面会有讨论。</p>
+<h3 id="s-maxage"><a href="#s-maxage" class="headerlink" title="s-maxage"></a>s-maxage</h3><p>s-maxage（单位为s）同max-age，只用于共享缓存（比如CDN缓存）。<br>比如，当s-maxage=60时，在这60秒中，即使更新了CDN的内容，浏览器也不会进行请求。也就是说max-age用于普通缓存，而s-maxage用于代理缓存。如果存在s-maxage，则会覆盖掉max-age和Expires header。</p>
+<h3 id="public"><a href="#public" class="headerlink" title="public"></a>public</h3><p>public 指定响应会被缓存，并且在多用户间共享。如果没有指定public还是private，则默认为public。</p>
+<h3 id="private"><a href="#private" class="headerlink" title="private"></a>private</h3><p>private 响应只作为私有的缓存，不能在用户间共享。如果要求HTTP认证，响应会自动设置为private。</p>
+<h3 id="no-cache"><a href="#no-cache" class="headerlink" title="no-cache"></a>no-cache</h3><p>no-cache 指定不缓存响应，表明资源不进行缓存，但是设置了no-cache之后并不代表浏览器不缓存，而是在缓存前要向服务器确认资源是否被更改。因此有的时候只设置no-cache防止缓存还是不够保险，还可以加上private指令，将过期时间设为过去的时间。</p>
+<h3 id="no-store"><a href="#no-store" class="headerlink" title="no-store"></a>no-store</h3><p>no-store 绝对禁止缓存，一看就知道如果用了这个命令当然就是不会进行缓存啦～每次请求资源都要从服务器重新获取。</p>
+<h3 id="must-revalidate"><a href="#must-revalidate" class="headerlink" title="must-revalidate"></a>must-revalidate</h3><p>must-revalidate指定如果页面是过期的，则去服务器进行获取。这个指令并不常用，就不做过多的讨论了。</p>
+<h2 id="Expires"><a href="#Expires" class="headerlink" title="Expires"></a>Expires</h2><p>缓存过期时间，用来指定资源到期的时间，是服务器端的具体的时间点。也就是说，Expires=max-age + 请求时间，需要和Last-modified结合使用。但在上面我们提到过，cache-control的优先级更高。 Expires是Web服务器响应消息头字段，在响应http请求时告诉浏览器在过期时间前浏览器可以直接从浏览器缓存取数据，而无需再次请求。</p>
+<h2 id="Last-modified"><a href="#Last-modified" class="headerlink" title="Last-modified"></a>Last-modified</h2><p>服务器端文件的最后修改时间，需要和cache-control共同使用，是检查服务器端资源是否更新的一种方式。当浏览器再次进行请求时，会向服务器传送If-Modified-Since报头，询问Last-Modified时间点之后资源是否被修改过。如果没有修改，则返回码为304，使用缓存；如果修改过，则再次去服务器请求资源，返回码和首次请求相同为200，资源为服务器最新资源。</p>
+<h2 id="ETag"><a href="#ETag" class="headerlink" title="ETag"></a>ETag</h2><p>根据实体内容生成一段hash字符串，标识资源的状态，由服务端产生。浏览器会将这串字符串传回服务器，验证资源是否已经修改。使用ETag可以解决Last-modified存在的一些问题：</p>
+<ol>
+<li>某些服务器不能精确得到资源的最后修改时间，这样就无法通过最后修改时间判断资源是否更新</li>
+<li>如果资源修改非常频繁，在秒以下的时间内进行修改，而Last-modified只能精确到秒 </li>
+<li>一些资源的最后修改时间改变了，但是内容没改变，使用ETag就认为资源还是没有修改的。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/10/23/web缓存机制/" data-id="cjg9ck0lp000lkcwzomqctmqh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/10/23/web缓存机制/" class="article-date">
+  Posted by Hexo on <time datetime="2017-10-23T13:40:13.000Z" itemprop="datePublished">2017-10-23</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/10/23/IndexedDB存储机制/" >
       <article id="post-IndexedDB存储机制" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -257,7 +372,7 @@ setTimeout(function(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/23/IndexedDB存储机制/" data-id="cje4b2s8e000500wzdus7bq1j" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/23/IndexedDB存储机制/" data-id="cjg9ck0kn0005kcwzjrf30qqo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -673,7 +788,7 @@ b.m() // 2
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cje4b2s9m000h00wzxsqlwxto" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/18/JS类的继承/" data-id="cjg9ck0lb000fkcwzza014djt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -912,7 +1027,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cje4b2s9m000i00wzh3i44j8i" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/10/16/JS类/" data-id="cjg9ck0l7000dkcwzsqc260zk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -986,7 +1101,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cje4b2s9m000k00wzbh084jm4" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/31/JS的算法-排序算法/" data-id="cjg9ck0l5000ckcwzwh9xkh3f" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1040,7 +1155,7 @@ Foo.bar() // hello
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cje4b2s8q000700wzyshd0gnm" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（三）/" data-id="cjg9ck0ky0009kcwz4zhtit7a" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1226,7 +1341,7 @@ console.log(setA.subset(setC));
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cje4b2s94000a00wztff2i0gu" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（二）/" data-id="cjg9ck0kw0008kcwz8gu9ispr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1389,7 +1504,7 @@ console.log(&#39;胜利者：&#39; + winner);
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cje4b2s8i000600wzrbmvhmbi" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS数据结构学习（一）/" data-id="cjg9ck0kr0007kcwzq3lgnkh7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1456,7 +1571,7 @@ console.log( 0 == NaN ) // false
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cje4b2s8z000900wzyqpagql6" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/28/JS的真值和假值/" data-id="cjg9ck0l2000bkcwz9qwgyt59" class="article-share-link">Share</a>
       
       
     </footer>
@@ -1474,208 +1589,10 @@ console.log( 0 == NaN ) // false
     </a>
     </div>
   
-    <div class="index-page">
-    <a href="/2017/07/19/JS浅拷贝和深拷贝/" >
-      <article id="post-JS浅拷贝和深拷贝" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/19/JS浅拷贝和深拷贝/">JS浅拷贝和深拷贝</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="值和引用"><a href="#值和引用" class="headerlink" title="值和引用"></a>值和引用</h2><p>简单值（即标量基本类型值）总是通过值复制的方式来赋值/传递，包括null、undefined、字符串、数字、布尔和ES6中的symbol。</p>
-<p>复合值–对象（包括数组和封装对象）和函数，则总是通过引用复制的方式来赋值/传递。</p>
-<pre><code>var a = 2;
-var b = a; // b是a的值得一个复本
-b++;
-a; // 2
-b; // 3
-
-var c = [1,2,3];
-var d = c; // d是[1,2,3]的一个引用
-d.push(4);
-c; // [1,2,3,4]
-d; // [1,2,3,4]
-</code></pre><p>变量a是一个标量基本类型值，持有该值得一个复本，b持有它的另一个复本。b更改时，a的值保持不变。</p>
-<p>c和d则分别指向同一个复合值[1,2,3]的两个不同引用。请注意，c和d仅仅是指向值[1,2,3],并非持有。所以它们更改的是同一个值，随后它们都指向更改后的新值[1,2,3,4]。</p>
-<p>由于引用指向的是值本身而非变量，所以一个引用无法更改另一个引用的指向。如下例，b=[4,5,6]并不影响a指向值[1,2,3]，除非b不是指向数组的引用，而是指向a的指针，但在js中不存在这样的困惑：</p>
-<pre><code>var a = [1,2,3];
-var b = a;
-a; // [1,2,3]
-b; // [1,2,3]
-
-b = [4,5,6];
-a; // [1,2,3]
-b; // [4,5,6]
-</code></pre><h2 id="浅拷贝和深拷贝"><a href="#浅拷贝和深拷贝" class="headerlink" title="浅拷贝和深拷贝"></a>浅拷贝和深拷贝</h2><p>在js中，对于Object和Array这类引用类型值，当从一个变量向另一个变量复制引用类型值时，这个值的副本其实是一个指针，两个变量指向同一个堆对象，改变其中一个变量，另一个也会受到影响。这种拷贝分为两种情况：拷贝引用和拷贝实例，也就是我们说的浅拷贝和深拷贝。</p>
-<h3 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h3><p>拷贝原对象的引用，这是最简单的浅拷贝。除了上述的方法，还有：</p>
-<h4 id="1-Object-assign"><a href="#1-Object-assign" class="headerlink" title="1.Object.assign()"></a>1.Object.assign()</h4><p>Object.assign()方法可以把任意多个的源对象自身的可枚举属性拷贝给目标对象，然后返回目标对象。</p>
-<pre><code>var x = {
-    a: 1,
-    b: { f: {g: 1} },
-    c: [1,2,3]
-};
-var y = Object.assign({}, x);
-console.log(y.b.f === x.b.f); // true
-</code></pre><h3 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h3><p>深拷贝也就是拷贝一个新的实例，新的实例和之前的实例互不影响。主要方法有：</p>
-<h4 id="1-Array的slice和concat方法"><a href="#1-Array的slice和concat方法" class="headerlink" title="1.Array的slice和concat方法"></a>1.Array的slice和concat方法</h4><p>Array的slice和concat方法不修改原数组，只会返回一个浅复制了原数组中的元素的一个新数组。之所以把它放在深拷贝里，是因为它看起来像是深拷贝。而实际上它是浅拷贝。原数组的元素会按照下述规则拷贝：</p>
-<ul>
-<li>如果该元素是个对象引用（不是实际的对象），slice会拷贝这个对象引用到新的数组里。两个对象引用都引用了同一个对象。如果被引用的对象发生改变，则新的和原来的数组中的这个元素也会发生改变。</li>
-<li>对于字符串、数字及布尔值来说（不是 String、Number 或者 Boolean 对象），slice 会拷贝这些值到新的数组里。在别的数组里修改这些字符串或数字或是布尔值，将不会影响另一个数组。</li>
-</ul>
-<pre><code>var o1 = [&#39;darko&#39;, {age: 22}];
-var o2 = o1.slice(); // 根据Array.prototype.slice()的特性，这里会返回一个o1的浅拷贝对象
-
-console.log(o1 === o2); // =&gt; false，说明o2拷贝的是o1的一个实例
-
-o2[0] = &#39;lin&#39;;
-console.log(o1[0]); // =&gt; &quot;darko&quot; o1和o2内部包含的基本类型值，复制的是其实例，不会相互影响
-
-o2[1].age = 23;
-console.log(o1[1].age); // =&gt;23 o1和o2内部包含的引用类型值，复制的是其引用，会相互影响
-</code></pre><h4 id="2-JSON对象的parse和stringfy"><a href="#2-JSON对象的parse和stringfy" class="headerlink" title="2.JSON对象的parse和stringfy"></a>2.JSON对象的parse和stringfy</h4><p>JSON对象parse方法可以将JSON字符串反序列化成JS对象，stringfy方法可以将JS对象序列化成JSON字符串，借助这个方法，也可以实现对象的深拷贝。</p>
-<pre><code>var source = { name: &#39;source&#39;, child: { name: &#39;child&#39; } };
-var target = JSON.parse(JSON.stringfy(source));
-target.name = &#39;target&#39;; // 改变target的name属性
-console.log(source.name); // source
-console.log(target.name); // target
-target.child.name = &#39;target child&#39;; // 改变target的child
-console.log(source.child.name); // child
-console.log(target.child.name); // target child
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cje4b2s97000b00wz74qy42cu" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/07/19/JS浅拷贝和深拷贝/" class="article-date">
-  Posted by Hexo on <time datetime="2017-07-19T15:04:54.000Z" itemprop="datePublished">2017-07-19</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
-    <div class="index-page">
-    <a href="/2017/07/18/null和undefined详解/" >
-      <article id="post-null和undefined详解" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/07/18/null和undefined详解/">null和undefined详解</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <a id="more"></a>
-<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>当声明的变量还未被初始化时，变量的默认值为undefined。<br>null用来表示尚未存在的对象，常用来表示函数企图返回一个不存在的对象。</p>
-<pre><code>undefined == null // true
-undefined === null // false
-</code></pre><p>null是一个表示‘无’的对象，转为数值时为0；undefined是一个表示‘无’的原始值，转为数值时为NaN。</p>
-<pre><code>Number(null) // 0
-5 + null // 5
-
-Number(undefined) // NaN
-5 + undefined // NaN
-</code></pre><p>undefined表示‘缺少值’，就是此处应该有一个值，但是还没有定义。典型用法是：</p>
-<ol>
-<li>变量被声明了，但还没有赋值时，就等于undefined。</li>
-<li>调用函数时，应该提供的参数没有提供，该参数等于undefined。</li>
-<li>对象没有赋值的属性，该属性的值为undefined。</li>
-<li>函数没有返回值时，默认返回undefined。</li>
-</ol>
-<p>null表示‘没有对象’，即该处不应该有值。典型用法是：</p>
-<ol>
-<li>作为函数的参数，表示该函数的参数不是对象。</li>
-<li>作为对象原型链的终点。</li>
-</ol>
-<h2 id="关于赋值"><a href="#关于赋值" class="headerlink" title="关于赋值"></a>关于赋值</h2><p>undefined可以被赋值，而null不可以被赋值：</p>
-<ol>
-<li>undefined、NaN和Infinity都是全局对象window的属性。既然是属性，当然可以赋值。然而这三个属性又是不可写的属性，即它们的内部特性[[writable]]为false，所以赋值无效。</li>
-<li>null是一个字面量，准确地说叫做Null字面量。与true和false类似。它们都属于js的保留字，换句话说它们都是值，与数字值123、字符串值’fttbar’一样，当然不能被赋值了。</li>
-</ol>
-<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>可以给undefined赋值，但是注意不要把它放到全局作用域：</p>
-<pre><code>function foo() {
-    var undefined = 10;
-    console.log(undefined);
-}
-foo(); // 10
-
-function foo() {
-    undefined = 10;
-    console.log(undefined);
-}
-foo(); // undefined
-</code></pre><p>通过Object.getOwnPropertyDescriptor方法，可以证明undefined是window对象的只读属性：</p>
-<pre><code>Object.getOwnPropertyDescriptor(window, &#39;undefined&#39;);
-
-/** 输出：Object {value: undefined, writable: false,
-enumerable: false, configurable: false} **/
-</code></pre><p>在严格模式下，给undefined赋值会报错。因为严格模式下，禁止给对象的只读属性赋值：</p>
-<pre><code>function foo() {
-    &#39;use strict&#39;;
-    undefined = 10;
-    console.log(undefined); // TypeError
-}
-foo();
-</code></pre><p>undefined和null的类型：</p>
-<pre><code>typeof undefined // &#39;undefined&#39;
-typeof null // &#39;object&#39;
-
-// 需要使用复合条件来检测null值得类型
-var a = null;
-(!a &amp;&amp; typeof a === &#39;object&#39;); // true
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cje4b2s9m000g00wzadxpuze1" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/07/18/null和undefined详解/" class="article-date">
-  Posted by Hexo on <time datetime="2017-07-18T14:46:43.000Z" itemprop="datePublished">2017-07-18</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
+    <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
   </nav>
 
 

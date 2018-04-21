@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>标签模板字面量 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="标签模板字面量该方法可以在字符串模板之前加入函数，用来处理模板： function foo(str, ...val) {     console.log(str);     console.log(val); } var desc = &amp;quot;awesome&amp;quot;;  foo`Everything is ${desc}!`; // [&amp;quot;Everything is &amp;quot;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="标签模板字面量">
+<meta property="og:url" content="https://totatolin.github.io/2018/04/21/标签模板字面量/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="标签模板字面量该方法可以在字符串模板之前加入函数，用来处理模板： function foo(str, ...val) {     console.log(str);     console.log(val); } var desc = &amp;quot;awesome&amp;quot;;  foo`Everything is ${desc}!`; // [&amp;quot;Everything is &amp;quot;">
+<meta property="og:updated_time" content="2018-04-21T12:15:04.902Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="标签模板字面量">
+<meta name="twitter:description" content="标签模板字面量该方法可以在字符串模板之前加入函数，用来处理模板： function foo(str, ...val) {     console.log(str);     console.log(val); } var desc = &amp;quot;awesome&amp;quot;;  foo`Everything is ${desc}!`; // [&amp;quot;Everything is &amp;quot;">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/icon.ico">
+  
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  <link href="css/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.2.0/styles/paraiso-light.min.css">
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      
+<header id="header" style="width: 1400px;height: 360px;margin: 0 auto;">
+  <div id="banner"  ></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">SennaLyn's Blog</a>
+      </h1>
+      
+        
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a href="/" class="nav-icon">Hexo Blog</a>
+      </nav>
+      <nav id="sub-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">HOME</a>
+        
+          <a class="main-nav-link" href="/archives">ARCHIVES</a>
+        
+          <a class="main-nav-link" href="/about">ABOUT</a>
+        
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://totatolin.github.io"></form>
+      </div>
+    </div>
+  </div>
+
+</header>
+<div class="outer">
+  <section id="main"><article id="post-标签模板字面量" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      标签模板字面量
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="标签模板字面量"><a href="#标签模板字面量" class="headerlink" title="标签模板字面量"></a>标签模板字面量</h2><p>该方法可以在字符串模板之前加入函数，用来处理模板：</p>
+<pre><code>function foo(str, ...val) {
+    console.log(str);
+    console.log(val);
+}
+var desc = &quot;awesome&quot;;
+
+foo`Everything is ${desc}!`;
+// [&quot;Everything is &quot;, &quot;!&quot;]
+// [&quot;awesome&quot;]
+str为字符串数组，val为所有变量数组
+</code></pre><p>该方法可以用来过滤HTML字符串，防止恶意攻击</p>
+<pre><code>let sender = &#39;&lt;script&gt;alert(&quot;abc&quot;)&lt;/script&gt;&#39;; // 恶意代码
+let message =
+  SaferHTML`&lt;p&gt;${sender} has sent you a message.&lt;/p&gt;`;
+
+function SaferHTML(templateData) {
+  let s = templateData[0];
+  for (let i = 1; i &lt; arguments.length; i++) {
+    let arg = String(arguments[i]);
+
+    // Escape special characters in the substitution.
+    s += arg.replace(/&amp;/g, &quot;&amp;amp;&quot;)
+            .replace(/&lt;/g, &quot;&amp;lt;&quot;)
+            .replace(/&gt;/g, &quot;&amp;gt;&quot;);
+
+    // Don&#39;t escape special characters in the template.
+    s += templateData[i];
+  }
+  return s;
+}
+
+// &lt;p&gt;&amp;lt;script&amp;gt;alert(&quot;abc&quot;)&amp;lt;/script&amp;gt; has sent you a message.&lt;/p&gt;
+
+sender为用户输入的变量，该方法可以过滤掉用户输入的HTML标签
+</code></pre><p>实现国际化 <a href="https://jaysoo.ca/2014/03/20/i18n-with-es2015-template-literals/" target="_blank" rel="external">参考</a></p>
+<pre><code>let I18n = {
+  use({locale, defaultCurrency, messageBundle}) {
+    I18n.locale = locale;
+    I18n.defaultCurrency = defaultCurrency;
+    I18n.messageBundle = messageBundle;
+    return I18n.translate;
+  },
+
+  translate(strings, ...values) {
+    let translationKey = I18n._buildKey(strings);
+    let translationString = I18n.messageBundle[translationKey];
+
+    if (translationString) {
+      let typeInfoForValues = strings.slice(1).map(I18n._extractTypeInfo);
+      let localizedValues = values.map((v, i) =&gt; I18n._localize(v, typeInfoForValues[i]));
+      return I18n._buildMessage(translationString, ...localizedValues);
+    }
+
+    return &#39;Error: translation missing!&#39;;
+  },
+  _localizers: {
+    s /*string*/: v =&gt; v.toLocaleString(I18n.locale),
+    c /*currency*/: (v, currency) =&gt; (
+      v.toLocaleString(I18n.locale, {
+        style: &#39;currency&#39;,
+        currency: currency || I18n.defaultCurrency
+      })
+    ),
+    n /*number*/: (v, fractionalDigits) =&gt; (
+      v.toLocaleString(I18n.locale, {
+        minimumFractionDigits: fractionalDigits,
+        maximumFractionDigits: fractionalDigits
+      })
+    )
+  },
+
+  _extractTypeInfo(str) {
+    let match = typeInfoRegex.exec(str);
+    if (match) {
+      return {type: match[1], options: match[3]};
+    } else {
+      return {type: &#39;s&#39;, options: &#39;&#39;};
+    }
+  },
+
+  _localize(value, {type, options}) {
+    return I18n._localizers[type](value, options);
+  },
+
+  // e.g. I18n._buildKey([&#39;&#39;, &#39; has &#39;, &#39;:c in the&#39;]) == &#39;{0} has {1} in the bank&#39;
+  _buildKey(strings) {
+    let stripType = s =&gt; s.replace(typeInfoRegex, &#39;&#39;);
+    let lastPartialKey = stripType(strings[strings.length - 1]);
+    let prependPartialKey = (memo, curr, i) =&gt; `${stripType(curr)}{${i}}${memo}`;
+
+    return strings.slice(0, -1).reduceRight(prependPartialKey, lastPartialKey);
+  },
+
+  // e.g. I18n._formatStrings(&#39;{0} {1}!&#39;, &#39;hello&#39;, &#39;world&#39;) == &#39;hello world!&#39;
+  _buildMessage(str, ...values) {
+    return str.replace(/{(\d)}/g, (_, index) =&gt; values[Number(index)]);
+  }
+};
+
+let name = &#39;Bob&#39;;
+let amount = 1234.56;
+let i18n;
+
+let messageBundle_fr = {
+  &#39;Hello {0}, you have {1} in your bank account.&#39;: &#39;Bonjour {0}, vous avez {1} dans votre compte bancaire.&#39;
+};
+let messageBundle_de = {
+  &#39;Hello {0}, you have {1} in your bank account.&#39;: &#39;Hallo {0}, Sie haben {1} auf Ihrem Bankkonto&#39;
+};
+let messageBundle_zh_Hant = {
+  &#39;Hello {0}, you have {1} in your bank account.&#39;: &#39;你好{0}，你有{1}在您的銀行帳戶。&#39;
+};
+
+i18n = I18n.use({locale: &#39;fr-CA&#39;, defaultCurrency: &#39;CAD&#39;, messageBundle: messageBundle_fr});
+i18n`Hello ${name}, you have ${amount}:c in your bank account.`;
+// =&gt; &#39;Bonjour Bob, vous avez 1 234,56 $CA dans votre compte bancaire.&#39;
+
+i18n = I18n.use({locale: &#39;de-DE&#39;, defaultCurrency: &#39;EUR&#39;, messageBundle: messageBundle_de});
+i18n`Hello ${name}, you have ${amount}:c in your bank account.`;
+// =&gt; &#39;Hallo Bob, Sie haben 1.234,56 € auf Ihrem Bankkonto.&#39;
+
+i18n = I18n.use({locale: &#39;zh-Hant-CN&#39;, defaultCurrency: &#39;CNY&#39;, messageBundle: messageBundle_zh_Hant});
+i18n`Hello ${name}, you have ${amount}:c in your bank account.`;
+// =&gt; &#39;你好Bob，你有￥1,234.56在您的銀行帳戶。&#39;
+</code></pre><p>除此之外，你甚至可以使用标签模板，在 JavaScript 语言之中嵌入其他语言<a href="https://gist.github.com/lygaret/a68220defa69174bdec5" target="_blank" rel="external">jsx具体实现</a></p>
+<pre><code>jsx`
+  &lt;div&gt;
+    &lt;input
+      ref=&#39;input&#39;
+      onChange=&#39;${this.handleChange}&#39;
+      defaultValue=&#39;${this.state.value}&#39; /&gt;
+      ${this.state.value}
+   &lt;/div&gt;
+`
+</code></pre><h2 id="String-raw"><a href="#String-raw" class="headerlink" title="String.raw()"></a>String.raw()</h2><p>raw方法返回一个斜杠都会被在前面添加一个斜杠，用来转译字符串。如果原字符串已经被转译，则会再次转译。</p>
+<pre><code>String.raw`Hi\n${2+3}!`;
+// 返回 &quot;Hi\\n5!&quot;
+
+String.raw`Hi\u000A!`;
+// 返回 &quot;Hi\\u000A!&quot;
+
+String.raw`Hi\\n`
+// 返回 &quot;Hi\\\\n&quot;
+</code></pre><h4 id="在实际项目中原本准备用此方法，用来处理emoji的unicode编码，但是在-内的变量含有-时无法被转译，最后通过escape多写了一层算法进行处理。"><a href="#在实际项目中原本准备用此方法，用来处理emoji的unicode编码，但是在-内的变量含有-时无法被转译，最后通过escape多写了一层算法进行处理。" class="headerlink" title="在实际项目中原本准备用此方法，用来处理emoji的unicode编码，但是在{}内的变量含有\时无法被转译，最后通过escape多写了一层算法进行处理。"></a>在实际项目中原本准备用此方法，用来处理emoji的unicode编码，但是在{}内的变量含有\时无法被转译，最后通过escape多写了一层算法进行处理。</h4>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2018/04/21/标签模板字面量/" data-id="cjg9ck0lv000qkcwzpygunqui" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2018/04/21/标签模板字面量/" class="article-date">
+  Posted by Hexo on <time datetime="2018-04-21T12:14:20.000Z" itemprop="datePublished">2018-04-21</time>
+</a>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/04/21/深度理解var、let、const及块级作用域/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">深度理解var、let、const及块级作用域</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+</div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      Copyright &copy; 2018 Lin Sen<br>
+      <p>
+      Theme by <a href="http//:fiowind.top">Fio</a> | <iframe style="display: inline-block;margin-left: 2px;margin-bottom: -5px;"src="https://ghbtns.com/github-btn.html?user=fiowind&repo=hexo-theme-sunshine&type=star&count=true" frameborder="0" scrolling="0" width="88px" height="20px"></iframe>
+      </p>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">HOME</a>
+  
+    <a href="/archives" class="mobile-nav-link">ARCHIVES</a>
+  
+    <a href="/about" class="mobile-nav-link">ABOUT</a>
+  
+</nav>
+    
+
+<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.2.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+  </div>
+</body>
+</html>

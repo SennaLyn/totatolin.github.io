@@ -73,6 +73,204 @@
     
   
     <div class="index-page">
+    <a href="/2017/07/19/JS浅拷贝和深拷贝/" >
+      <article id="post-JS浅拷贝和深拷贝" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/19/JS浅拷贝和深拷贝/">JS浅拷贝和深拷贝</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="值和引用"><a href="#值和引用" class="headerlink" title="值和引用"></a>值和引用</h2><p>简单值（即标量基本类型值）总是通过值复制的方式来赋值/传递，包括null、undefined、字符串、数字、布尔和ES6中的symbol。</p>
+<p>复合值–对象（包括数组和封装对象）和函数，则总是通过引用复制的方式来赋值/传递。</p>
+<pre><code>var a = 2;
+var b = a; // b是a的值得一个复本
+b++;
+a; // 2
+b; // 3
+
+var c = [1,2,3];
+var d = c; // d是[1,2,3]的一个引用
+d.push(4);
+c; // [1,2,3,4]
+d; // [1,2,3,4]
+</code></pre><p>变量a是一个标量基本类型值，持有该值得一个复本，b持有它的另一个复本。b更改时，a的值保持不变。</p>
+<p>c和d则分别指向同一个复合值[1,2,3]的两个不同引用。请注意，c和d仅仅是指向值[1,2,3],并非持有。所以它们更改的是同一个值，随后它们都指向更改后的新值[1,2,3,4]。</p>
+<p>由于引用指向的是值本身而非变量，所以一个引用无法更改另一个引用的指向。如下例，b=[4,5,6]并不影响a指向值[1,2,3]，除非b不是指向数组的引用，而是指向a的指针，但在js中不存在这样的困惑：</p>
+<pre><code>var a = [1,2,3];
+var b = a;
+a; // [1,2,3]
+b; // [1,2,3]
+
+b = [4,5,6];
+a; // [1,2,3]
+b; // [4,5,6]
+</code></pre><h2 id="浅拷贝和深拷贝"><a href="#浅拷贝和深拷贝" class="headerlink" title="浅拷贝和深拷贝"></a>浅拷贝和深拷贝</h2><p>在js中，对于Object和Array这类引用类型值，当从一个变量向另一个变量复制引用类型值时，这个值的副本其实是一个指针，两个变量指向同一个堆对象，改变其中一个变量，另一个也会受到影响。这种拷贝分为两种情况：拷贝引用和拷贝实例，也就是我们说的浅拷贝和深拷贝。</p>
+<h3 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h3><p>拷贝原对象的引用，这是最简单的浅拷贝。除了上述的方法，还有：</p>
+<h4 id="1-Object-assign"><a href="#1-Object-assign" class="headerlink" title="1.Object.assign()"></a>1.Object.assign()</h4><p>Object.assign()方法可以把任意多个的源对象自身的可枚举属性拷贝给目标对象，然后返回目标对象。</p>
+<pre><code>var x = {
+    a: 1,
+    b: { f: {g: 1} },
+    c: [1,2,3]
+};
+var y = Object.assign({}, x);
+console.log(y.b.f === x.b.f); // true
+</code></pre><h3 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h3><p>深拷贝也就是拷贝一个新的实例，新的实例和之前的实例互不影响。主要方法有：</p>
+<h4 id="1-Array的slice和concat方法"><a href="#1-Array的slice和concat方法" class="headerlink" title="1.Array的slice和concat方法"></a>1.Array的slice和concat方法</h4><p>Array的slice和concat方法不修改原数组，只会返回一个浅复制了原数组中的元素的一个新数组。之所以把它放在深拷贝里，是因为它看起来像是深拷贝。而实际上它是浅拷贝。原数组的元素会按照下述规则拷贝：</p>
+<ul>
+<li>如果该元素是个对象引用（不是实际的对象），slice会拷贝这个对象引用到新的数组里。两个对象引用都引用了同一个对象。如果被引用的对象发生改变，则新的和原来的数组中的这个元素也会发生改变。</li>
+<li>对于字符串、数字及布尔值来说（不是 String、Number 或者 Boolean 对象），slice 会拷贝这些值到新的数组里。在别的数组里修改这些字符串或数字或是布尔值，将不会影响另一个数组。</li>
+</ul>
+<pre><code>var o1 = [&#39;darko&#39;, {age: 22}];
+var o2 = o1.slice(); // 根据Array.prototype.slice()的特性，这里会返回一个o1的浅拷贝对象
+
+console.log(o1 === o2); // =&gt; false，说明o2拷贝的是o1的一个实例
+
+o2[0] = &#39;lin&#39;;
+console.log(o1[0]); // =&gt; &quot;darko&quot; o1和o2内部包含的基本类型值，复制的是其实例，不会相互影响
+
+o2[1].age = 23;
+console.log(o1[1].age); // =&gt;23 o1和o2内部包含的引用类型值，复制的是其引用，会相互影响
+</code></pre><h4 id="2-JSON对象的parse和stringfy"><a href="#2-JSON对象的parse和stringfy" class="headerlink" title="2.JSON对象的parse和stringfy"></a>2.JSON对象的parse和stringfy</h4><p>JSON对象parse方法可以将JSON字符串反序列化成JS对象，stringfy方法可以将JS对象序列化成JSON字符串，借助这个方法，也可以实现对象的深拷贝。</p>
+<pre><code>var source = { name: &#39;source&#39;, child: { name: &#39;child&#39; } };
+var target = JSON.parse(JSON.stringfy(source));
+target.name = &#39;target&#39;; // 改变target的name属性
+console.log(source.name); // source
+console.log(target.name); // target
+target.child.name = &#39;target child&#39;; // 改变target的child
+console.log(source.child.name); // child
+console.log(target.child.name); // target child
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/07/19/JS浅拷贝和深拷贝/" data-id="cjg9ck0l0000akcwz5kt857nu" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/07/19/JS浅拷贝和深拷贝/" class="article-date">
+  Posted by Hexo on <time datetime="2017-07-19T15:04:54.000Z" itemprop="datePublished">2017-07-19</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
+    <a href="/2017/07/18/null和undefined详解/" >
+      <article id="post-null和undefined详解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/18/null和undefined详解/">null和undefined详解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>当声明的变量还未被初始化时，变量的默认值为undefined。<br>null用来表示尚未存在的对象，常用来表示函数企图返回一个不存在的对象。</p>
+<pre><code>undefined == null // true
+undefined === null // false
+</code></pre><p>null是一个表示‘无’的对象，转为数值时为0；undefined是一个表示‘无’的原始值，转为数值时为NaN。</p>
+<pre><code>Number(null) // 0
+5 + null // 5
+
+Number(undefined) // NaN
+5 + undefined // NaN
+</code></pre><p>undefined表示‘缺少值’，就是此处应该有一个值，但是还没有定义。典型用法是：</p>
+<ol>
+<li>变量被声明了，但还没有赋值时，就等于undefined。</li>
+<li>调用函数时，应该提供的参数没有提供，该参数等于undefined。</li>
+<li>对象没有赋值的属性，该属性的值为undefined。</li>
+<li>函数没有返回值时，默认返回undefined。</li>
+</ol>
+<p>null表示‘没有对象’，即该处不应该有值。典型用法是：</p>
+<ol>
+<li>作为函数的参数，表示该函数的参数不是对象。</li>
+<li>作为对象原型链的终点。</li>
+</ol>
+<h2 id="关于赋值"><a href="#关于赋值" class="headerlink" title="关于赋值"></a>关于赋值</h2><p>undefined可以被赋值，而null不可以被赋值：</p>
+<ol>
+<li>undefined、NaN和Infinity都是全局对象window的属性。既然是属性，当然可以赋值。然而这三个属性又是不可写的属性，即它们的内部特性[[writable]]为false，所以赋值无效。</li>
+<li>null是一个字面量，准确地说叫做Null字面量。与true和false类似。它们都属于js的保留字，换句话说它们都是值，与数字值123、字符串值’fttbar’一样，当然不能被赋值了。</li>
+</ol>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><p>可以给undefined赋值，但是注意不要把它放到全局作用域：</p>
+<pre><code>function foo() {
+    var undefined = 10;
+    console.log(undefined);
+}
+foo(); // 10
+
+function foo() {
+    undefined = 10;
+    console.log(undefined);
+}
+foo(); // undefined
+</code></pre><p>通过Object.getOwnPropertyDescriptor方法，可以证明undefined是window对象的只读属性：</p>
+<pre><code>Object.getOwnPropertyDescriptor(window, &#39;undefined&#39;);
+
+/** 输出：Object {value: undefined, writable: false,
+enumerable: false, configurable: false} **/
+</code></pre><p>在严格模式下，给undefined赋值会报错。因为严格模式下，禁止给对象的只读属性赋值：</p>
+<pre><code>function foo() {
+    &#39;use strict&#39;;
+    undefined = 10;
+    console.log(undefined); // TypeError
+}
+foo();
+</code></pre><p>undefined和null的类型：</p>
+<pre><code>typeof undefined // &#39;undefined&#39;
+typeof null // &#39;object&#39;
+
+// 需要使用复合条件来检测null值得类型
+var a = null;
+(!a &amp;&amp; typeof a === &#39;object&#39;); // true
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://totatolin.github.io/2017/07/18/null和undefined详解/" data-id="cjg9ck0lh000ikcwza002lx4m" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  <div class="article-meta">
+    <a href="/2017/07/18/null和undefined详解/" class="article-date">
+  Posted by Hexo on <time datetime="2017-07-18T14:46:43.000Z" itemprop="datePublished">2017-07-18</time>
+</a>
+    
+  </div>
+  
+</article>
+
+
+    </a>
+    </div>
+  
+    <div class="index-page">
     <a href="/2017/07/18/数组和类数组/" >
       <article id="post-数组和类数组" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -157,7 +355,7 @@ var arr = Array.prototype.slice.call(a); // arr === [1,2,3]
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cje4b2sa2000p00wzvyv4453p" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/18/数组和类数组/" data-id="cjg9ck0lu000pkcwzwkd0ind9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -300,7 +498,7 @@ console.log(numbers.some(isOutsideRange, range))
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" data-id="cje4b2s5l000100wzzm3lczij" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/04/Array方法之fill、filter、every、some、map、reduce/" data-id="cjg9ck0jz0000kcwz296ngtf8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -411,7 +609,7 @@ person1.hasOwnProperty(&#39;name&#39;) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/07/03/原型和原型链/" data-id="cje4b2sa2000r00wzd2icpn5e" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/07/03/原型和原型链/" data-id="cjg9ck0lr000nkcwzu2ojcrcv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -458,7 +656,7 @@ person1.hasOwnProperty(&#39;name&#39;) // true
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/隐式类型转换的方式/" data-id="cje4b2sa2000n00wzlzdwzg2a" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/隐式类型转换的方式/" data-id="cjg9ck0m4000ukcwz884wz37s" class="article-share-link">Share</a>
       
       
     </footer>
@@ -518,7 +716,7 @@ document.write(typeof(num)); // number
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/JS中的一元运算符/" data-id="cje4b2s8w000800wz2lts3or9" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/JS中的一元运算符/" data-id="cjg9ck0ke0003kcwz4ytkmi9w" class="article-share-link">Share</a>
       
       
     </footer>
@@ -684,7 +882,7 @@ var vm = new Vue({
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/27/Object-defineProperty用法/" data-id="cje4b2s97000c00wzswx88z9g" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/27/Object-defineProperty用法/" data-id="cjg9ck0lc000gkcwz34iflem0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -738,7 +936,7 @@ alert(color2);    //  yellow,black
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/" data-id="cje4b2s5s000300wzdf5qg1jc" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/10/Array方法之slice和splice/" data-id="cjg9ck0k70001kcwzo33jpy27" class="article-share-link">Share</a>
       
       
     </footer>
@@ -840,7 +1038,7 @@ for (v of k) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" data-id="cje4b2s5t000400wz8x0mw3da" class="article-share-link">Share</a>
+      <a data-url="https://totatolin.github.io/2017/06/08/JS中的三种遍历方法：forEach-for-in-for-of/" data-id="cjg9ck0kp0006kcwzytxqbz1m" class="article-share-link">Share</a>
       
       
     </footer>
@@ -858,63 +1056,10 @@ for (v of k) {
     </a>
     </div>
   
-    <div class="index-page">
-    <a href="/2017/06/08/hello-world/" >
-      <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/08/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy
-</code></pre>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://totatolin.github.io/2017/06/08/hello-world/" data-id="cje4b2s9m000e00wz2nftsj13" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  <div class="article-meta">
-    <a href="/2017/06/08/hello-world/" class="article-date">
-  Posted by Hexo on <time datetime="2017-06-08T15:04:56.270Z" itemprop="datePublished">2017-06-08</time>
-</a>
-    
-  </div>
-  
-</article>
-
-
-    </a>
-    </div>
-  
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
   </nav>
 
 
